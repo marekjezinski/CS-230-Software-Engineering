@@ -111,22 +111,30 @@ public class Main extends Application {
         switch (event.getCode()) {
             case RIGHT:
                 // Right key was pressed. So move the player right by one cell.
-                playerX = playerX + 1;
+                if (playerX < 11) {
+                    playerX = playerX + 1;
+                }
                 break;
 
             case LEFT:
                 // Left key was pressed. So move the player left by one cell.
-                playerX = playerX - 1;
+                if (playerX > 0) {
+                    playerX = playerX - 1;
+                }
                 break;
 
             case UP:
                 // Up key was pressed. So move the player up by one cell.
-                playerY = playerY - 1;
+                if (playerY > 0) {
+                    playerY = playerY - 1;
+                }
                 break;
 
             case DOWN:
                 // Down key was pressed. So move the player down by one cell.
-                playerY = playerY + 1;
+                if (playerY < 7) {
+                    playerY = playerY + 1;
+                }
                 break;
 
             default:
