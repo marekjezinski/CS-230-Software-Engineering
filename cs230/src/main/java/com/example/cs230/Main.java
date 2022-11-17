@@ -186,12 +186,32 @@ public class Main extends Application {
         // We draw the row at y value 2.
         MapReader a = new MapReader();
         this.tiles = a.tileReader();
-        for (int i = 0; i < this.tiles.size(); i++){
-            System.out.print(this.tiles.get(i));
-        }
-        for (int x = 0; x < 12; x++){
-            for (int y = 0; y < 8; y++) {
-                gc.drawImage(redTile, x * GRID_CELL_WIDTH, y * GRID_CELL_HEIGHT);
+
+
+        int tileIndex = 0;
+        System.out.println(this.tiles.get(tileIndex));
+        for (int y = 0; y < 8; y++){
+            for (int x = 0; x < 12; x++) {
+                if (this.tiles.get(tileIndex).equals("r")){
+                    gc.drawImage(redTile, x * GRID_CELL_WIDTH, y * GRID_CELL_HEIGHT);
+                    tileIndex++;
+                } else if (this.tiles.get(tileIndex).equals("g")){
+                    gc.drawImage(greenTile, x * GRID_CELL_WIDTH, y * GRID_CELL_HEIGHT);
+                    tileIndex++;
+                } else if (this.tiles.get(tileIndex).equals("b")){
+                    gc.drawImage(blueTile, x * GRID_CELL_WIDTH, y * GRID_CELL_HEIGHT);
+                    tileIndex++;
+                } else if (this.tiles.get(tileIndex).equals("y")){
+                    gc.drawImage(yellowTile, x * GRID_CELL_WIDTH, y * GRID_CELL_HEIGHT);
+                    tileIndex++;
+                } else if (this.tiles.get(tileIndex).equals("p")){
+                    gc.drawImage(pinkTile, x * GRID_CELL_WIDTH, y * GRID_CELL_HEIGHT);
+                    tileIndex++;
+                } else if (this.tiles.get(tileIndex).equals("v")){
+                    gc.drawImage(violetTile, x * GRID_CELL_WIDTH, y * GRID_CELL_HEIGHT);
+                    tileIndex++;
+                }
+
             }
         }
 
