@@ -8,7 +8,7 @@ public class MapReader {
 
     public ArrayList<String> tileReader(){
         Scanner in = null;
-        File f = new File("l1.txt");
+        File f = new File("src/resources/file.txt");
         try {
             in = new Scanner(f);
         }

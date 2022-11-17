@@ -86,16 +86,16 @@ public class Main extends Application {
      */
     public void start(Stage primaryStage) throws URISyntaxException {
         // Load images. Note we use png images with a transparent background.
-        playerImage = new Image(getClass().getResource("player.png").toURI().toString());
-        dirtImage = new Image(getClass().getResource("dirt.png").toURI().toString());
-        iconImage = new Image(getClass().getResource("icon.png").toURI().toString());
+        playerImage = new Image(getClass().getResource("resources/player.png").toURI().toString());
+        dirtImage = new Image(getClass().getResource("resources/dirt.png").toURI().toString());
+        iconImage = new Image(getClass().getResource("resources/icon.png").toURI().toString());
 
-        redTile = new Image(getClass().getResource("red.png").toURI().toString());
-        greenTile = new Image(getClass().getResource("green.png").toURI().toString());
-        blueTile = new Image(getClass().getResource("blue.png").toURI().toString());
-        yellowTile = new Image(getClass().getResource("yellow.png").toURI().toString());
-        pinkTile = new Image(getClass().getResource("pink.png").toURI().toString());
-        violetTile = new Image(getClass().getResource("violet.png").toURI().toString());
+        redTile = new Image(getClass().getResource("resources/red.png").toURI().toString());
+        greenTile = new Image(getClass().getResource("resources/green.png").toURI().toString());
+        blueTile = new Image(getClass().getResource("resources/blue.png").toURI().toString());
+        yellowTile = new Image(getClass().getResource("resources/yellow.png").toURI().toString());
+        pinkTile = new Image(getClass().getResource("resources/pink.png").toURI().toString());
+        violetTile = new Image(getClass().getResource("resources/violet.png").toURI().toString());
 
         // Build the GUI
         Pane root = buildGUI();
