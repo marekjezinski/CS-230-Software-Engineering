@@ -26,6 +26,8 @@ import javafx.util.Duration;
 
 import java.net.URISyntaxException;
 
+import java.util.ArrayList;
+
 /**
  * Sample application that demonstrates the use of JavaFX Canvas for a Game.
  * This class is intentionally not structured very well. This is just a starting point to show
@@ -74,6 +76,9 @@ public class Main extends Application {
 
     // Timeline which will cause tick method to be called periodically.
     private Timeline tickTimeline;
+
+    //Array for tiles
+    private ArrayList<String> tiles = new ArrayList<String>();
 
     /**
      * Setup the new application.
@@ -179,6 +184,11 @@ public class Main extends Application {
         // Draw row of dirt images
         // We multiply by the cell width and height to turn a coordinate in our grid into a pixel coordinate.
         // We draw the row at y value 2.
+        MapReader a = new MapReader();
+        this.tiles = a.tileReader();
+        for (int i = 0; i < this.tiles.size(); i++){
+            System.out.print(this.tiles.get(i));
+        }
         for (int x = 0; x < 12; x++){
             for (int y = 0; y < 8; y++) {
                 gc.drawImage(redTile, x * GRID_CELL_WIDTH, y * GRID_CELL_HEIGHT);
