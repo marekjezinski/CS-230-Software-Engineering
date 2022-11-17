@@ -3,6 +3,12 @@
   <component name="ChangeListManager">
     <list default="true" id="a1315078-ef58-467c-98cd-6b6a6f1190c0" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/cs230.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/cs230.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/runConfigurations.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/runConfigurations.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cs230/.idea/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/cs230/.idea/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cs230/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/cs230/.idea/compiler.xml" afterDir="false" />
@@ -25,6 +31,7 @@
       <change beforePath="$PROJECT_DIR$/cs230/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/cs230/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cs230/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/cs230/.idea/modules.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cs230/.idea/runConfigurations.xml" beforeDir="false" afterPath="$PROJECT_DIR$/cs230/.idea/runConfigurations.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cs230/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/cs230/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cs230/cs230.iml" beforeDir="false" afterPath="$PROJECT_DIR$/cs230/cs230.iml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -55,6 +62,7 @@
       <option name="presentableId" value="Default" />
       <updated>1668610308974</updated>
       <workItem from="1668610312478" duration="31000" />
+      <workItem from="1668632121357" duration="42000" />
     </task>
     <servers />
   </component>
