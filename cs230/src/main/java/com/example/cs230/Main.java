@@ -61,6 +61,12 @@ public class Main extends Application {
     private Image playerImage;
     private Image dirtImage;
     private Image iconImage;
+    private Image redTile;
+    private Image greenTile;
+    private Image blueTile;
+    private Image yellowTile;
+    private Image pinkTile;
+    private Image violetTile;
 
     // X and Y coordinate of player on the grid.
     private int playerX = 0;
@@ -78,6 +84,13 @@ public class Main extends Application {
         playerImage = new Image(getClass().getResource("player.png").toURI().toString());
         dirtImage = new Image(getClass().getResource("dirt.png").toURI().toString());
         iconImage = new Image(getClass().getResource("icon.png").toURI().toString());
+
+        redTile = new Image(getClass().getResource("red.png").toURI().toString());
+        greenTile = new Image(getClass().getResource("green.png").toURI().toString());
+        blueTile = new Image(getClass().getResource("blue.png").toURI().toString());
+        yellowTile = new Image(getClass().getResource("yellow.png").toURI().toString());
+        pinkTile = new Image(getClass().getResource("pink.png").toURI().toString());
+        violetTile = new Image(getClass().getResource("violet.png").toURI().toString());
 
         // Build the GUI
         Pane root = buildGUI();
