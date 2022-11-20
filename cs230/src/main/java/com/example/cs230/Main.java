@@ -192,7 +192,6 @@ public class Main extends Application {
 
 
         int tileIndex = 0;
-        System.out.println(this.tiles.get(tileIndex));
         for (int y = 0; y < 8; y++){
             for (int x = 0; x < 12; x++) {
                 if (this.tiles.get(tileIndex).equals("r")){
