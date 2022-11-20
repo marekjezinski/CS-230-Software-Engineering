@@ -5,6 +5,9 @@ import java.util.Scanner;
 import java.util.ArrayList;
 public class MapReader {
     private ArrayList<String> tiles = new ArrayList<String>();
+    private ArrayList<Integer> clockParam = new ArrayList<Integer>();
+    private int x;
+    private int y;
 
     public ArrayList<String> tileReader(){
         Scanner in = null;
@@ -21,4 +24,30 @@ public class MapReader {
         }
         return this.tiles;
     }
-}
+
+    public ArrayList<Integer> clockSetter(){
+        Scanner in = null;
+        File f = new File("l1.txt");
+        try {
+            in = new Scanner(f);
+        }
+        catch(FileNotFoundException e){
+            System.out.println("Error!");
+            System.exit(0);
+        }
+        //97
+        for (int i = 0; i <= 95; i++){
+            in.next();
+        }
+        while (in.hasNext()) {
+             x = in.nextInt();
+             y = in.nextInt();
+             System.out.println(x);
+             System.out.println(y);
+             this.clockParam.add(x);
+             this.clockParam.add(y);
+        }
+        return this.clockParam;
+    }
+    }
+

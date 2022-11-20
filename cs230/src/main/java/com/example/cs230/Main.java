@@ -69,6 +69,7 @@ public class Main extends Application {
     private Image yellowTile;
     private Image pinkTile;
     private Image violetTile;
+    private Image clock;
 
     // X and Y coordinate of player on the grid.
     private int playerX = 0;
@@ -77,9 +78,9 @@ public class Main extends Application {
     // Timeline which will cause tick method to be called periodically.
     private Timeline tickTimeline;
 
-    //Array for tiles
+    //Array for tiles and items
     private ArrayList<String> tiles = new ArrayList<String>();
-
+    private ArrayList<Integer> clockParams = new ArrayList<Integer>();
     /**
      * Setup the new application.
      * @param primaryStage The stage that is to be used for the application.
@@ -96,6 +97,8 @@ public class Main extends Application {
         yellowTile = new Image(getClass().getResource("yellow.png").toURI().toString());
         pinkTile = new Image(getClass().getResource("pink.png").toURI().toString());
         violetTile = new Image(getClass().getResource("violet.png").toURI().toString());
+
+        clock = new Image(getClass().getResource("clock.png").toURI().toString());
 
         // Build the GUI
         Pane root = buildGUI();
@@ -214,6 +217,13 @@ public class Main extends Application {
 
             }
         }
+
+        clockParams = a.clockSetter();
+        for(int i = 0; i < clockParams.size(); i = i+2){
+            gc.drawImage(clock, clockParams.get(i)* GRID_CELL_WIDTH,
+                    clockParams.get(i+1)* GRID_CELL_HEIGHT - 1);
+        }
+        //  gc.drawImage(clock, 0 * GRID_CELL_WIDTH, 0 * GRID_CELL_HEIGHT);
 
         // Draw player at current location
         gc.drawImage(playerImage, playerX * GRID_CELL_WIDTH, playerY * GRID_CELL_HEIGHT);
