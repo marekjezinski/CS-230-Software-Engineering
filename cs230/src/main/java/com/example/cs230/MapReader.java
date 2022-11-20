@@ -42,8 +42,6 @@ public class MapReader {
         while (in.hasNext()) {
              x = in.nextInt();
              y = in.nextInt();
-             System.out.println(x);
-             System.out.println(y);
              this.clockParam.add(x);
              this.clockParam.add(y);
         }
