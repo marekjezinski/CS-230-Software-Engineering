@@ -78,9 +78,13 @@ public class Main extends Application {
     // Timeline which will cause tick method to be called periodically.
     private Timeline tickTimeline;
 
+
+    private int timerDuration;
+
     //Array for tiles and items
     private ArrayList<String> tiles = new ArrayList<String>();
     private ArrayList<Integer> clockParams = new ArrayList<Integer>();
+
     /**
      * Setup the new application.
      * @param primaryStage The stage that is to be used for the application.
@@ -347,6 +351,23 @@ public class Main extends Application {
             tickTimeline.stop();
             startTickTimelineButton.setDisable(false);
         });
+
+        Button startTimer = new Button("Start game");
+        toolbar.getChildren().addAll(startTimer);
+        startTimer.setOnAction(e -> {
+            int countdown = 20;
+            GameTimer g = new GameTimer(countdown);
+            while (countdown > 0){
+                try {
+                    countdown = g.timer();
+                } catch (InterruptedException ex) {
+                    ex.printStackTrace();
+                }
+                System.out.println(countdown);
+            }
+
+        });
+
 
         // Setup a draggable image.
         ImageView draggableImage = new ImageView();
