@@ -90,6 +90,11 @@ public class Main extends Application {
      * @param primaryStage The stage that is to be used for the application.
      */
     public void start(Stage primaryStage) throws URISyntaxException {
+        MapReader c = new MapReader();
+        clockParams = c.clockSetter();
+        for (int i = 0; i < clockParams.size(); i++){
+            System.out.println(clockParams.get(i));
+        }
         // Load images. Note we use png images with a transparent background.
         playerImage = new Image(getClass().getResource("player.png").toURI().toString());
         dirtImage = new Image(getClass().getResource("dirt.png").toURI().toString());
@@ -221,7 +226,15 @@ public class Main extends Application {
             }
         }
 
-        clockParams = a.clockSetter();
+        for(int i = 0; i < clockParams.size(); i = i+2){
+            if (clockParams.get(i) == playerX){
+                if (clockParams.get(i+1) == playerY){
+                    clockParams.remove(i);
+                    clockParams.remove(i);
+
+                }
+            }
+        }
         for(int i = 0; i < clockParams.size(); i = i+2){
             gc.drawImage(clock, clockParams.get(i)* GRID_CELL_WIDTH,
                     clockParams.get(i+1)* GRID_CELL_HEIGHT - 1);
@@ -272,21 +285,7 @@ public class Main extends Application {
      * React when an object is dragged onto the canvas.
      * @param event The drag event itself which contains data about the drag that occurred.
      */
-    public void canvasDragDroppedOccured(DragEvent event) {
-        double x = event.getX();
-        double y = event.getY();
 
-        // Print a string showing the location.
-        String s = String.format("You dropped at (%f, %f) relative to the canvas.", x, y);
-        System.out.println(s);
-
-        // Draw an icon at the dropped location.
-        GraphicsContext gc = canvas.getGraphicsContext2D();
-        // Draw the the image so the top-left corner is where we dropped.
-        gc.drawImage(iconImage, x, y);
-        // Draw the the image so the center is where we dropped.
-        // gc.drawImage(iconImage, x - iconImage.getWidth() / 2.0, y - iconImage.getHeight() / 2.0);
-    }
 
     /**
      * Create the GUI.
@@ -310,24 +309,16 @@ public class Main extends Application {
         // Create the toolbar content
 
         // Reset Player Location Button
-        Button resetPlayerLocationButton = new Button("Reset Player");
-        toolbar.getChildren().add(resetPlayerLocationButton);
+        Button resetGameButton = new Button("Reset Game");
+        toolbar.getChildren().add(resetGameButton);
 
         // Setup the behaviour of the button.
-        resetPlayerLocationButton.setOnAction(e -> {
+        resetGameButton.setOnAction(e -> {
             // We keep this method short and use a method for the bulk of the work.
             resetPlayerLocation();
         });
 
-        // Center Player Button
-        Button centerPlayerLocationButton = new Button("Center Player");
-        toolbar.getChildren().add(centerPlayerLocationButton);
 
-        // Setup the behaviour of the button.
-        centerPlayerLocationButton.setOnAction(e -> {
-            // We keep this method short and use a method for the bulk of the work.
-            movePlayerToCenter();
-        });
 
         // Tick Timeline buttons
         Button startTickTimelineButton = new Button("Start Ticks");
@@ -369,56 +360,10 @@ public class Main extends Application {
         });
 
 
-        // Setup a draggable image.
-        ImageView draggableImage = new ImageView();
-        draggableImage.setImage(iconImage);
-        toolbar.getChildren().add(draggableImage);
 
-        // This code setup what happens when the dragging starts on the image.
-        // You probably don't need to change this (unless you wish to do more advanced things).
-        draggableImage.setOnDragDetected(new EventHandler<MouseEvent>() {
-            public void handle(MouseEvent event) {
-                // Mark the drag as started.
-                // We do not use the transfer mode (this can be used to indicate different forms
-                // of drags operations, for example, moving files or copying files).
-                Dragboard db = draggableImage.startDragAndDrop(TransferMode.ANY);
 
-                // We have to put some content in the clipboard of the drag event.
-                // We do not use this, but we could use it to store extra data if we wished.
-                ClipboardContent content = new ClipboardContent();
-                content.putString("Hello");
-                db.setContent(content);
 
-                // Consume the event. This means we mark it as dealt with.
-                event.consume();
-            }
-        });
 
-        // This code allows the canvas to receive a dragged object within its bounds.
-        // You probably don't need to change this (unless you wish to do more advanced things).
-        canvas.setOnDragOver(new EventHandler<DragEvent>() {
-            public void handle(DragEvent event) {
-                // Mark the drag as acceptable if the source was the draggable image.
-                // (for example, we don't want to allow the user to drag things or files into our application)
-                if (event.getGestureSource() == draggableImage) {
-                    // Mark the drag event as acceptable by the canvas.
-                    event.acceptTransferModes(TransferMode.ANY);
-                    // Consume the event. This means we mark it as dealt with.
-                    event.consume();
-                }
-            }
-        });
-
-        // This code allows the canvas to react to a dragged object when it is finally dropped.
-        // You probably don't need to change this (unless you wish to do more advanced things).
-        canvas.setOnDragDropped(new EventHandler<DragEvent>() {
-            public void handle(DragEvent event) {
-                // We call this method which is where the bulk of the behaviour takes place.
-                canvasDragDroppedOccured(event);
-                // Consume the event. This means we mark it as dealt with.
-                event.consume();
-            }
-        });
 
         // Finally, return the border pane we built up.
         return root;
