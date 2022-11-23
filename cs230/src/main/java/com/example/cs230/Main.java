@@ -18,9 +18,6 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.net.URISyntaxException;
-import java.util.ArrayList;
-
-import static java.lang.Character.toUpperCase;
 
 /**
  * Sample application that demonstrates the use of JavaFX Canvas for a Game.
@@ -44,9 +41,6 @@ public class Main extends Application {
     // The width and height (in pixels) of each cell that makes up the game.
     private static final int GRID_CELL_WIDTH = 25;
     private static final int GRID_CELL_HEIGHT = 25;
-
-    // The width of the grid in number of cells.
-    private static final int GRID_WIDTH = 12;
 
     // The canvas in the GUI. This needs to be a global variable
     // (in this setup) as we need to access it in different methods.
@@ -82,7 +76,7 @@ public class Main extends Application {
 
 
     /**
-     * Setup the new application.
+     * Set up the new application.
      * @param primaryStage The stage that is to be used for the application.
      */
     public void start(Stage primaryStage) throws URISyntaxException {
@@ -103,6 +97,7 @@ public class Main extends Application {
         magentaTile = new Image(getClass().getResource("magenta.png").toURI().toString());
 
         clock = new Image(getClass().getResource("clock.png").toURI().toString());
+
 
         // Build the GUI
         Pane root = buildGUI();
@@ -170,7 +165,7 @@ public class Main extends Application {
         // Redraw game as the player may have moved.
         drawGame();
 
-        // Consume the event. This means we mark it as dealt with. This stops other GUI nodes (buttons etc) responding to it.
+        // Consume the event. This means we mark it as dealt with. This stops other GUI nodes (buttons etc.) responding to it.
         event.consume();
     }
 
@@ -198,22 +193,28 @@ public class Main extends Application {
             for (int x = 0; x < cellsArray.length; x++) {
                 switch(cellsArray[x][y].getColourCode()) {
                     case 'R':
-                        gc.drawImage(redTile, x * GRID_CELL_WIDTH, y * GRID_CELL_HEIGHT, GRID_CELL_WIDTH, GRID_CELL_HEIGHT);
+                        gc.drawImage(redTile, x * GRID_CELL_WIDTH, y * GRID_CELL_HEIGHT,
+                                GRID_CELL_WIDTH, GRID_CELL_HEIGHT);
                         break;
                     case 'G':
-                        gc.drawImage(greenTile, x * GRID_CELL_WIDTH, y * GRID_CELL_HEIGHT, GRID_CELL_WIDTH, GRID_CELL_HEIGHT);
+                        gc.drawImage(greenTile, x * GRID_CELL_WIDTH, y * GRID_CELL_HEIGHT,
+                                GRID_CELL_WIDTH, GRID_CELL_HEIGHT);
                         break;
                     case 'B':
-                        gc.drawImage(blueTile, x * GRID_CELL_WIDTH, y * GRID_CELL_HEIGHT, GRID_CELL_WIDTH, GRID_CELL_HEIGHT);
+                        gc.drawImage(blueTile, x * GRID_CELL_WIDTH, y * GRID_CELL_HEIGHT,
+                                GRID_CELL_WIDTH, GRID_CELL_HEIGHT);
                         break;
                     case 'Y':
-                        gc.drawImage(yellowTile, x * GRID_CELL_WIDTH, y * GRID_CELL_HEIGHT, GRID_CELL_WIDTH, GRID_CELL_HEIGHT);
+                        gc.drawImage(yellowTile, x * GRID_CELL_WIDTH, y * GRID_CELL_HEIGHT,
+                                GRID_CELL_WIDTH, GRID_CELL_HEIGHT);
                         break;
                     case 'C':
-                        gc.drawImage(cyanTile, x * GRID_CELL_WIDTH, y * GRID_CELL_HEIGHT, GRID_CELL_WIDTH, GRID_CELL_HEIGHT);
+                        gc.drawImage(cyanTile, x * GRID_CELL_WIDTH, y * GRID_CELL_HEIGHT,
+                                GRID_CELL_WIDTH, GRID_CELL_HEIGHT);
                         break;
                     case 'M':
-                        gc.drawImage(magentaTile, x * GRID_CELL_WIDTH, y * GRID_CELL_HEIGHT, GRID_CELL_WIDTH, GRID_CELL_HEIGHT);
+                        gc.drawImage(magentaTile, x * GRID_CELL_WIDTH, y * GRID_CELL_HEIGHT,
+                                GRID_CELL_WIDTH, GRID_CELL_HEIGHT);
                         break;
                     default:
                         System.err.println("Check level file!");
@@ -292,7 +293,7 @@ public class Main extends Application {
         BorderPane root = new BorderPane();
 
         // Create the canvas that we will draw on.
-        // We store this as a gloabl variable so other methods can access it.
+        // We store this as a global variable so other methods can access it.
         canvas = new Canvas(CANVAS_WIDTH, CANVAS_HEIGHT);
         root.setCenter(canvas);
 
@@ -308,7 +309,7 @@ public class Main extends Application {
         Button resetGameButton = new Button("Reset Game");
         toolbar.getChildren().add(resetGameButton);
 
-        // Setup the behaviour of the button.
+        // Set up the behaviour of the button.
         resetGameButton.setOnAction(e -> {
             // We keep this method short and use a method for the bulk of the work.
             resetPlayerLocation();
@@ -324,7 +325,7 @@ public class Main extends Application {
         // Stop button is disabled by default
         stopTickTimelineButton.setDisable(true);
 
-        // Setup the behaviour of the buttons.
+        // Set up the behaviour of the buttons.
         startTickTimelineButton.setOnAction(e -> {
             // Start the tick timeline and enable/disable buttons as appropriate.
             startTickTimelineButton.setDisable(true);
