@@ -3,20 +3,13 @@ import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.input.ClipboardContent;
-import javafx.scene.input.DragEvent;
-import javafx.scene.input.Dragboard;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.input.TransferMode;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -25,8 +18,9 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.net.URISyntaxException;
-
 import java.util.ArrayList;
+
+import static java.lang.Character.toUpperCase;
 
 /**
  * Sample application that demonstrates the use of JavaFX Canvas for a Game.
@@ -40,16 +34,16 @@ import java.util.ArrayList;
  */
 public class Main extends Application {
     // The dimensions of the window
-    private static final int WINDOW_WIDTH = 800;
-    private static final int WINDOW_HEIGHT = 500;
+    private static final int WINDOW_WIDTH = 1000;
+    private static final int WINDOW_HEIGHT = 700;
 
     // The dimensions of the canvas
-    private static final int CANVAS_WIDTH = 600;
-    private static final int CANVAS_HEIGHT = 400;
+    private static final int CANVAS_WIDTH = 750;
+    private static final int CANVAS_HEIGHT = 500;
 
     // The width and height (in pixels) of each cell that makes up the game.
-    private static final int GRID_CELL_WIDTH = 50;
-    private static final int GRID_CELL_HEIGHT = 50;
+    private static final int GRID_CELL_WIDTH = 25;
+    private static final int GRID_CELL_HEIGHT = 25;
 
     // The width of the grid in number of cells.
     private static final int GRID_WIDTH = 12;
@@ -67,8 +61,8 @@ public class Main extends Application {
     private Image greenTile;
     private Image blueTile;
     private Image yellowTile;
-    private Image pinkTile;
-    private Image violetTile;
+    private Image cyanTile;
+    private Image magentaTile;
     private Image clock;
 
     // X and Y coordinate of player on the grid.
@@ -81,20 +75,21 @@ public class Main extends Application {
 
     private int timerDuration;
 
+    Map level1 = new Map("15x10.txt");
+
     //Array for tiles and items
-    private ArrayList<String> tiles = new ArrayList<String>();
-    private ArrayList<Integer> clockParams = new ArrayList<Integer>();
+
+
 
     /**
      * Setup the new application.
      * @param primaryStage The stage that is to be used for the application.
      */
     public void start(Stage primaryStage) throws URISyntaxException {
-        MapReader c = new MapReader();
-        clockParams = c.clockSetter();
-        for (int i = 0; i < clockParams.size(); i++){
-            System.out.println(clockParams.get(i));
-        }
+        //clockParams = c.clockSetter();
+//        for (int i = 0; i < clockParams.size(); i++){
+//            System.out.println(clockParams.get(i));
+//        }
         // Load images. Note we use png images with a transparent background.
         playerImage = new Image(getClass().getResource("player.png").toURI().toString());
         dirtImage = new Image(getClass().getResource("dirt.png").toURI().toString());
@@ -104,8 +99,8 @@ public class Main extends Application {
         greenTile = new Image(getClass().getResource("green.png").toURI().toString());
         blueTile = new Image(getClass().getResource("blue.png").toURI().toString());
         yellowTile = new Image(getClass().getResource("yellow.png").toURI().toString());
-        pinkTile = new Image(getClass().getResource("pink.png").toURI().toString());
-        violetTile = new Image(getClass().getResource("violet.png").toURI().toString());
+        cyanTile = new Image(getClass().getResource("cyan.png").toURI().toString());
+        magentaTile = new Image(getClass().getResource("magenta.png").toURI().toString());
 
         clock = new Image(getClass().getResource("clock.png").toURI().toString());
 
@@ -141,29 +136,29 @@ public class Main extends Application {
         switch (event.getCode()) {
             case RIGHT:
                 // Right key was pressed. So move the player right by one cell.
-                if (playerX < 11) {
-                    playerX = playerX + 1;
+                if (playerX < 28) {
+                    playerX = playerX + 2;
                 }
                 break;
 
             case LEFT:
                 // Left key was pressed. So move the player left by one cell.
                 if (playerX > 0) {
-                    playerX = playerX - 1;
+                    playerX = playerX - 2;
                 }
                 break;
 
             case UP:
                 // Up key was pressed. So move the player up by one cell.
                 if (playerY > 0) {
-                    playerY = playerY - 1;
+                    playerY = playerY - 2;
                 }
                 break;
 
             case DOWN:
                 // Down key was pressed. So move the player down by one cell.
-                if (playerY < 7) {
-                    playerY = playerY + 1;
+                if (playerY < 18) {
+                    playerY = playerY + 2;
                 }
                 break;
 
@@ -196,49 +191,50 @@ public class Main extends Application {
         // Draw row of dirt images
         // We multiply by the cell width and height to turn a coordinate in our grid into a pixel coordinate.
         // We draw the row at y value 2.
-        MapReader a = new MapReader();
-        this.tiles = a.tileReader();
 
+        Cell[][] cellsArray = level1.getCellsArray();
 
-        int tileIndex = 0;
-        for (int y = 0; y < 8; y++){
-            for (int x = 0; x < 12; x++) {
-                if (this.tiles.get(tileIndex).equals("r")){
-                    gc.drawImage(redTile, x * GRID_CELL_WIDTH, y * GRID_CELL_HEIGHT);
-                    tileIndex++;
-                } else if (this.tiles.get(tileIndex).equals("g")){
-                    gc.drawImage(greenTile, x * GRID_CELL_WIDTH, y * GRID_CELL_HEIGHT);
-                    tileIndex++;
-                } else if (this.tiles.get(tileIndex).equals("b")){
-                    gc.drawImage(blueTile, x * GRID_CELL_WIDTH, y * GRID_CELL_HEIGHT);
-                    tileIndex++;
-                } else if (this.tiles.get(tileIndex).equals("y")){
-                    gc.drawImage(yellowTile, x * GRID_CELL_WIDTH, y * GRID_CELL_HEIGHT);
-                    tileIndex++;
-                } else if (this.tiles.get(tileIndex).equals("p")){
-                    gc.drawImage(pinkTile, x * GRID_CELL_WIDTH, y * GRID_CELL_HEIGHT);
-                    tileIndex++;
-                } else if (this.tiles.get(tileIndex).equals("v")){
-                    gc.drawImage(violetTile, x * GRID_CELL_WIDTH, y * GRID_CELL_HEIGHT);
-                    tileIndex++;
-                }
-
-            }
-        }
-
-        for(int i = 0; i < clockParams.size(); i = i+2){
-            if (clockParams.get(i) == playerX){
-                if (clockParams.get(i+1) == playerY){
-                    clockParams.remove(i);
-                    clockParams.remove(i);
-
+        for (int y = 0; y < cellsArray[0].length; y++){
+            for (int x = 0; x < cellsArray.length; x++) {
+                switch(cellsArray[x][y].getColourCode()) {
+                    case 'R':
+                        gc.drawImage(redTile, x * GRID_CELL_WIDTH, y * GRID_CELL_HEIGHT, GRID_CELL_WIDTH, GRID_CELL_HEIGHT);
+                        break;
+                    case 'G':
+                        gc.drawImage(greenTile, x * GRID_CELL_WIDTH, y * GRID_CELL_HEIGHT, GRID_CELL_WIDTH, GRID_CELL_HEIGHT);
+                        break;
+                    case 'B':
+                        gc.drawImage(blueTile, x * GRID_CELL_WIDTH, y * GRID_CELL_HEIGHT, GRID_CELL_WIDTH, GRID_CELL_HEIGHT);
+                        break;
+                    case 'Y':
+                        gc.drawImage(yellowTile, x * GRID_CELL_WIDTH, y * GRID_CELL_HEIGHT, GRID_CELL_WIDTH, GRID_CELL_HEIGHT);
+                        break;
+                    case 'C':
+                        gc.drawImage(cyanTile, x * GRID_CELL_WIDTH, y * GRID_CELL_HEIGHT, GRID_CELL_WIDTH, GRID_CELL_HEIGHT);
+                        break;
+                    case 'M':
+                        gc.drawImage(magentaTile, x * GRID_CELL_WIDTH, y * GRID_CELL_HEIGHT, GRID_CELL_WIDTH, GRID_CELL_HEIGHT);
+                        break;
+                    default:
+                        System.err.println("Check level file!");
+                        System.exit(1);
                 }
             }
         }
-        for(int i = 0; i < clockParams.size(); i = i+2){
-            gc.drawImage(clock, clockParams.get(i)* GRID_CELL_WIDTH,
-                    clockParams.get(i+1)* GRID_CELL_HEIGHT - 1);
-        }
+
+//        for(int i = 0; i < clockParams.size(); i = i+2){
+//            if (clockParams.get(i) == playerX){
+//                if (clockParams.get(i+1) == playerY){
+//                    clockParams.remove(i);
+//                    clockParams.remove(i);
+//
+//                }
+//            }
+//        }
+//        for(int i = 0; i < clockParams.size(); i = i+2){
+//            gc.drawImage(clock, clockParams.get(i)* GRID_CELL_WIDTH,
+//                    clockParams.get(i+1)* GRID_CELL_HEIGHT - 1);
+//        }
         //  gc.drawImage(clock, 0 * GRID_CELL_WIDTH, 0 * GRID_CELL_HEIGHT);
 
         // Draw player at current location
@@ -371,5 +367,6 @@ public class Main extends Application {
 
     public static void main(String[] args) {
         launch(args);
+
     }
 }

@@ -2,50 +2,73 @@ package com.example.cs230;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
-import java.util.ArrayList;
+
 public class MapReader {
-    private ArrayList<String> tiles = new ArrayList<String>();
-    private ArrayList<Integer> clockParam = new ArrayList<Integer>();
-    private int x;
-    private int y;
-
-    public ArrayList<String> tileReader(){
+    private Tile[][] tiles = null;
+    private int maxTileX;
+    private int maxTileY;
+    String fileName;
+    //private ArrayList<Integer> clockParam = new ArrayList<Integer>();
+    public MapReader(String fileName) {
+        this.fileName = fileName;
         Scanner in = null;
-        File f = new File("l1.txt");
+        File f = new File(this.fileName);
         try {
             in = new Scanner(f);
         }
-        catch(FileNotFoundException e){
-            System.out.println("Error!");
+        catch(FileNotFoundException e) {
+            System.err.println(String.format("Map file '%s' not found!", this.fileName));
             System.exit(0);
         }
-        while (in.hasNext()){
-            tiles.add(in.next());
+
+        try {
+            maxTileX = in.nextInt();
+            maxTileY = in.nextInt();
+            tiles = new Tile[maxTileX][maxTileY];
+            for(int y = 0; y < maxTileY; y++) {
+                for(int x = 0; x < maxTileX; x++) {
+                    tiles[x][y] = new Tile(in.next());
+                }
+            }
         }
-        return this.tiles;
+        catch(Exception e) {
+            System.err.println("Please check map file!");
+            System.exit(1);
+        }
+        in.close();
+    }
+    public int getMaxTileX() {
+        return maxTileX;
+    }
+    public int getMaxTileY() {
+        return maxTileY;
     }
 
-    public ArrayList<Integer> clockSetter(){
-        Scanner in = null;
-        File f = new File("l1.txt");
-        try {
-            in = new Scanner(f);
-        }
-        catch(FileNotFoundException e){
-            System.out.println("Error!");
-            System.exit(0);
-        }
-        //97
-        for (int i = 0; i <= 95; i++){
-            in.next();
-        }
-        while (in.hasNext()) {
-             x = in.nextInt();
-             y = in.nextInt();
-             this.clockParam.add(x);
-             this.clockParam.add(y);
-        }
-        return this.clockParam;
+    public Tile[][] getTiles() {
+        return tiles;
     }
+
+//    public ArrayList<Integer> clockSetter(){
+//        Scanner in = null;
+//        File f = new File("l1.txt");
+//        try {
+//            in = new Scanner(f);
+//        }
+//        catch(FileNotFoundException e){
+//            System.out.println("Error!");
+//            System.exit(0);
+//        }
+//        //97
+//        for (int i = 0; i <= 95; i++){
+//            in.next();
+//        }
+//        while (in.hasNext()) {
+//             x = in.nextInt();
+//             y = in.nextInt();
+//             this.clockParam.add(x);
+//             this.clockParam.add(y);
+//        }
+//        return this.clockParam;
+//    }
     }
 
