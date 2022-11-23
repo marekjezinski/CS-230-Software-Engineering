@@ -183,10 +183,7 @@ public class Main extends Application {
         gc.setFill(Color.GRAY);
         gc.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
 
-        // Draw row of dirt images
-        // We multiply by the cell width and height to turn a coordinate in our grid into a pixel coordinate.
-        // We draw the row at y value 2.
-
+        //Drawing cells on canvas
         Cell[][] cellsArray = level1.getCellsArray();
 
         for (int y = 0; y < cellsArray[0].length; y++){
