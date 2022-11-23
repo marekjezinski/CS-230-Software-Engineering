@@ -92,9 +92,6 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws URISyntaxException {
         MapReader c = new MapReader();
         clockParams = c.clockSetter();
-        for (int i = 0; i < clockParams.size(); i++){
-            System.out.println(clockParams.get(i));
-        }
         // Load images. Note we use png images with a transparent background.
         playerImage = new Image(getClass().getResource("player.png").toURI().toString());
         dirtImage = new Image(getClass().getResource("dirt.png").toURI().toString());
