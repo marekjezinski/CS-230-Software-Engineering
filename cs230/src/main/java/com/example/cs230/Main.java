@@ -86,15 +86,6 @@ public class Main extends Application {
 //        }
         // Load images. Note we use png images with a transparent background.
         playerImage = new Image(getClass().getResource("player.png").toURI().toString());
-        dirtImage = new Image(getClass().getResource("dirt.png").toURI().toString());
-        iconImage = new Image(getClass().getResource("icon.png").toURI().toString());
-
-        redTile = new Image(getClass().getResource("red.png").toURI().toString());
-        greenTile = new Image(getClass().getResource("green.png").toURI().toString());
-        blueTile = new Image(getClass().getResource("blue.png").toURI().toString());
-        yellowTile = new Image(getClass().getResource("yellow.png").toURI().toString());
-        cyanTile = new Image(getClass().getResource("cyan.png").toURI().toString());
-        magentaTile = new Image(getClass().getResource("magenta.png").toURI().toString());
 
         clock = new Image(getClass().getResource("clock.png").toURI().toString());
 
@@ -188,35 +179,8 @@ public class Main extends Application {
 
         for (int y = 0; y < cellsArray[0].length; y++){
             for (int x = 0; x < cellsArray.length; x++) {
-                switch(cellsArray[x][y].getColourCode()) {
-                    case 'R':
-                        gc.drawImage(redTile, x * GRID_CELL_WIDTH, y * GRID_CELL_HEIGHT,
-                                GRID_CELL_WIDTH, GRID_CELL_HEIGHT);
-                        break;
-                    case 'G':
-                        gc.drawImage(greenTile, x * GRID_CELL_WIDTH, y * GRID_CELL_HEIGHT,
-                                GRID_CELL_WIDTH, GRID_CELL_HEIGHT);
-                        break;
-                    case 'B':
-                        gc.drawImage(blueTile, x * GRID_CELL_WIDTH, y * GRID_CELL_HEIGHT,
-                                GRID_CELL_WIDTH, GRID_CELL_HEIGHT);
-                        break;
-                    case 'Y':
-                        gc.drawImage(yellowTile, x * GRID_CELL_WIDTH, y * GRID_CELL_HEIGHT,
-                                GRID_CELL_WIDTH, GRID_CELL_HEIGHT);
-                        break;
-                    case 'C':
-                        gc.drawImage(cyanTile, x * GRID_CELL_WIDTH, y * GRID_CELL_HEIGHT,
-                                GRID_CELL_WIDTH, GRID_CELL_HEIGHT);
-                        break;
-                    case 'M':
-                        gc.drawImage(magentaTile, x * GRID_CELL_WIDTH, y * GRID_CELL_HEIGHT,
-                                GRID_CELL_WIDTH, GRID_CELL_HEIGHT);
-                        break;
-                    default:
-                        System.err.println("Check level file!");
-                        System.exit(1);
-                }
+                gc.drawImage(cellsArray[x][y].getCellImage(), x * GRID_CELL_WIDTH, y * GRID_CELL_HEIGHT,
+                        GRID_CELL_WIDTH, GRID_CELL_HEIGHT);
             }
         }
 

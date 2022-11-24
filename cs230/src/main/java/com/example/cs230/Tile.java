@@ -1,5 +1,7 @@
 package com.example.cs230;
 
+import java.net.URISyntaxException;
+
 public class Tile {
     private Cell[] cells = new Cell[4];
 
