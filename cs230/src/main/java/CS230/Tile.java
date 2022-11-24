@@ -12,10 +12,15 @@ public class Tile {
         }
     }
 
-    public boolean isLegalMovement(char colourCode) {
-        for(Cell var : cells) {
-            if(var.getColourCode() == colourCode) {
-                return true;
+    public boolean isLegalMovement(String colourCode1) {
+        String colourCode2 = getTileColours();
+        char[] charColourArray1 = colourCode1.toCharArray();
+        char[] charColourArray2 = colourCode2.toCharArray();
+        for(char var : charColourArray1) {
+            for(char var2 : charColourArray2) {
+                if (var == var2) {
+                    return true;
+                }
             }
         }
         return false;

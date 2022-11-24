@@ -61,7 +61,7 @@ public class Main extends Application {
 
     private int timerDuration;
 
-    Map level1 = new Map("15x10.txt");
+    Map level = new Map("15x10.txt");
 
     //Array for tiles and items
 
@@ -116,28 +116,31 @@ public class Main extends Application {
             case RIGHT:
                 // Right key was pressed. So move the player right by one cell.
                 if (playerX < 28) {
-                    playerX = playerX + 2;
+                    //playerX = playerX + 2;
+                    playerX = level.moveRight(playerX, playerY);
                 }
                 break;
 
             case LEFT:
                 // Left key was pressed. So move the player left by one cell.
                 if (playerX > 0) {
-                    playerX = playerX - 2;
+                    playerX = level.moveLeft(playerX, playerY);
                 }
                 break;
 
             case UP:
                 // Up key was pressed. So move the player up by one cell.
                 if (playerY > 0) {
-                    playerY = playerY - 2;
+                    //playerY = playerY - 2;
+                    playerY = level.moveUp(playerX, playerY);
                 }
                 break;
 
             case DOWN:
                 // Down key was pressed. So move the player down by one cell.
                 if (playerY < 18) {
-                    playerY = playerY + 2;
+                    //playerY = playerY + 2;
+                    playerY = level.moveDown(playerX, playerY);
                 }
                 break;
 
@@ -168,7 +171,7 @@ public class Main extends Application {
         gc.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
 
         //Drawing cells on canvas
-        Cell[][] cellsArray = level1.getCellsArray();
+        Cell[][] cellsArray = level.getCellsArray();
         for (int y = 0; y < cellsArray[0].length; y++){
             for (int x = 0; x < cellsArray.length; x++) {
                 gc.drawImage(cellsArray[x][y].getCellImage(), x * GRID_CELL_WIDTH, y * GRID_CELL_HEIGHT,
