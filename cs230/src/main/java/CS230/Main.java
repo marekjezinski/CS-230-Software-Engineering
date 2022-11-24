@@ -49,14 +49,6 @@ public class Main extends Application {
 
     // Loaded images
     private Image playerImage;
-    private Image dirtImage;
-    private Image iconImage;
-    private Image redTile;
-    private Image greenTile;
-    private Image blueTile;
-    private Image yellowTile;
-    private Image cyanTile;
-    private Image magentaTile;
     private Image clock;
 
     // X and Y coordinate of player on the grid.
