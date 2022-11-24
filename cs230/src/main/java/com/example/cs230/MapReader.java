@@ -28,12 +28,18 @@ public class MapReader {
             tiles = new Tile[maxTileX][maxTileY];
             for(int y = 0; y < maxTileY; y++) {
                 for(int x = 0; x < maxTileX; x++) {
-                    tiles[x][y] = new Tile(in.next());
+                    String word = in.next();
+                    if(word.length() == 4) {
+                        tiles[x][y] = new Tile(word);
+                    } else {
+                        System.err.println("Level file tile shorter/longer than 4 characters detected");
+                        throw new Exception();
+                    }
                 }
             }
         }
         catch(Exception e) {
-            System.err.println("Please check map file!");
+            System.err.println("Please check level file!");
             System.exit(1);
         }
         in.close();

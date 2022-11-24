@@ -31,13 +31,10 @@ public class Cell {
                     cellImage = new Image(getClass().getResource("magenta.png").toURI().toString());
                     break;
                 default:
-                    System.err.println("Check level file! Possible wrong letter at cells map");
+                    System.err.println("Check level file! Possible wrong letter");
                     System.exit(1);
             }
-        } catch(URISyntaxException e) {
-            System.err.println("Check image files!");
-            System.exit(1);
-        } catch(NullPointerException e) {
+        } catch(Exception e) {
             System.err.println("Check image files!");
             System.exit(1);
         }

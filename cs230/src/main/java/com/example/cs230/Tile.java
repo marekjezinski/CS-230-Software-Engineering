@@ -1,7 +1,5 @@
 package com.example.cs230;
 
-import java.net.URISyntaxException;
-
 public class Tile {
     private Cell[] cells = new Cell[4];
 
@@ -14,23 +12,24 @@ public class Tile {
         }
     }
 
-    public Cell[] getCellsArray() {
+    public Cell[] getCellsOnTileArray() {
         return cells;
     }
 
-    public Cell getTopLeft() {
+    public Cell getTopLeftCell() {
         return cells[0];
     }
 
-    public Cell getTopRight() {
+    public Cell getTopRightCell() {
         return cells[1];
     }
 
-    public Cell getBottomLeft() {
+    public Cell getBottomLeftCell() {
         return cells[2];
     }
 
-    public Cell getBottomRight() {
+    public Cell getBottomRightCell() {
         return cells[3];
     }
+
 }

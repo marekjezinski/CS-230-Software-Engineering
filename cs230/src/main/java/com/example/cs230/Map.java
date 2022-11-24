@@ -1,7 +1,5 @@
 package com.example.cs230;
 
-import java.util.ArrayList;
-
 public class Map {
     private MapReader mapRead = null;
 
@@ -30,10 +28,10 @@ public class Map {
         cellsArray = new Cell[MAP_MAX_X * 2][MAP_MAX_Y * 2];
         for(int y = 0; y < MAP_MAX_Y; y++) {
             for(int x = 0; x < MAP_MAX_X; x++) {
-                cellsArray[x * 2][y * 2] = tilesArray[x][y].getTopLeft();
-                cellsArray[x * 2 + 1][y * 2] = tilesArray[x][y].getTopRight();
-                cellsArray[x * 2][y * 2 + 1] = tilesArray[x][y].getBottomLeft();
-                cellsArray[x * 2 + 1][y * 2 + 1] = tilesArray[x][y].getBottomRight();
+                cellsArray[x * 2][y * 2] = tilesArray[x][y].getTopLeftCell();
+                cellsArray[x * 2 + 1][y * 2] = tilesArray[x][y].getTopRightCell();
+                cellsArray[x * 2][y * 2 + 1] = tilesArray[x][y].getBottomLeftCell();
+                cellsArray[x * 2 + 1][y * 2 + 1] = tilesArray[x][y].getBottomRightCell();
             }
         }
         return cellsArray;

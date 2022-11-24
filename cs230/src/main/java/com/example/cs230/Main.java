@@ -119,6 +119,7 @@ public class Main extends Application {
      */
     public void processKeyEvent(KeyEvent event) {
         // We change the behaviour depending on the actual key that was pressed.
+
         switch (event.getCode()) {
             case RIGHT:
                 // Right key was pressed. So move the player right by one cell.
@@ -153,6 +154,12 @@ public class Main extends Application {
                 break;
         }
 
+        //TODO: Remove test statement below showing colours on current tile
+        for(int i = 0; i < 4; i++) {
+            System.out.print(level1.getTilesArray()[playerX/2][playerY/2].getCellsOnTileArray()[i].getColourCode());
+        }
+        System.out.println();
+
         // Redraw game as the player may have moved.
         drawGame();
 
@@ -176,7 +183,6 @@ public class Main extends Application {
 
         //Drawing cells on canvas
         Cell[][] cellsArray = level1.getCellsArray();
-
         for (int y = 0; y < cellsArray[0].length; y++){
             for (int x = 0; x < cellsArray.length; x++) {
                 gc.drawImage(cellsArray[x][y].getCellImage(), x * GRID_CELL_WIDTH, y * GRID_CELL_HEIGHT,
