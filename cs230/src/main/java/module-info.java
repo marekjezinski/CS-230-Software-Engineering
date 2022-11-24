@@ -3,6 +3,6 @@ module com.example.cs230 {
     requires javafx.fxml;
 
 
-    opens com.example.cs230 to javafx.fxml;
-    exports com.example.cs230;
+    opens CS230 to javafx.fxml;
+    exports CS230;
 }

@@ -1,7 +1,6 @@
-package com.example.cs230;
+package CS230;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.net.URISyntaxException;
 import java.util.Scanner;
 
 public class MapReader {

@@ -1,4 +1,4 @@
-package com.example.cs230;
+package CS230;
 
 public class GameTimer {
     private int duration;

@@ -1,3 +1,4 @@
+package CS230;
 public class Leaderboard extends SaveLoad{
 
     private void addScore (String gameState) {

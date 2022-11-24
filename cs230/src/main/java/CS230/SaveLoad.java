@@ -1,3 +1,5 @@
+package CS230;
+
 public class SaveLoad {
     protected int score;
     private String gameState;

@@ -1,4 +1,4 @@
-package com.example.cs230;
+package CS230;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;

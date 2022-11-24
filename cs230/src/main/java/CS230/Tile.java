@@ -1,4 +1,4 @@
-package com.example.cs230;
+package CS230;
 
 public class Tile {
     private Cell[] cells = new Cell[4];

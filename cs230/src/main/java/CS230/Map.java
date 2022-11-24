@@ -1,4 +1,4 @@
-package com.example.cs230;
+package CS230;
 
 public class Map {
     private MapReader mapRead = null;
