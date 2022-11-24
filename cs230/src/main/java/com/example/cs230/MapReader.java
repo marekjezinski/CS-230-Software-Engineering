@@ -37,6 +37,9 @@ public class MapReader {
                     }
                 }
             }
+            //while(in.hasNext()) {
+                //System.out.println(in.next());
+            //}
         }
         catch(Exception e) {
             System.err.println("Please check level file!");

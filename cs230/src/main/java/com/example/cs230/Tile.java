@@ -12,8 +12,20 @@ public class Tile {
         }
     }
 
-    public Cell[] getCellsOnTileArray() {
-        return cells;
+    public boolean isLegalMovement(char colourCode) {
+        for(Cell var : cells) {
+            if(var.getColourCode() == colourCode) {
+                return true;
+            }
+        }
+        return false;
+    }
+    public String getTileColours() {
+        String s = "";
+        for(Cell var : cells) {
+            s += var.getColourCode();
+        }
+        return s;
     }
 
     public Cell getTopLeftCell() {

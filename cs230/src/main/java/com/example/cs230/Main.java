@@ -154,12 +154,6 @@ public class Main extends Application {
                 break;
         }
 
-        //TODO: Remove test statement below showing colours on current tile
-        for(int i = 0; i < 4; i++) {
-            System.out.print(level1.getTilesArray()[playerX/2][playerY/2].getCellsOnTileArray()[i].getColourCode());
-        }
-        System.out.println();
-
         // Redraw game as the player may have moved.
         drawGame();
 
@@ -190,6 +184,8 @@ public class Main extends Application {
             }
         }
 
+        //gc.drawImage(clock, 0 * GRID_CELL_WIDTH, 0 * GRID_CELL_HEIGHT);
+        //gc.drawImage(clock, 28 * GRID_CELL_WIDTH, 18 * GRID_CELL_HEIGHT);
 //        for(int i = 0; i < clockParams.size(); i = i+2){
 //            if (clockParams.get(i) == playerX){
 //                if (clockParams.get(i+1) == playerY){

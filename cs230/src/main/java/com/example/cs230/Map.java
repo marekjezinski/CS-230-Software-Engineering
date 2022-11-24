@@ -5,8 +5,12 @@ public class Map {
 
     private final int MAP_MAX_X;
     private final int MAP_MAX_Y;
-    private Tile[][] tilesArray;
-    private Cell[][] cellsArray;
+    private Tile[][] tilesArray; //contains every tile (that is tile with 4 cells) - used for all other purposes
+    private Cell[][] cellsArray; //contains just cells used for drawImage in main only!
+
+    public Tile getTileAtCord(int x, int y) {
+        return tilesArray[x][y];
+    }
 
     public Cell[][] getCellsArray() {
         return cellsArray;
