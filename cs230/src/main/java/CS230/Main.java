@@ -116,7 +116,6 @@ public class Main extends Application {
             case RIGHT:
                 // Right key was pressed. So move the player right by one cell.
                 if (playerX < 28) {
-                    //playerX = playerX + 2;
                     playerX = level.moveRight(playerX, playerY);
                 }
                 break;
@@ -131,7 +130,6 @@ public class Main extends Application {
             case UP:
                 // Up key was pressed. So move the player up by one cell.
                 if (playerY > 0) {
-                    //playerY = playerY - 2;
                     playerY = level.moveUp(playerX, playerY);
                 }
                 break;
@@ -139,7 +137,6 @@ public class Main extends Application {
             case DOWN:
                 // Down key was pressed. So move the player down by one cell.
                 if (playerY < 18) {
-                    //playerY = playerY + 2;
                     playerY = level.moveDown(playerX, playerY);
                 }
                 break;
