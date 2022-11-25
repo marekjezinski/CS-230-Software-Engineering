@@ -41,8 +41,8 @@ public class Cell {
     }
 
     public Cell(char colourCode) {
-        //this.colourCode = colourCode;
-        //this.cellImage = setCellImage(this.colourCode);
+        this.colourCode = colourCode;
+        this.cellImage = setCellImage(this.colourCode);
     }
 
     public char getColourCode() {
