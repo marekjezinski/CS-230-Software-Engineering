@@ -81,9 +81,9 @@ public class Main extends Application {
 
 
         // Load images. Note we use png images with a transparent background.
-        playerImage = new Image(getClass().getResource("CS230/player.png").toURI().toString());
+        playerImage = new Image(getClass().getResource("player.png").toURI().toString());
 
-        clock = new Image(getClass().getResource("CS230/clock.png").toURI().toString());
+        clock = new Image(getClass().getResource("clock.png").toURI().toString());
 
 
         // Build the GUI
@@ -185,13 +185,8 @@ public class Main extends Application {
 
         for(int i = 0; i < clockParams.size(); i = i+2){
             gc.drawImage(clock, clockParams.get(i) * GRID_CELL_WIDTH, clockParams.get(i+1) * GRID_CELL_HEIGHT);
-
         }
-        System.out.println(clockParams.get(0));
-        System.out.println(clockParams.get(1));
         for(int i = 0; i < clockParams.size(); i = i+2){
-            System.out.println(playerX);
-            System.out.println(playerY);
             if (clockParams.get(i) == playerX){
                 if (clockParams.get(i+1) == playerY){
                     clockParams.remove(i);

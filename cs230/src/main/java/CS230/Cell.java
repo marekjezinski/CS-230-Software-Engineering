@@ -11,22 +11,22 @@ public class Cell {
         try {
             switch(colourCode) {
                 case 'R':
-                    cellImage = new Image(getClass().getResource("CS230/red.png").toURI().toString());
+                    cellImage = new Image(getClass().getResource("red.png").toURI().toString());
                     break;
                 case 'G':
-                    cellImage = new Image(getClass().getResource("CS230/green.png").toURI().toString());
+                    cellImage = new Image(getClass().getResource("green.png").toURI().toString());
                     break;
                 case 'B':
-                    cellImage = new Image(getClass().getResource("CS230/blue.png").toURI().toString());
+                    cellImage = new Image(getClass().getResource("blue.png").toURI().toString());
                     break;
                 case 'Y':
-                    cellImage = new Image(getClass().getResource("CS230/yellow.png").toURI().toString());
+                    cellImage = new Image(getClass().getResource("yellow.png").toURI().toString());
                     break;
                 case 'C':
-                    cellImage = new Image(getClass().getResource("CS230/cyan.png").toURI().toString());
+                    cellImage = new Image(getClass().getResource("cyan.png").toURI().toString());
                     break;
                 case 'M':
-                    cellImage = new Image(getClass().getResource("CS230/magenta.png").toURI().toString());
+                    cellImage = new Image(getClass().getResource("magenta.png").toURI().toString());
                     break;
                 default:
                     System.err.println("Check level file! Possible wrong letter");
@@ -41,8 +41,8 @@ public class Cell {
     }
 
     public Cell(char colourCode) {
-        this.colourCode = colourCode;
-        this.cellImage = setCellImage(this.colourCode);
+        //this.colourCode = colourCode;
+        //this.cellImage = setCellImage(this.colourCode);
     }
 
     public char getColourCode() {

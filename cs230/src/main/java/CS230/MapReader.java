@@ -48,14 +48,14 @@ public class MapReader {
                         this.clockParam.add(x);
                     }
                     else{
-                        this.clockParam.add(x-1);
+                        this.clockParam.add(x+1);
                     }
                     y = in.nextInt();
                     if (y%2==0){
                         this.clockParam.add(y);
                     }
                     else{
-                        this.clockParam.add(y-1);
+                        this.clockParam.add(y+1);
                     }
                 }
             }
