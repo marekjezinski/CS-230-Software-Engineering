@@ -1,4 +1,5 @@
-package com.example.cs230;
+package CS230;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
@@ -31,7 +32,13 @@ public class MapReader {
             tiles = new Tile[maxTileX][maxTileY];
             for(int y = 0; y < maxTileY; y++) {
                 for(int x = 0; x < maxTileX; x++) {
-                    tiles[x][y] = new Tile(in.next());
+                    String word = in.next();
+                    if(word.length() == 4) {
+                        tiles[x][y] = new Tile(word);
+                    } else {
+                        System.err.println("Level file tile shorter/longer than 4 characters detected");
+                        throw new Exception();
+                    }
                 }
             }
             while (in.hasNext()) {
@@ -54,10 +61,11 @@ public class MapReader {
             }
 
 
+
         }
         catch(Exception e) {
-           System.err.println("Please check map file!");
-           System.exit(1);
+            System.err.println("Please check level file!");
+            System.exit(1);
         }
         in.close();
     }

@@ -1,4 +1,4 @@
-package com.example.cs230;
+package CS230;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;

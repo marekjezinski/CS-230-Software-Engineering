@@ -1,4 +1,5 @@
-package com.example.cs230;
+
+package CS230;
 import java.util.ArrayList;
 public class Clock {
     private String fileName;

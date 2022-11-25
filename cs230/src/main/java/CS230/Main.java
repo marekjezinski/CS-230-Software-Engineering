@@ -1,4 +1,4 @@
-package com.example.cs230;
+package CS230;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -50,14 +50,6 @@ public class Main extends Application {
 
     // Loaded images
     private Image playerImage;
-    private Image dirtImage;
-    private Image iconImage;
-    private Image redTile;
-    private Image greenTile;
-    private Image blueTile;
-    private Image yellowTile;
-    private Image cyanTile;
-    private Image magentaTile;
     private Image clock;
 
     // X and Y coordinate of player on the grid.
@@ -71,7 +63,7 @@ public class Main extends Application {
     private int timerDuration;
     private ArrayList<Integer> clockParams = new ArrayList<Integer>();
 
-    Map level1 = new Map("15x10.txt");
+    Map level = new Map("15x10.txt");
 
     Clock c = new Clock("15x10.txt");
 
@@ -89,18 +81,9 @@ public class Main extends Application {
 
 
         // Load images. Note we use png images with a transparent background.
-        playerImage = new Image(getClass().getResource("player.png").toURI().toString());
-        dirtImage = new Image(getClass().getResource("dirt.png").toURI().toString());
-        iconImage = new Image(getClass().getResource("icon.png").toURI().toString());
+        playerImage = new Image(getClass().getResource("CS230/player.png").toURI().toString());
 
-        redTile = new Image(getClass().getResource("red.png").toURI().toString());
-        greenTile = new Image(getClass().getResource("green.png").toURI().toString());
-        blueTile = new Image(getClass().getResource("blue.png").toURI().toString());
-        yellowTile = new Image(getClass().getResource("yellow.png").toURI().toString());
-        cyanTile = new Image(getClass().getResource("cyan.png").toURI().toString());
-        magentaTile = new Image(getClass().getResource("magenta.png").toURI().toString());
-
-        clock = new Image(getClass().getResource("clock.png").toURI().toString());
+        clock = new Image(getClass().getResource("CS230/clock.png").toURI().toString());
 
 
         // Build the GUI
@@ -132,32 +115,33 @@ public class Main extends Application {
      */
     public void processKeyEvent(KeyEvent event) {
         // We change the behaviour depending on the actual key that was pressed.
+
         switch (event.getCode()) {
             case RIGHT:
                 // Right key was pressed. So move the player right by one cell.
                 if (playerX < 28) {
-                    playerX = playerX + 2;
+                    playerX = level.moveRight(playerX, playerY);
                 }
                 break;
 
             case LEFT:
                 // Left key was pressed. So move the player left by one cell.
                 if (playerX > 0) {
-                    playerX = playerX - 2;
+                    playerX = level.moveLeft(playerX, playerY);
                 }
                 break;
 
             case UP:
                 // Up key was pressed. So move the player up by one cell.
                 if (playerY > 0) {
-                    playerY = playerY - 2;
+                    playerY = level.moveUp(playerX, playerY);
                 }
                 break;
 
             case DOWN:
                 // Down key was pressed. So move the player down by one cell.
                 if (playerY < 18) {
-                    playerY = playerY + 2;
+                    playerY = level.moveDown(playerX, playerY);
                 }
                 break;
 
@@ -188,41 +172,14 @@ public class Main extends Application {
         gc.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
 
         //Drawing cells on canvas
-        Cell[][] cellsArray = level1.getCellsArray();
-
+        Cell[][] cellsArray = level.getCellsArray();
         for (int y = 0; y < cellsArray[0].length; y++){
             for (int x = 0; x < cellsArray.length; x++) {
-                switch(cellsArray[x][y].getColourCode()) {
-                    case 'R':
-                        gc.drawImage(redTile, x * GRID_CELL_WIDTH, y * GRID_CELL_HEIGHT,
-                                GRID_CELL_WIDTH, GRID_CELL_HEIGHT);
-                        break;
-                    case 'G':
-                        gc.drawImage(greenTile, x * GRID_CELL_WIDTH, y * GRID_CELL_HEIGHT,
-                                GRID_CELL_WIDTH, GRID_CELL_HEIGHT);
-                        break;
-                    case 'B':
-                        gc.drawImage(blueTile, x * GRID_CELL_WIDTH, y * GRID_CELL_HEIGHT,
-                                GRID_CELL_WIDTH, GRID_CELL_HEIGHT);
-                        break;
-                    case 'Y':
-                        gc.drawImage(yellowTile, x * GRID_CELL_WIDTH, y * GRID_CELL_HEIGHT,
-                                GRID_CELL_WIDTH, GRID_CELL_HEIGHT);
-                        break;
-                    case 'C':
-                        gc.drawImage(cyanTile, x * GRID_CELL_WIDTH, y * GRID_CELL_HEIGHT,
-                                GRID_CELL_WIDTH, GRID_CELL_HEIGHT);
-                        break;
-                    case 'M':
-                        gc.drawImage(magentaTile, x * GRID_CELL_WIDTH, y * GRID_CELL_HEIGHT,
-                                GRID_CELL_WIDTH, GRID_CELL_HEIGHT);
-                        break;
-                    default:
-                        System.err.println("Check level file!");
-                        System.exit(1);
-                }
+                gc.drawImage(cellsArray[x][y].getCellImage(), x * GRID_CELL_WIDTH, y * GRID_CELL_HEIGHT,
+                        GRID_CELL_WIDTH, GRID_CELL_HEIGHT);
             }
         }
+
 
 
 
@@ -244,8 +201,6 @@ public class Main extends Application {
             }
         }
 
-
-          //gc.drawImage(clock, 0 * GRID_CELL_WIDTH, 0 * GRID_CELL_HEIGHT);
 
         // Draw player at current location
         gc.drawImage(playerImage, playerX * GRID_CELL_WIDTH, playerY * GRID_CELL_HEIGHT);
