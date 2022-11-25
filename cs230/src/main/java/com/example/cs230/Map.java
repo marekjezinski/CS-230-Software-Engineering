@@ -46,5 +46,4 @@ public class Map {
         cellsArray = convertTilesToCellsArray(tilesArray);
     }
 
-    //private ArrayList<Integer> clockParams = new ArrayList<Integer>();
 }

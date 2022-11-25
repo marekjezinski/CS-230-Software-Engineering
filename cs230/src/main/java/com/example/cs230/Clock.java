@@ -1,5 +1,16 @@
 package com.example.cs230;
-
+import java.util.ArrayList;
 public class Clock {
-    //TODO: implement clock class and reuse code from previous versions
+    private String fileName;
+
+    public Clock(String fileName) {
+        this.fileName = fileName;
+    }
+
+    public ArrayList<Integer> clockSetter(){
+        ArrayList<Integer> params = new ArrayList<Integer>();
+        MapReader c = new MapReader(fileName);
+        params = c.getClock();
+        return params;
+    }
 }

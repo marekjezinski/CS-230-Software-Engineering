@@ -2,13 +2,17 @@ package com.example.cs230;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
+import java.util.ArrayList;
 
 public class MapReader {
     private Tile[][] tiles = null;
     private int maxTileX;
     private int maxTileY;
+
+    private int x;
+    private int y;
+    private ArrayList<Integer> clockParam = new ArrayList<Integer>();
     String fileName;
-    //private ArrayList<Integer> clockParam = new ArrayList<Integer>();
     public MapReader(String fileName) {
         this.fileName = fileName;
         Scanner in = null;
@@ -30,10 +34,30 @@ public class MapReader {
                     tiles[x][y] = new Tile(in.next());
                 }
             }
+            while (in.hasNext()) {
+                if (in.next().equals("Clock")) {
+                    x = in.nextInt();
+                    if (x%2==0){
+                        this.clockParam.add(x);
+                    }
+                    else{
+                        this.clockParam.add(x-1);
+                    }
+                    y = in.nextInt();
+                    if (y%2==0){
+                        this.clockParam.add(y);
+                    }
+                    else{
+                        this.clockParam.add(y-1);
+                    }
+                }
+            }
+
+
         }
         catch(Exception e) {
-            System.err.println("Please check map file!");
-            System.exit(1);
+           System.err.println("Please check map file!");
+           System.exit(1);
         }
         in.close();
     }
@@ -48,27 +72,8 @@ public class MapReader {
         return tiles;
     }
 
-//    public ArrayList<Integer> clockSetter(){
-//        Scanner in = null;
-//        File f = new File("l1.txt");
-//        try {
-//            in = new Scanner(f);
-//        }
-//        catch(FileNotFoundException e){
-//            System.out.println("Error!");
-//            System.exit(0);
-//        }
-//        //97
-//        for (int i = 0; i <= 95; i++){
-//            in.next();
-//        }
-//        while (in.hasNext()) {
-//             x = in.nextInt();
-//             y = in.nextInt();
-//             this.clockParam.add(x);
-//             this.clockParam.add(y);
-//        }
-//        return this.clockParam;
-//    }
+   public ArrayList<Integer> getClock(){
+        return this.clockParam;
+    }
     }
 

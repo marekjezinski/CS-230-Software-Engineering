@@ -18,6 +18,7 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.net.URISyntaxException;
+import java.util.ArrayList;
 
 /**
  * Sample application that demonstrates the use of JavaFX Canvas for a Game.
@@ -68,8 +69,12 @@ public class Main extends Application {
 
 
     private int timerDuration;
+    private ArrayList<Integer> clockParams = new ArrayList<Integer>();
 
     Map level1 = new Map("15x10.txt");
+
+    Clock c = new Clock("15x10.txt");
+
 
     //Array for tiles and items
 
@@ -80,10 +85,9 @@ public class Main extends Application {
      * @param primaryStage The stage that is to be used for the application.
      */
     public void start(Stage primaryStage) throws URISyntaxException {
-        //clockParams = c.clockSetter();
-//        for (int i = 0; i < clockParams.size(); i++){
-//            System.out.println(clockParams.get(i));
-//        }
+        clockParams = c.clockSetter();
+
+
         // Load images. Note we use png images with a transparent background.
         playerImage = new Image(getClass().getResource("player.png").toURI().toString());
         dirtImage = new Image(getClass().getResource("dirt.png").toURI().toString());
@@ -220,20 +224,28 @@ public class Main extends Application {
             }
         }
 
-//        for(int i = 0; i < clockParams.size(); i = i+2){
-//            if (clockParams.get(i) == playerX){
-//                if (clockParams.get(i+1) == playerY){
-//                    clockParams.remove(i);
-//                    clockParams.remove(i);
-//
-//                }
-//            }
-//        }
-//        for(int i = 0; i < clockParams.size(); i = i+2){
-//            gc.drawImage(clock, clockParams.get(i)* GRID_CELL_WIDTH,
-//                    clockParams.get(i+1)* GRID_CELL_HEIGHT - 1);
-//        }
-        //  gc.drawImage(clock, 0 * GRID_CELL_WIDTH, 0 * GRID_CELL_HEIGHT);
+
+
+        for(int i = 0; i < clockParams.size(); i = i+2){
+            gc.drawImage(clock, clockParams.get(i) * GRID_CELL_WIDTH, clockParams.get(i+1) * GRID_CELL_HEIGHT);
+
+        }
+        System.out.println(clockParams.get(0));
+        System.out.println(clockParams.get(1));
+        for(int i = 0; i < clockParams.size(); i = i+2){
+            System.out.println(playerX);
+            System.out.println(playerY);
+            if (clockParams.get(i) == playerX){
+                if (clockParams.get(i+1) == playerY){
+                    clockParams.remove(i);
+                    clockParams.remove(i);
+
+                }
+            }
+        }
+
+
+          //gc.drawImage(clock, 0 * GRID_CELL_WIDTH, 0 * GRID_CELL_HEIGHT);
 
         // Draw player at current location
         gc.drawImage(playerImage, playerX * GRID_CELL_WIDTH, playerY * GRID_CELL_HEIGHT);
