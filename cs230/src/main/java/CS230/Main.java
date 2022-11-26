@@ -8,12 +8,17 @@ import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import javafx.scene.text.FontPosture;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -59,9 +64,10 @@ public class Main extends Application {
 
     // Timeline which will cause tick method to be called periodically.
     private Timeline tickTimeline;
+    private Timeline timerTimeline;
 
 
-    private int timerDuration;
+    private int timerDuration = 20;
     private ArrayList<Integer> clockParams = new ArrayList<Integer>();
     private ArrayList<Integer> lootParams = new ArrayList<Integer>();
 
@@ -103,10 +109,12 @@ public class Main extends Application {
 
         // Register a tick method to be called periodically.
         // Make a new timeline with one keyframe that triggers the tick method every half a second.
-        tickTimeline = new Timeline(new KeyFrame(Duration.millis(500), event -> tick()));
+        tickTimeline = new Timeline(new KeyFrame(Duration.millis(1000), event -> tick()));
         // Loop the timeline forever
         tickTimeline.setCycleCount(Animation.INDEFINITE);
         // We start the timeline upon a button press.
+        timerTimeline = new Timeline(new KeyFrame(Duration.millis(1000), event -> timer()));
+        timerTimeline.setCycleCount(Animation.INDEFINITE);
 
         // Display the scene on the stage
         drawGame();
@@ -256,6 +264,15 @@ public class Main extends Application {
         drawGame();
     }
 
+    public void timer(){
+        Text text = new Text();
+        String a = "jeff";
+        text.setX(50);
+        text.setY(130);
+        text.setFont(Font.font("verdana",FontWeight.BOLD, FontPosture.REGULAR,50));
+        text.setText(a);
+    }
+
     /**
      * React when an object is dragged onto the canvas.
      * @param event The drag event itself which contains data about the drag that occurred.
@@ -321,17 +338,7 @@ public class Main extends Application {
         Button startTimer = new Button("Start game");
         toolbar.getChildren().addAll(startTimer);
         startTimer.setOnAction(e -> {
-            int countdown = 20;
-            GameTimer g = new GameTimer(countdown);
-            while (countdown > 0){
-                try {
-                    countdown = g.timer();
-                } catch (InterruptedException ex) {
-                    ex.printStackTrace();
-                }
-                System.out.println(countdown);
-            }
-
+            timerTimeline.play();
         });
 
 
