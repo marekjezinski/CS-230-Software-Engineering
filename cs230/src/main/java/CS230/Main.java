@@ -67,7 +67,7 @@ public class Main extends Application {
     private Timeline timerTimeline;
 
 
-    private int timerDuration = 20;
+    private int timerLeft = 20;
     private ArrayList<Integer> clockParams = new ArrayList<Integer>();
     private ArrayList<Integer> lootParams = new ArrayList<Integer>();
 
@@ -204,6 +204,7 @@ public class Main extends Application {
                 if (clockParams.get(i+1) == playerY){
                     clockParams.remove(i);
                     clockParams.remove(i);
+                    this.timerLeft = this.timerLeft + 5;
 
                 }
             }
@@ -265,12 +266,14 @@ public class Main extends Application {
     }
 
     public void timer(){
-        Text text = new Text();
-        String a = "jeff";
-        text.setX(50);
-        text.setY(130);
-        text.setFont(Font.font("verdana",FontWeight.BOLD, FontPosture.REGULAR,50));
-        text.setText(a);
+        if (this.timerLeft > 0) {
+            System.out.println(this.timerLeft);
+            this.timerLeft = this.timerLeft- 1;
+        }
+        else {
+            System.out.println("You ran out of time! GAME OVER!!!");
+            System.exit(0);
+        }
     }
 
     /**
