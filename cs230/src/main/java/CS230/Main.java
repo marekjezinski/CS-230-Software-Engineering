@@ -51,6 +51,7 @@ public class Main extends Application {
     // Loaded images
     private Image playerImage;
     private Image clock;
+    private Image loot;
 
     // X and Y coordinate of player on the grid.
     private int playerX = 0;
@@ -62,10 +63,13 @@ public class Main extends Application {
 
     private int timerDuration;
     private ArrayList<Integer> clockParams = new ArrayList<Integer>();
+    private ArrayList<Integer> lootParams = new ArrayList<Integer>();
 
     Map level = new Map("15x10.txt");
 
     Clock c = new Clock("15x10.txt");
+
+    Loot l = new Loot("15x10.txt");
 
 
     //Array for tiles and items
@@ -78,12 +82,13 @@ public class Main extends Application {
      */
     public void start(Stage primaryStage) throws URISyntaxException {
         clockParams = c.clockSetter();
-
+        lootParams = l.lootSetter();
 
         // Load images. Note we use png images with a transparent background.
         playerImage = new Image(getClass().getResource("player.png").toURI().toString());
 
         clock = new Image(getClass().getResource("clock.png").toURI().toString());
+        loot = new Image(getClass().getResource("placeholder.png").toURI().toString());
 
 
         // Build the GUI
@@ -191,6 +196,20 @@ public class Main extends Application {
                 if (clockParams.get(i+1) == playerY){
                     clockParams.remove(i);
                     clockParams.remove(i);
+
+                }
+            }
+        }
+
+        for(int i = 0; i < lootParams.size(); i = i+2){
+            gc.drawImage(loot, lootParams.get(i) * GRID_CELL_WIDTH, lootParams.get(i+1) * GRID_CELL_HEIGHT);
+        }
+
+        for(int i = 0; i < lootParams.size(); i = i+2){
+            if (lootParams.get(i) == playerX){
+                if (lootParams.get(i+1) == playerY){
+                    lootParams.remove(i);
+                    lootParams.remove(i);
 
                 }
             }
