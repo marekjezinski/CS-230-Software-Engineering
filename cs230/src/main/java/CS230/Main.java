@@ -67,15 +67,19 @@ public class Main extends Application {
     private Timeline timerTimeline;
 
 
-    private int timerLeft = 20;
+
     private ArrayList<Integer> clockParams = new ArrayList<Integer>();
     private ArrayList<Integer> lootParams = new ArrayList<Integer>();
+
+    private int timerLeft;
 
     Map level = new Map("15x10.txt");
 
     Clock c = new Clock("15x10.txt");
 
     Loot l = new Loot("15x10.txt");
+
+    Timer t = new Timer("15x10.txt");
 
 
     //Array for tiles and items
@@ -89,7 +93,7 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws URISyntaxException {
         clockParams = c.clockSetter();
         lootParams = l.lootSetter();
-
+        timerLeft = t.timerSetter();
         // Load images. Note we use png images with a transparent background.
         playerImage = new Image(getClass().getResource("player.png").toURI().toString());
 

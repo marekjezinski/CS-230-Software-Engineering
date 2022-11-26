@@ -15,6 +15,7 @@ public class MapReader {
     private String type;
     private ArrayList<Integer> clockParam = new ArrayList<Integer>();
     private ArrayList<Integer> lootParam = new ArrayList<Integer>();
+    private int timer;
     String fileName;
     public MapReader(String fileName) {
         this.fileName = fileName;
@@ -45,6 +46,9 @@ public class MapReader {
             }
             while (in.hasNext()) {
                 this.type = in.next();
+                if (type.equals("Timer")) {
+                    this.timer = in.nextInt();
+                }
                 if (type.equals("Clock")) {
                     x = in.nextInt();
                     if (x%2==0){
@@ -101,6 +105,9 @@ public class MapReader {
 
    public ArrayList<Integer> getClock(){
         return this.clockParam;
+    }
+    public int getTimer(){
+        return this.timer;
     }
     public ArrayList<Integer> getLoot(){
         return this.lootParam;
