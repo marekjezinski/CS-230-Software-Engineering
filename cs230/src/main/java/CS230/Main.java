@@ -280,6 +280,7 @@ public class Main extends Application {
         }
         else {
             System.out.println("You ran out of time! GAME OVER!!!");
+            System.out.println("You scored " + this.score + " points");
             System.exit(0);
         }
     }
