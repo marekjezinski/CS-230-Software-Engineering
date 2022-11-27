@@ -73,6 +73,8 @@ public class Main extends Application {
 
     private int timerLeft;
 
+    private int score = 0;
+
     Map level = new Map("15x10.txt");
 
     Clock c = new Clock("15x10.txt");
@@ -223,6 +225,8 @@ public class Main extends Application {
                 if (lootParams.get(i+1) == playerY){
                     lootParams.remove(i);
                     lootParams.remove(i);
+                    this.score = this.score + 10;
+                    System.out.println(score);
 
                 }
             }
