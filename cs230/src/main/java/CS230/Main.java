@@ -15,8 +15,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
-import javafx.scene.text.FontPosture;
-import javafx.scene.text.FontWeight;
+import javafx.scene.paint.Paint;
 import javafx.scene.text.Text;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
@@ -272,6 +271,9 @@ public class Main extends Application {
     }
 
     public void timer(){
+        if (this.timerLeft <= 6){
+            timerText.setFill(Paint.valueOf("Red"));
+        }
         if (this.timerLeft > 0) {
             this.timerLeft = this.timerLeft- 1;
             timerText.setText("Time remaining: " + this.timerLeft);
