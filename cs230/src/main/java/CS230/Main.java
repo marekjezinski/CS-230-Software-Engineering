@@ -84,7 +84,7 @@ public class Main extends Application {
     Timer t = new Timer("15x10.txt");
 
 
-    //Array for tiles and items
+    private boolean hasGameStarted = false;
 
 
 
@@ -115,10 +115,13 @@ public class Main extends Application {
 
         // Register a tick method to be called periodically.
         // Make a new timeline with one keyframe that triggers the tick method every half a second.
-        tickTimeline = new Timeline(new KeyFrame(Duration.millis(1000), event -> tick()));
+        //tickTimeline = new Timeline(new KeyFrame(Duration.millis(1000), event -> tick()));
         // Loop the timeline forever
-        tickTimeline.setCycleCount(Animation.INDEFINITE);
+        //tickTimeline.setCycleCount(Animation.INDEFINITE);
         // We start the timeline upon a button press.
+
+
+
         timerTimeline = new Timeline(new KeyFrame(Duration.millis(1000), event -> timer()));
         timerTimeline.setCycleCount(Animation.INDEFINITE);
 
@@ -138,28 +141,28 @@ public class Main extends Application {
         switch (event.getCode()) {
             case RIGHT:
                 // Right key was pressed. So move the player right by one cell.
-                if (playerX < 28) {
+                if (playerX < 28 && this.hasGameStarted == true) {
                     playerX = level.moveRight(playerX, playerY);
                 }
                 break;
 
             case LEFT:
                 // Left key was pressed. So move the player left by one cell.
-                if (playerX > 0) {
+                if (playerX > 0 && this.hasGameStarted == true) {
                     playerX = level.moveLeft(playerX, playerY);
                 }
                 break;
 
             case UP:
                 // Up key was pressed. So move the player up by one cell.
-                if (playerY > 0) {
+                if (playerY > 0 && this.hasGameStarted == true) {
                     playerY = level.moveUp(playerX, playerY);
                 }
                 break;
 
             case DOWN:
                 // Down key was pressed. So move the player down by one cell.
-                if (playerY < 18) {
+                if (playerY < 18 && this.hasGameStarted == true) {
                     playerY = level.moveDown(playerX, playerY);
                 }
                 break;
@@ -246,15 +249,8 @@ public class Main extends Application {
         drawGame();
     }
 
-    /**
-     * Move the player to roughly the center of the grid.
-     */
-    public void movePlayerToCenter() {
-        // We just move the player to cell (5, 2)
-        playerX = 5;
-        playerY = 2;
-        drawGame();
-    }
+
+
 
     /**
      * This method is called periodically by the tick timeline
@@ -325,7 +321,7 @@ public class Main extends Application {
 
 
         // Tick Timeline buttons
-        Button startTickTimelineButton = new Button("Start Ticks");
+        /*Button startTickTimelineButton = new Button("Start Ticks");
         Button stopTickTimelineButton = new Button("Stop Ticks");
         // We add both buttons at the same time to the timeline (we could have done this in two steps).
         toolbar.getChildren().addAll(startTickTimelineButton, stopTickTimelineButton);
@@ -345,11 +341,12 @@ public class Main extends Application {
             stopTickTimelineButton.setDisable(true);
             tickTimeline.stop();
             startTickTimelineButton.setDisable(false);
-        });
+        });*/
 
         Button startTimer = new Button("Start game");
         toolbar.getChildren().addAll(startTimer);
         startTimer.setOnAction(e -> {
+            this.hasGameStarted = true;
             timerTimeline.play();
         });
 
