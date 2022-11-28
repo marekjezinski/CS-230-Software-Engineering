@@ -19,7 +19,7 @@ public class Map {
         playerY = playerY / 2;
         Tile currentTile = tilesArray[playerX][playerY];
         for(int x = playerX + 1; x < MAP_MAX_X; x++) {
-            if(currentTile.isLegalMovement(tilesArray[x][playerY].getTileColours())) {
+            if(currentTile.isLegalMovement(tilesArray[x][playerY])) {
                 return x * 2;
             }
         }
@@ -31,7 +31,7 @@ public class Map {
         playerY = playerY / 2;
         Tile currentTile = tilesArray[playerX][playerY];
         for(int x = playerX - 1; x >= 0; x--) {
-            if(currentTile.isLegalMovement(tilesArray[x][playerY].getTileColours())) {
+            if(currentTile.isLegalMovement(tilesArray[x][playerY])) {
                 return x * 2;
             }
         }
@@ -43,7 +43,7 @@ public class Map {
         playerY = playerY / 2;
         Tile currentTile = tilesArray[playerX][playerY];
         for(int y = playerY + 1; y < MAP_MAX_Y; y++) {
-            if(currentTile.isLegalMovement(tilesArray[playerX][y].getTileColours())) {
+            if(currentTile.isLegalMovement(tilesArray[playerX][y])) {
                 return y * 2;
             }
         }
@@ -55,7 +55,7 @@ public class Map {
         playerY = playerY / 2;
         Tile currentTile = tilesArray[playerX][playerY];
         for(int y = playerY - 1; y >= 0; y--) {
-            if(currentTile.isLegalMovement(tilesArray[playerX][y].getTileColours())) {
+            if(currentTile.isLegalMovement(tilesArray[playerX][y])) {
                 return y * 2;
             }
         }

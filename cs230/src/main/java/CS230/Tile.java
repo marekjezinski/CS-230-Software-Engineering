@@ -12,7 +12,8 @@ public class Tile {
         }
     }
 
-    public boolean isLegalMovement(String colourCode1) {
+    public boolean isLegalMovement(Tile t) {
+        String colourCode1 = t.getTileColours();
         String colourCode2 = getTileColours();
         char[] charColourArray1 = colourCode1.toCharArray();
         char[] charColourArray2 = colourCode2.toCharArray();
