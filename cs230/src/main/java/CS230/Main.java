@@ -85,7 +85,8 @@ public class Main extends Application {
 
 
     private boolean hasGameStarted = false;
-
+    private Text timerText = new Text();
+    private Text scoreText = new Text();
 
 
     /**
@@ -229,7 +230,8 @@ public class Main extends Application {
                     lootParams.remove(i);
                     lootParams.remove(i);
                     this.score = this.score + 10;
-                    System.out.println(score);
+                    scoreText.setText("Score: " + this.score);
+                    scoreText.setFont(Font.font("arial",20));
 
                 }
             }
@@ -271,8 +273,8 @@ public class Main extends Application {
 
     public void timer(){
         if (this.timerLeft > 0) {
-            System.out.println(this.timerLeft);
             this.timerLeft = this.timerLeft- 1;
+            timerText.setText("Time remaining: " + this.timerLeft);
         }
         else {
             System.out.println("You ran out of time! GAME OVER!!!");
@@ -320,6 +322,9 @@ public class Main extends Application {
 
 
 
+
+
+
         // Tick Timeline buttons
         /*Button startTickTimelineButton = new Button("Start Ticks");
         Button stopTickTimelineButton = new Button("Stop Ticks");
@@ -343,6 +348,11 @@ public class Main extends Application {
             startTickTimelineButton.setDisable(false);
         });*/
 
+
+
+
+
+
         Button startTimer = new Button("Start game");
         toolbar.getChildren().addAll(startTimer);
         startTimer.setOnAction(e -> {
@@ -350,10 +360,13 @@ public class Main extends Application {
             timerTimeline.play();
         });
 
+        timerText.setText("Time remaining: " + this.timerLeft);
+        timerText.setFont(Font.font("arial",20));
+        toolbar.getChildren().add(timerText);
 
-
-
-
+        scoreText.setText("Score: " + this.score);
+        scoreText.setFont(Font.font("arial",20));
+        toolbar.getChildren().add(scoreText);
 
 
         // Finally, return the border pane we built up.
