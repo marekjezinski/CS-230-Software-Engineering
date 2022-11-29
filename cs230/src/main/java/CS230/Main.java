@@ -9,6 +9,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
@@ -80,6 +81,9 @@ public class Main extends Application {
     private boolean hasGameStarted = false;
     private Text timerText = new Text();
     private Text scoreText = new Text();
+
+
+    private String username;
 
     private int currentLevel = 0;
     private ArrayList<Map> levels = new ArrayList<Map>();
@@ -383,13 +387,17 @@ public class Main extends Application {
 
 
 
-
+        Label username = new Label("Username:");
+        TextField usernameIn = new TextField();
+        toolbar.getChildren().addAll(username,usernameIn);
         Button startTimer = new Button("Start game");
         toolbar.getChildren().addAll(startTimer);
         startTimer.setOnAction(e -> {
             this.hasGameStarted = true;
             timerTimeline.play();
             scoreColourChanger.play();
+            this.username = usernameIn.getText();
+            System.out.println(this.username);
         });
 
         timerText.setText("Time remaining: " + this.timerLeft);
