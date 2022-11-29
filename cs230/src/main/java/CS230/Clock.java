@@ -1,6 +1,7 @@
 
 package CS230;
 import java.util.ArrayList;
+import javafx.scene.image.Image;
 public class Clock {
     private String fileName;
 
@@ -14,4 +15,6 @@ public class Clock {
         params = c.getClock();
         return params;
     }
+
+
 }

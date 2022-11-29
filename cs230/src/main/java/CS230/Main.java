@@ -66,30 +66,19 @@ public class Main extends Application {
     private Timeline tickTimeline;
     private Timeline timerTimeline;
 
-
-
-    private ArrayList<Integer> clockParams = new ArrayList<Integer>();
-    private ArrayList<Integer> lootParams = new ArrayList<Integer>();
-    private ArrayList<Integer> doorParams = new ArrayList<Integer>();
-
     private int timerLeft;
+
+
 
     private int score = 0;
 
-    Map level = new Map("15x10.txt");
 
-    Clock c = new Clock("15x10.txt");
-
-    Loot l = new Loot("15x10.txt");
-
-    Timer t = new Timer("15x10.txt");
-
-    Door d = new Door("15x10.txt");
 
 
     private boolean hasGameStarted = false;
     private Text timerText = new Text();
     private Text scoreText = new Text();
+    Map level = new Map("15x10.txt");
 
 
     /**
@@ -97,10 +86,7 @@ public class Main extends Application {
      * @param primaryStage The stage that is to be used for the application.
      */
     public void start(Stage primaryStage) throws URISyntaxException {
-        this.clockParams = c.clockSetter();
-        this.lootParams = l.lootSetter();
-        this.timerLeft = t.timerSetter();
-        this.doorParams = d.doorSetter();
+        this.timerLeft = this.level.getTimerLeft();
         // Load images. Note we use png images with a transparent background.
         playerImage = new Image(getClass().getResource("player.png").toURI().toString());
 
@@ -210,29 +196,32 @@ public class Main extends Application {
 
 
 
-        for(int i = 0; i < clockParams.size(); i = i+2){
-            gc.drawImage(clock, clockParams.get(i) * GRID_CELL_WIDTH, clockParams.get(i+1) * GRID_CELL_HEIGHT);
+
+        for(int i = 0; i < level.getClockParams().size(); i = i+2){
+            gc.drawImage(clock, level.getClockParams().get(i) * GRID_CELL_WIDTH,
+                    level.getClockParams().get(i+1) * GRID_CELL_HEIGHT);
         }
-        for(int i = 0; i < clockParams.size(); i = i+2){
-            if (clockParams.get(i) == playerX){
-                if (clockParams.get(i+1) == playerY){
-                    clockParams.remove(i);
-                    clockParams.remove(i);
+        for(int i = 0; i < level.getClockParams().size(); i = i+2){
+            if (level.getClockParams().get(i) == playerX){
+                if (level.getClockParams().get(i+1) == playerY){
+                    level.getClockParams().remove(i);
+                    level.getClockParams().remove(i);
                     this.timerLeft = this.timerLeft + 5;
 
                 }
             }
         }
 
-        for(int i = 0; i < lootParams.size(); i = i+2){
-            gc.drawImage(loot, lootParams.get(i) * GRID_CELL_WIDTH, lootParams.get(i+1) * GRID_CELL_HEIGHT);
+        for(int i = 0; i < this.level.getLootParams().size(); i = i+2){
+            gc.drawImage(loot, this.level.getLootParams().get(i) * GRID_CELL_WIDTH,
+                    this.level.getLootParams().get(i+1) * GRID_CELL_HEIGHT);
         }
 
-        for(int i = 0; i < lootParams.size(); i = i+2){
-            if (lootParams.get(i) == playerX){
-                if (lootParams.get(i+1) == playerY){
-                    lootParams.remove(i);
-                    lootParams.remove(i);
+        for(int i = 0; i < this.level.getLootParams().size(); i = i+2){
+            if (this.level.getLootParams().get(i) == playerX){
+                if (this.level.getLootParams().get(i+1) == playerY){
+                    this.level.getLootParams().remove(i);
+                    this.level.getLootParams().remove(i);
                     this.score = this.score + 10;
                     scoreText.setText("Score: " + this.score);
                     scoreText.setFont(Font.font("arial",20));
@@ -241,8 +230,9 @@ public class Main extends Application {
             }
         }
 
-        for(int i = 0; i < doorParams.size(); i = i+2){
-            gc.drawImage(door, doorParams.get(i) * GRID_CELL_WIDTH, doorParams.get(i+1) * GRID_CELL_HEIGHT);
+        for(int i = 0; i < this.level.getDoorParams().size(); i = i+2){
+            gc.drawImage(door, this.level.getDoorParams().get(i) * GRID_CELL_WIDTH,
+                    this.level.getDoorParams().get(i+1) * GRID_CELL_HEIGHT);
         }
 
 

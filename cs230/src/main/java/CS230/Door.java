@@ -1,7 +1,7 @@
 
 package CS230;
 import java.util.ArrayList;
-
+import javafx.scene.image.Image;
 public class Door {
     private String fileName;
 
