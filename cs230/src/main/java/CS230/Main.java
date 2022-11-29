@@ -15,8 +15,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
-import javafx.scene.text.FontPosture;
-import javafx.scene.text.FontWeight;
+import javafx.scene.paint.Paint;
 import javafx.scene.text.Text;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
@@ -57,6 +56,7 @@ public class Main extends Application {
     private Image playerImage;
     private Image clock;
     private Image loot;
+    private Image door;
 
     // X and Y coordinate of player on the grid.
     private int playerX = 0;
@@ -66,27 +66,19 @@ public class Main extends Application {
     private Timeline tickTimeline;
     private Timeline timerTimeline;
 
-
-
-    private ArrayList<Integer> clockParams = new ArrayList<Integer>();
-    private ArrayList<Integer> lootParams = new ArrayList<Integer>();
-
     private int timerLeft;
+
+
 
     private int score = 0;
 
-    Map level = new Map("15x10.txt");
 
-    Clock c = new Clock("15x10.txt");
-
-    Loot l = new Loot("15x10.txt");
-
-    Timer t = new Timer("15x10.txt");
 
 
     private boolean hasGameStarted = false;
     private Text timerText = new Text();
     private Text scoreText = new Text();
+    Map level = new Map("15x10.txt");
 
 
     /**
@@ -94,15 +86,13 @@ public class Main extends Application {
      * @param primaryStage The stage that is to be used for the application.
      */
     public void start(Stage primaryStage) throws URISyntaxException {
-        clockParams = c.clockSetter();
-        lootParams = l.lootSetter();
-        timerLeft = t.timerSetter();
+        this.timerLeft = this.level.getTimerLeft();
         // Load images. Note we use png images with a transparent background.
         playerImage = new Image(getClass().getResource("player.png").toURI().toString());
 
         clock = new Image(getClass().getResource("clock.png").toURI().toString());
         loot = new Image(getClass().getResource("placeholder.png").toURI().toString());
-
+        door = new Image(getClass().getResource("door.png").toURI().toString());
 
         // Build the GUI
         Pane root = buildGUI();
@@ -206,35 +196,43 @@ public class Main extends Application {
 
 
 
-        for(int i = 0; i < clockParams.size(); i = i+2){
-            gc.drawImage(clock, clockParams.get(i) * GRID_CELL_WIDTH, clockParams.get(i+1) * GRID_CELL_HEIGHT);
+
+        for(int i = 0; i < level.getClockParams().size(); i = i+2){
+            gc.drawImage(clock, level.getClockParams().get(i) * GRID_CELL_WIDTH,
+                    level.getClockParams().get(i+1) * GRID_CELL_HEIGHT);
         }
-        for(int i = 0; i < clockParams.size(); i = i+2){
-            if (clockParams.get(i) == playerX){
-                if (clockParams.get(i+1) == playerY){
-                    clockParams.remove(i);
-                    clockParams.remove(i);
+        for(int i = 0; i < level.getClockParams().size(); i = i+2){
+            if (level.getClockParams().get(i) == playerX){
+                if (level.getClockParams().get(i+1) == playerY){
+                    level.getClockParams().remove(i);
+                    level.getClockParams().remove(i);
                     this.timerLeft = this.timerLeft + 5;
 
                 }
             }
         }
 
-        for(int i = 0; i < lootParams.size(); i = i+2){
-            gc.drawImage(loot, lootParams.get(i) * GRID_CELL_WIDTH, lootParams.get(i+1) * GRID_CELL_HEIGHT);
+        for(int i = 0; i < this.level.getLootParams().size(); i = i+2){
+            gc.drawImage(loot, this.level.getLootParams().get(i) * GRID_CELL_WIDTH,
+                    this.level.getLootParams().get(i+1) * GRID_CELL_HEIGHT);
         }
 
-        for(int i = 0; i < lootParams.size(); i = i+2){
-            if (lootParams.get(i) == playerX){
-                if (lootParams.get(i+1) == playerY){
-                    lootParams.remove(i);
-                    lootParams.remove(i);
+        for(int i = 0; i < this.level.getLootParams().size(); i = i+2){
+            if (this.level.getLootParams().get(i) == playerX){
+                if (this.level.getLootParams().get(i+1) == playerY){
+                    this.level.getLootParams().remove(i);
+                    this.level.getLootParams().remove(i);
                     this.score = this.score + 10;
                     scoreText.setText("Score: " + this.score);
                     scoreText.setFont(Font.font("arial",20));
 
                 }
             }
+        }
+
+        for(int i = 0; i < this.level.getDoorParams().size(); i = i+2){
+            gc.drawImage(door, this.level.getDoorParams().get(i) * GRID_CELL_WIDTH,
+                    this.level.getDoorParams().get(i+1) * GRID_CELL_HEIGHT);
         }
 
 
@@ -272,6 +270,9 @@ public class Main extends Application {
     }
 
     public void timer(){
+        if (this.timerLeft <= 6){
+            timerText.setFill(Paint.valueOf("Red"));
+        }
         if (this.timerLeft > 0) {
             this.timerLeft = this.timerLeft- 1;
             timerText.setText("Time remaining: " + this.timerLeft);

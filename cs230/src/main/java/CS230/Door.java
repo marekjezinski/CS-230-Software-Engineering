@@ -2,17 +2,17 @@
 package CS230;
 import java.util.ArrayList;
 import javafx.scene.image.Image;
-public class Loot {
+public class Door {
     private String fileName;
 
-    public Loot(String fileName) {
+    public Door(String fileName) {
         this.fileName = fileName;
     }
 
-    public ArrayList<Integer> lootSetter(){
+    public ArrayList<Integer> doorSetter(){
         ArrayList<Integer> params = new ArrayList<Integer>();
-        MapReader l = new MapReader(fileName);
-        params = l.getLoot();
+        MapReader d = new MapReader(fileName);
+        params = d.getDoor();
         return params;
     }
 }
