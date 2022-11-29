@@ -80,14 +80,22 @@ public class Main extends Application {
     private boolean hasGameStarted = false;
     private Text timerText = new Text();
     private Text scoreText = new Text();
-    Map level = new Map("15x10.txt");
 
+    private int currentLevel = 0;
+    private ArrayList<Map> levels = new ArrayList<Map>();
+    Map level;
+    Map level1 = new Map("15x10.txt");
+    Map level2 = new Map("15x10l2.txt");
 
     /**
      * Set up the new application.
      * @param primaryStage The stage that is to be used for the application.
      */
     public void start(Stage primaryStage) throws URISyntaxException {
+        levels.add(level1);
+        levels.add(level2);
+        this.level = levels.get(currentLevel);
+        this.timerLeft = 0;
         this.timerLeft = this.level.getTimerLeft();
         // Load images. Note we use png images with a transparent background.
         playerImage = new Image(getClass().getResource("player.png").toURI().toString());
@@ -238,6 +246,15 @@ public class Main extends Application {
         for(int i = 0; i < this.level.getDoorParams().size(); i = i+2){
             gc.drawImage(door, this.level.getDoorParams().get(i) * GRID_CELL_WIDTH,
                     this.level.getDoorParams().get(i+1) * GRID_CELL_HEIGHT);
+        }
+        for(int i = 0; i < this.level.getDoorParams().size(); i = i+2){
+            if (this.level.getDoorParams().get(i) == playerX){
+                if (this.level.getDoorParams().get(i+1) == playerY){
+                    this.currentLevel = currentLevel + 1;
+                    System.out.print(this.currentLevel);
+
+                }
+            }
         }
 
 
