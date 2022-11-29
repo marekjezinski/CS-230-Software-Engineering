@@ -15,6 +15,7 @@ public class MapReader {
     private String type;
     private ArrayList<Integer> clockParam = new ArrayList<Integer>();
     private ArrayList<Integer> lootParam = new ArrayList<Integer>();
+    private ArrayList<Integer> doorParam = new ArrayList<Integer>();
     private int timer;
     String fileName;
     public MapReader(String fileName) {
@@ -81,6 +82,22 @@ public class MapReader {
                         this.lootParam.add(y+1);
                     }
                 }
+                if (type.equals("Door")) {
+                    x = in.nextInt();
+                    if (x%2==0){
+                        this.doorParam.add(x);
+                    }
+                    else{
+                        this.doorParam.add(x+1);
+                    }
+                    y = in.nextInt();
+                    if (y%2==0){
+                        this.doorParam.add(y);
+                    }
+                    else{
+                        this.doorParam.add(y+1);
+                    }
+                }
             }
 
 
@@ -112,5 +129,8 @@ public class MapReader {
     public ArrayList<Integer> getLoot(){
         return this.lootParam;
     }
+    public ArrayList<Integer> getDoor(){
+        return this.doorParam;
     }
+}
 

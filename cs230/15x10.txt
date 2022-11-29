@@ -14,4 +14,5 @@ Clock 14 9
 Clock 3 1
 Loot 2 2
 Loot 10 3
+Door 10 5
 

@@ -56,6 +56,7 @@ public class Main extends Application {
     private Image playerImage;
     private Image clock;
     private Image loot;
+    private Image door;
 
     // X and Y coordinate of player on the grid.
     private int playerX = 0;
@@ -69,6 +70,7 @@ public class Main extends Application {
 
     private ArrayList<Integer> clockParams = new ArrayList<Integer>();
     private ArrayList<Integer> lootParams = new ArrayList<Integer>();
+    private ArrayList<Integer> doorParams = new ArrayList<Integer>();
 
     private int timerLeft;
 
@@ -82,6 +84,8 @@ public class Main extends Application {
 
     Timer t = new Timer("15x10.txt");
 
+    Door d = new Door("15x10.txt");
+
 
     private boolean hasGameStarted = false;
     private Text timerText = new Text();
@@ -93,15 +97,16 @@ public class Main extends Application {
      * @param primaryStage The stage that is to be used for the application.
      */
     public void start(Stage primaryStage) throws URISyntaxException {
-        clockParams = c.clockSetter();
-        lootParams = l.lootSetter();
-        timerLeft = t.timerSetter();
+        this.clockParams = c.clockSetter();
+        this.lootParams = l.lootSetter();
+        this.timerLeft = t.timerSetter();
+        this.doorParams = d.doorSetter();
         // Load images. Note we use png images with a transparent background.
         playerImage = new Image(getClass().getResource("player.png").toURI().toString());
 
         clock = new Image(getClass().getResource("clock.png").toURI().toString());
         loot = new Image(getClass().getResource("placeholder.png").toURI().toString());
-
+        door = new Image(getClass().getResource("door.png").toURI().toString());
 
         // Build the GUI
         Pane root = buildGUI();
@@ -234,6 +239,10 @@ public class Main extends Application {
 
                 }
             }
+        }
+
+        for(int i = 0; i < doorParams.size(); i = i+2){
+            gc.drawImage(door, doorParams.get(i) * GRID_CELL_WIDTH, doorParams.get(i+1) * GRID_CELL_HEIGHT);
         }
 
 
