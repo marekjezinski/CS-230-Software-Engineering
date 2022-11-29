@@ -20,6 +20,7 @@ import javafx.scene.text.Text;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import java.util.Random;
 
 import java.net.URISyntaxException;
 import java.util.ArrayList;
@@ -65,6 +66,7 @@ public class Main extends Application {
     // Timeline which will cause tick method to be called periodically.
     private Timeline tickTimeline;
     private Timeline timerTimeline;
+    private Timeline scoreColourChanger;
 
     private int timerLeft;
 
@@ -115,6 +117,9 @@ public class Main extends Application {
 
         timerTimeline = new Timeline(new KeyFrame(Duration.millis(1000), event -> timer()));
         timerTimeline.setCycleCount(Animation.INDEFINITE);
+
+        scoreColourChanger = new Timeline(new KeyFrame(Duration.millis(500), event -> scoreColour()));
+        scoreColourChanger.setCycleCount(Animation.INDEFINITE);
 
         // Display the scene on the stage
         drawGame();
@@ -284,6 +289,14 @@ public class Main extends Application {
         }
     }
 
+    public void scoreColour(){
+        Random random = new Random();
+        int r = random.nextInt(255);
+        int g = random.nextInt(255);
+        int b = random.nextInt(255);
+        scoreText.setFill(Color.rgb(r,g,b));
+    }
+
     /**
      * React when an object is dragged onto the canvas.
      * @param event The drag event itself which contains data about the drag that occurred.
@@ -359,6 +372,7 @@ public class Main extends Application {
         startTimer.setOnAction(e -> {
             this.hasGameStarted = true;
             timerTimeline.play();
+            scoreColourChanger.play();
         });
 
         timerText.setText("Time remaining: " + this.timerLeft);
