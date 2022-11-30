@@ -22,8 +22,8 @@ public class Cell {
                 case 'Y':
                     cellImage = new Image(getClass().getResource("yellow.png").toURI().toString());
                     break;
-                case 'C':
-                    cellImage = new Image(getClass().getResource("cyan.png").toURI().toString());
+                case 'O':
+                    cellImage = new Image(getClass().getResource("orange.png").toURI().toString());
                     break;
                 case 'M':
                     cellImage = new Image(getClass().getResource("magenta.png").toURI().toString());
