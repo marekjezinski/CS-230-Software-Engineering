@@ -269,6 +269,9 @@ public class Main extends Application {
             System.out.println("You ran out of time! GAME OVER!!!");
             System.out.println("You scored " + this.score + " points");
             l.addScore(username,score);
+            System.out.println("---------------------------------");
+            System.out.println("Leaderboard:");
+            l.getTopScores();
             System.exit(0);
         }
     }
@@ -328,7 +331,7 @@ public class Main extends Application {
             timerTimeline.play();
             scoreColourChanger.play();
             this.username = usernameIn.getText();
-            System.out.println(this.username);
+            System.out.printf(this.username);
         });
 
         timerText.setText("Time remaining: " + this.timerLeft);

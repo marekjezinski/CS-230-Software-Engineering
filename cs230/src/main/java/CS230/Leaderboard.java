@@ -1,15 +1,17 @@
 package CS230;
 
+import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.File;
 import java.io.IOException;
+import java.util.Scanner;
 
 public class Leaderboard extends SaveLoad {
 
     public void addScore (String username, int score) {
         try{
-            FileWriter f = new FileWriter("scores.txt");
-            f.write(username + " " + score);
+            FileWriter f = new FileWriter("scores.txt", true);
+            f.write(username + " " + score + System.lineSeparator());
             f.close();
         }
         catch (IOException e) {
@@ -25,8 +27,19 @@ public class Leaderboard extends SaveLoad {
         //upload to txt file
     }
 
-    private void getTopScores(){
-        //fetch form txt file
+    public String getTopScores(){
+        String scores = "";
+        File f = new File("scores.txt");
+        try  {
+            Scanner in = new Scanner(f);
+            while(in.hasNextLine()){
+                System.out.println(in.nextLine());
+            }
+        }
+        catch (FileNotFoundException exception) {
+            exception.printStackTrace();
+        }
+        return scores;
     }
 
     private Object showTop10Scores(){
