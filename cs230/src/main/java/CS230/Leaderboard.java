@@ -1,16 +1,26 @@
 package CS230;
 
+import java.io.FileWriter;
+import java.io.File;
+import java.io.IOException;
+
 public class Leaderboard extends SaveLoad {
 
-    private void addScore (String gameState) {
-        // pull score from game state
-        // if statement to determine if in top 10
-        //use either recursion of for loop to define
+    public void addScore (String username, int score) {
+        try{
+            FileWriter f = new FileWriter("scores.txt");
+            f.write(username + " " + score);
+            f.close();
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+            System.exit(1);
+        }
+
     }
 
     private void addUser(){
         String username = null;
-        String password = null;
         //collect inputs in gui
         //upload to txt file
     }
