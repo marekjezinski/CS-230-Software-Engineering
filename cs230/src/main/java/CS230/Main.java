@@ -236,7 +236,16 @@ public class Main extends Application {
         drawGame();
     }
 
-
+    public void resetGame() {
+        //TODO: change filename
+        currentLevel = new Map("15x10.txt");
+        resetPlayerLocation();
+        score = 0;
+        timerLeft = currentLevel.getTimerLeft();
+        timerTimeline.stop();
+        hasGameStarted = false;
+        drawGame();
+    }
 
 
     /**
@@ -313,7 +322,7 @@ public class Main extends Application {
         // Set up the behaviour of the button.
         resetGameButton.setOnAction(e -> {
             // We keep this method short and use a method for the bulk of the work.
-            resetPlayerLocation();
+            resetGame();
         });
 
         Label labelUsername = new Label("Username");
