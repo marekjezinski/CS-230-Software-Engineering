@@ -36,6 +36,17 @@ public class Character {
         return charImage;
     }
 
+    public void setXPos(int newX){
+        this.xPos = newX;
+    }
+
+    public void setYPos(int newY){
+        this.yPos = newY;
+    }
+
+    public void killPlayer(){
+        this.alive = false;
+    }
     // public void moveChar() to be implemented...
 
 }
