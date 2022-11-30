@@ -71,6 +71,7 @@ public class Main extends Application {
     private Timeline tickTimeline;
     private Timeline timerTimeline;
     private Timeline scoreColourChanger;
+    private Leaderboard l = new Leaderboard();
 
     private int timerLeft;
 
@@ -267,6 +268,7 @@ public class Main extends Application {
         else {
             System.out.println("You ran out of time! GAME OVER!!!");
             System.out.println("You scored " + this.score + " points");
+            l.addScore(username,score);
             System.exit(0);
         }
     }
