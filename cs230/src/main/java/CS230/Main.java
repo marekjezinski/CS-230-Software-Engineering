@@ -1,4 +1,5 @@
 package CS230;
+import CS230.items.*;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -8,7 +9,6 @@ import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
@@ -20,6 +20,8 @@ import javafx.scene.text.Text;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+
+import java.lang.reflect.Array;
 import java.util.Random;
 
 import java.net.URISyntaxException;
@@ -76,16 +78,16 @@ public class Main extends Application {
 
 
 
-
+    private ArrayList<Item> items;
     private boolean hasGameStarted = false;
     private Text timerText = new Text();
     private Text scoreText = new Text();
 
-    private int currentLevel = 0;
+    private int currentLevelID = 0;
     private ArrayList<Map> levels = new ArrayList<Map>();
-    Map level;
+    Map currentLevel;
     Map level1 = new Map("15x10.txt");
-    Map level2 = new Map("15x10l2.txt");
+    //Map level2 = new Map("15x10l2.txt");
 
     /**
      * Set up the new application.
@@ -93,16 +95,11 @@ public class Main extends Application {
      */
     public void start(Stage primaryStage) throws URISyntaxException {
         levels.add(level1);
-        levels.add(level2);
-        this.level = levels.get(currentLevel);
-        this.timerLeft = 0;
-        this.timerLeft = this.level.getTimerLeft();
+        //levels.add(level2);
+        this.currentLevel = levels.get(currentLevelID);
+        this.timerLeft = this.currentLevel.getTimerLeft();
         // Load images. Note we use png images with a transparent background.
         playerImage = new Image(getClass().getResource("player.png").toURI().toString());
-
-        clock = new Image(getClass().getResource("clock.png").toURI().toString());
-        loot = new Image(getClass().getResource("placeholder.png").toURI().toString());
-        door = new Image(getClass().getResource("door.png").toURI().toString());
 
         // Build the GUI
         Pane root = buildGUI();
@@ -141,33 +138,32 @@ public class Main extends Application {
      */
     public void processKeyEvent(KeyEvent event) {
         // We change the behaviour depending on the actual key that was pressed.
-
         switch (event.getCode()) {
             case RIGHT:
                 // Right key was pressed. So move the player right by one cell.
                 if (playerX < 28 && this.hasGameStarted == true) {
-                    playerX = level.moveRight(playerX, playerY);
+                    playerX = currentLevel.moveRight(playerX, playerY);
                 }
                 break;
 
             case LEFT:
                 // Left key was pressed. So move the player left by one cell.
                 if (playerX > 0 && this.hasGameStarted == true) {
-                    playerX = level.moveLeft(playerX, playerY);
+                    playerX = currentLevel.moveLeft(playerX, playerY);
                 }
                 break;
 
             case UP:
                 // Up key was pressed. So move the player up by one cell.
                 if (playerY > 0 && this.hasGameStarted == true) {
-                    playerY = level.moveUp(playerX, playerY);
+                    playerY = currentLevel.moveUp(playerX, playerY);
                 }
                 break;
 
             case DOWN:
                 // Down key was pressed. So move the player down by one cell.
                 if (playerY < 18 && this.hasGameStarted == true) {
-                    playerY = level.moveDown(playerX, playerY);
+                    playerY = currentLevel.moveDown(playerX, playerY);
                 }
                 break;
 
@@ -175,12 +171,22 @@ public class Main extends Application {
                 // Do nothing for all other keys.
                 break;
         }
+        checkItems();
 
         // Redraw game as the player may have moved.
         drawGame();
 
         // Consume the event. This means we mark it as dealt with. This stops other GUI nodes (buttons etc.) responding to it.
         event.consume();
+    }
+
+    private void checkItems() {
+        timerLeft += currentLevel.checkClocks(playerX / 2, playerY / 2);
+        //TODO: implement door and level progression
+        currentLevel.checkDoor(playerX / 2, playerY / 2);
+        score += currentLevel.checkLoots(playerX / 2, playerY / 2);
+        scoreText.setText("Score: " + this.score);
+        scoreText.setFont(Font.font("arial",20));
     }
 
     /**
@@ -198,65 +204,23 @@ public class Main extends Application {
         gc.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
 
         //Drawing cells on canvas
-        Cell[][] cellsArray = level.getCellsArray();
+        Cell[][] cellsArray = currentLevel.getCellsArray();
         for (int y = 0; y < cellsArray[0].length; y++){
             for (int x = 0; x < cellsArray.length; x++) {
-                gc.drawImage(cellsArray[x][y].getCellImage(), x * GRID_CELL_WIDTH, y * GRID_CELL_HEIGHT,
-                        GRID_CELL_WIDTH, GRID_CELL_HEIGHT);
+                gc.drawImage(cellsArray[x][y].getCellImage(), x * GRID_CELL_WIDTH, y * GRID_CELL_HEIGHT);
             }
         }
 
+        Door door = currentLevel.getDoor();
+        gc.drawImage(door.getImg(), door.getX() * GRID_CELL_WIDTH * 2, door.getY() * GRID_CELL_HEIGHT * 2);
 
+        ArrayList<Clock> clocks = currentLevel.getClocks();
+        clocks.forEach(e ->  gc.drawImage(e.getImg(),
+                e.getX() * GRID_CELL_WIDTH * 2, e.getY() * GRID_CELL_HEIGHT * 2));
 
-
-
-        for(int i = 0; i < level.getClockParams().size(); i = i+2){
-            gc.drawImage(clock, level.getClockParams().get(i) * GRID_CELL_WIDTH,
-                    level.getClockParams().get(i+1) * GRID_CELL_HEIGHT);
-        }
-        for(int i = 0; i < level.getClockParams().size(); i = i+2){
-            if (level.getClockParams().get(i) == playerX){
-                if (level.getClockParams().get(i+1) == playerY){
-                    level.getClockParams().remove(i);
-                    level.getClockParams().remove(i);
-                    this.timerLeft = this.timerLeft + 5;
-
-                }
-            }
-        }
-
-        for(int i = 0; i < this.level.getLootParams().size(); i = i+2){
-            gc.drawImage(loot, this.level.getLootParams().get(i) * GRID_CELL_WIDTH,
-                    this.level.getLootParams().get(i+1) * GRID_CELL_HEIGHT);
-        }
-
-        for(int i = 0; i < this.level.getLootParams().size(); i = i+2){
-            if (this.level.getLootParams().get(i) == playerX){
-                if (this.level.getLootParams().get(i+1) == playerY){
-                    this.level.getLootParams().remove(i);
-                    this.level.getLootParams().remove(i);
-                    this.score = this.score + 10;
-                    scoreText.setText("Score: " + this.score);
-                    scoreText.setFont(Font.font("arial",20));
-
-                }
-            }
-        }
-
-        for(int i = 0; i < this.level.getDoorParams().size(); i = i+2){
-            gc.drawImage(door, this.level.getDoorParams().get(i) * GRID_CELL_WIDTH,
-                    this.level.getDoorParams().get(i+1) * GRID_CELL_HEIGHT);
-        }
-        for(int i = 0; i < this.level.getDoorParams().size(); i = i+2){
-            if (this.level.getDoorParams().get(i) == playerX){
-                if (this.level.getDoorParams().get(i+1) == playerY){
-                    this.currentLevel = currentLevel + 1;
-                    System.out.print(this.currentLevel);
-
-                }
-            }
-        }
-
+        ArrayList<Loot> loots = currentLevel.getLoots();
+        loots.forEach(e ->  gc.drawImage(e.getImg(),
+                e.getX() * GRID_CELL_WIDTH * 2, e.getY() * GRID_CELL_HEIGHT * 2));
 
         // Draw player at current location
         gc.drawImage(playerImage, playerX * GRID_CELL_WIDTH, playerY * GRID_CELL_HEIGHT);
@@ -296,7 +260,7 @@ public class Main extends Application {
             timerText.setFill(Paint.valueOf("Red"));
         }
         if (this.timerLeft > 0) {
-            this.timerLeft = this.timerLeft- 1;
+            this.timerLeft = this.timerLeft - 1;
             timerText.setText("Time remaining: " + this.timerLeft);
         }
         else {

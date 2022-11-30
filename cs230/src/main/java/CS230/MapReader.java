@@ -1,5 +1,8 @@
 package CS230;
 
+import CS230.items.*;
+import javafx.scene.image.Image;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
@@ -9,15 +12,17 @@ public class MapReader {
     private Tile[][] tiles = null;
     private int maxTileX;
     private int maxTileY;
-
-    private int x;
-    private int y;
-    private String type;
-    private ArrayList<Integer> clockParam = new ArrayList<Integer>();
-    private ArrayList<Integer> lootParam = new ArrayList<Integer>();
-    private ArrayList<Integer> doorParam = new ArrayList<Integer>();
     private int timer;
-    String fileName;
+    private ArrayList<Item> items = new ArrayList<>();
+    private ArrayList<Loot> loot = new ArrayList<>();
+    private ArrayList<Clock> clocks = new ArrayList<>();
+    private Door door;
+    private String fileName;
+    private final int CLOCK_TIME_ADDED = 20;
+    private final int CENT_VALUE = 10;
+    private final int DOLLAR_VALUE = 20;
+    private final int RUBY_VALUE = 30;
+    private final int DIAMOND_VALUE = 40;
     public MapReader(String fileName) {
         this.fileName = fileName;
         Scanner in = null;
@@ -46,62 +51,52 @@ public class MapReader {
                 }
             }
             while (in.hasNext()) {
-                this.type = in.next();
-                if (type.equals("Timer")) {
+                String type = in.next().toLowerCase();
+                if (type.equals("timer")) {
                     this.timer = in.nextInt();
                 }
-                if (type.equals("Clock")) {
-                    x = in.nextInt();
-                    if (x%2==0){
-                        this.clockParam.add(x);
-                    }
-                    else{
-                        this.clockParam.add(x+1);
-                    }
-                    y = in.nextInt();
-                    if (y%2==0){
-                        this.clockParam.add(y);
-                    }
-                    else{
-                        this.clockParam.add(y+1);
-                    }
+                else if (type.equals("clock")) {
+                    Clock c = new Clock(new Image(getClass().getResource("clock.png").toURI().toString()),
+                            in.nextInt(), in.nextInt(), CLOCK_TIME_ADDED);
+                    items.add(c);
+                    clocks.add(c);
                 }
-                if (type.equals("Loot")) {
-                    x = in.nextInt();
-                    if (x%2==0){
-                        this.lootParam.add(x);
-                    }
-                    else{
-                        this.lootParam.add(x+1);
-                    }
-                    y = in.nextInt();
-                    if (y%2==0){
-                        this.lootParam.add(y);
-                    }
-                    else{
-                        this.lootParam.add(y+1);
-                    }
+                //TODO: Change filename for all loot!
+                else if (type.equals("cent")) {
+                    Cent c = new Cent(new Image(getClass().getResource("placeholder.png").toURI().toString()),
+                            in.nextInt(), in.nextInt(), CENT_VALUE);
+                    items.add(c);
+                    loot.add(c);
                 }
-                if (type.equals("Door")) {
-                    x = in.nextInt();
-                    if (x%2==0){
-                        this.doorParam.add(x);
-                    }
-                    else{
-                        this.doorParam.add(x+1);
-                    }
-                    y = in.nextInt();
-                    if (y%2==0){
-                        this.doorParam.add(y);
-                    }
-                    else{
-                        this.doorParam.add(y+1);
-                    }
+                else if (type.equals("dollar")) {
+                    Dollar d = new Dollar(new Image(getClass().getResource("placeholder.png").toURI().toString()),
+                            in.nextInt(), in.nextInt(), DOLLAR_VALUE);
+                    items.add(d);
+                    loot.add(d);
+                }
+                else if (type.equals("ruby")) {
+                    Ruby r = new Ruby(new Image(getClass().getResource("placeholder.png").toURI().toString()),
+                            in.nextInt(), in.nextInt(), RUBY_VALUE);
+                    items.add(r);
+                    loot.add(r);
+                }
+                else if (type.equals("diamond")) {
+                    Diamond d = new Diamond(new Image(getClass().getResource("placeholder.png").toURI().toString()),
+                            in.nextInt(), in.nextInt(), DIAMOND_VALUE);
+                    items.add(d);
+                    loot.add(d);
+                }
+                else if (type.equals("door")) {
+                    Door d = new Door(new Image(getClass().getResource("door.png").toURI().toString()),
+                            in.nextInt(), in.nextInt());
+                    items.add(d);
+                    door = d;
+                }
+                else {
+                    System.err.println("Please check level file, entity identifier mismatch");
+                    throw new Exception();
                 }
             }
-
-
-
         }
         catch(Exception e) {
             System.err.println("Please check level file!");
@@ -115,22 +110,26 @@ public class MapReader {
     public int getMaxTileY() {
         return maxTileY;
     }
-
     public Tile[][] getTiles() {
         return tiles;
-    }
-
-   public ArrayList<Integer> getClock(){
-        return this.clockParam;
     }
     public int getTimer(){
         return this.timer;
     }
-    public ArrayList<Integer> getLoot(){
-        return this.lootParam;
+    public ArrayList<Item> getItems() {
+        return items;
     }
-    public ArrayList<Integer> getDoor(){
-        return this.doorParam;
+
+    public ArrayList<Loot> getLoot() {
+        return loot;
+    }
+
+    public ArrayList<Clock> getClocks() {
+        return clocks;
+    }
+
+    public Door getDoor() {
+        return door;
     }
 }
 

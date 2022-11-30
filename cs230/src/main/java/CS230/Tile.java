@@ -1,5 +1,7 @@
 package CS230;
 
+import CS230.items.Item;
+
 public class Tile {
     private Cell[] cells = new Cell[4];
 
