@@ -315,39 +315,6 @@ public class Main extends Application {
             resetPlayerLocation();
         });
 
-
-
-
-
-
-        // Tick Timeline buttons
-        /*Button startTickTimelineButton = new Button("Start Ticks");
-        Button stopTickTimelineButton = new Button("Stop Ticks");
-        // We add both buttons at the same time to the timeline (we could have done this in two steps).
-        toolbar.getChildren().addAll(startTickTimelineButton, stopTickTimelineButton);
-        // Stop button is disabled by default
-        stopTickTimelineButton.setDisable(true);
-
-        // Set up the behaviour of the buttons.
-        startTickTimelineButton.setOnAction(e -> {
-            // Start the tick timeline and enable/disable buttons as appropriate.
-            startTickTimelineButton.setDisable(true);
-            tickTimeline.play();
-            stopTickTimelineButton.setDisable(false);
-        });
-
-        stopTickTimelineButton.setOnAction(e -> {
-            // Stop the tick timeline and enable/disable buttons as appropriate.
-            stopTickTimelineButton.setDisable(true);
-            tickTimeline.stop();
-            startTickTimelineButton.setDisable(false);
-        });*/
-
-
-
-
-
-
         Button startTimer = new Button("Start game");
         toolbar.getChildren().addAll(startTimer);
         startTimer.setOnAction(e -> {
