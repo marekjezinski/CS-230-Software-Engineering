@@ -9,6 +9,13 @@ public class Character {
     private boolean alive;
     private Image charImage;
 
+    public Character(int x, int y,Image pic){
+        this.xPos = x;
+        this.yPos = y;
+        this.alive = true;
+        this.charImage = pic;
+    }
+
     public int getYPos() {
         return yPos;
     }
