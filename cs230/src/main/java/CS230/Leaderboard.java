@@ -46,17 +46,27 @@ public class Leaderboard extends SaveLoad {
     }
 
     public void getTopScores(){
-        int topScore = 0;
         File f = new File("scores.txt");
         try  {
             Scanner in = new Scanner(f);
             while(in.hasNext()) {
                 this.names.add(in.next());
-
                 this.scores.add(in.nextInt());
             }
            for (int i = 0; i < 10; i++){
-               System.out.println(this.names.get(i) + " " + this.scores.get(i));
+               int topScore = 0;
+               String name = "";
+               int position = 0;
+                for (int j = 0; j < this.scores.size(); j++) {
+                    if (this.scores.get(j) >= topScore) {
+                        topScore = this.scores.get(j);
+                        name = this.names.get(j);
+                        position = j;
+                    }
+                }
+                System.out.println(name + " " + topScore);
+                this.names.remove(position);
+                this.scores.remove(position);
            }
                 }
 
