@@ -187,7 +187,11 @@ public class Main extends Application {
     private void checkItems() {
         timerLeft += currentLevel.checkClocks(playerX / 2, playerY / 2);
         //TODO: implement door and level progression
-        currentLevelID += currentLevel.checkDoor(playerX / 2, playerY / 2);
+
+        if(currentLevel.checkDoor(playerX / 2, playerY / 2)>0){
+            currentLevelID += currentLevel.checkDoor(playerX / 2, playerY / 2);
+            currentLevel = levels.get(currentLevelID);
+        }
         score += currentLevel.checkLoots(playerX / 2, playerY / 2);
         scoreText.setText("Score: " + this.score);
         scoreText.setFont(Font.font("arial",20));
@@ -242,6 +246,8 @@ public class Main extends Application {
     public void resetGame() {
         //TODO: change filename
         currentLevelID = 0;
+        currentLevel = levels.get(currentLevelID);
+
         resetPlayerLocation();
         score = 0;
         timerLeft = 10;
