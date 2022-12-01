@@ -280,14 +280,19 @@ public class Main extends Application {
             timerText.setText("Time remaining: " + this.timerLeft + "Level" + currentLevelID);
         }
         else {
-            System.out.println("You ran out of time! GAME OVER!!!");
-            System.out.println("You scored " + this.score + " points");
-            l.addScore(username,score);
-            System.out.println("---------------------------------");
-            System.out.println("Leaderboard:");
-            l.getTopScores();
-            System.exit(0);
+            timerTimeline.stop();
+            scoreColourChanger.stop();
+            gameOver();
         }
+    }
+    public void gameOver(){
+        System.out.println("GAME OVER!!!");
+        System.out.println("You scored " + this.score + " points");
+        l.addScore(username,score);
+        System.out.println("---------------------------------");
+        System.out.println("Leaderboard:");
+        l.getTopScores();
+        System.exit(0);
     }
 
     public void scoreColour(){
