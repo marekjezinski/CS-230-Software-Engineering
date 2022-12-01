@@ -85,11 +85,13 @@ public class Main extends Application {
     private Text timerText = new Text();
     private Text scoreText = new Text();
 
+
+
     private int currentLevelID = 0;
     private ArrayList<Map> levels = new ArrayList<Map>();
     Map currentLevel;
     Map level1 = new Map("15x10.txt");
-    //Map level2 = new Map("15x10l2.txt");
+    Map level2 = new Map("15x10l2.txt");
 
     /**
      * Set up the new application.
@@ -97,7 +99,7 @@ public class Main extends Application {
      */
     public void start(Stage primaryStage) throws URISyntaxException {
         levels.add(level1);
-        //levels.add(level2);
+        levels.add(level2);
         this.currentLevel = levels.get(currentLevelID);
         this.timerLeft = this.currentLevel.getTimerLeft();
         // Load images. Note we use png images with a transparent background.
@@ -185,7 +187,7 @@ public class Main extends Application {
     private void checkItems() {
         timerLeft += currentLevel.checkClocks(playerX / 2, playerY / 2);
         //TODO: implement door and level progression
-        currentLevel.checkDoor(playerX / 2, playerY / 2);
+        currentLevelID += currentLevel.checkDoor(playerX / 2, playerY / 2);
         score += currentLevel.checkLoots(playerX / 2, playerY / 2);
         scoreText.setText("Score: " + this.score);
         scoreText.setFont(Font.font("arial",20));
@@ -239,10 +241,10 @@ public class Main extends Application {
 
     public void resetGame() {
         //TODO: change filename
-        currentLevel = new Map("15x10.txt");
+        currentLevelID = 0;
         resetPlayerLocation();
         score = 0;
-        timerLeft = currentLevel.getTimerLeft();
+        timerLeft = 10;
         timerTimeline.stop();
         hasGameStarted = false;
         drawGame();
@@ -270,9 +272,12 @@ public class Main extends Application {
         if (this.timerLeft <= 6){
             timerText.setFill(Paint.valueOf("Red"));
         }
+        if (this.timerLeft > 6){
+            timerText.setFill(Paint.valueOf("Black"));
+        }
         if (this.timerLeft > 0) {
             this.timerLeft = this.timerLeft - 1;
-            timerText.setText("Time remaining: " + this.timerLeft);
+            timerText.setText("Time remaining: " + this.timerLeft + "Level" + currentLevelID);
         }
         else {
             System.out.println("You ran out of time! GAME OVER!!!");
@@ -343,11 +348,11 @@ public class Main extends Application {
             System.out.printf(this.username);
         });
 
-        timerText.setText("Time remaining: " + this.timerLeft);
+        timerText.setText("Time remaining: " + this.timerLeft );
         timerText.setFont(Font.font("arial",20));
         toolbar.getChildren().add(timerText);
 
-        scoreText.setText("Score: " + this.score);
+        scoreText.setText("Score: " + this.score );
         scoreText.setFont(Font.font("arial",20));
         toolbar.getChildren().add(scoreText);
 

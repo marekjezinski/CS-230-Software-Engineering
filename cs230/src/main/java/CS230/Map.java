@@ -106,12 +106,16 @@ public class Map {
         return(0);
     }
 
-    public boolean checkDoor(int playerX, int playerY) {
-        if(door.getX() == playerX && door.getY() == playerY) {
-            //TODO: add conditions to make door collectable
-            return(true);
-        }
-        return(false);
+    public int checkDoor(int playerX, int playerY) {
+
+            if (door.getX() == playerX && door.getY() == playerY) {
+                //TODO: add conditions to make door collectable
+
+                return (1);
+            }
+
+
+        return (0);
     }
 
     public int checkLoots(int playerX, int playerY) {
