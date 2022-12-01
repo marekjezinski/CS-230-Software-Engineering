@@ -93,6 +93,8 @@ public class Main extends Application {
     Map level1 = new Map("15x10.txt");
     Map level2 = new Map("15x10l2.txt");
 
+    Map level3 = new Map("15x10l3.txt");
+
     /**
      * Set up the new application.
      * @param primaryStage The stage that is to be used for the application.
@@ -100,6 +102,7 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws URISyntaxException {
         levels.add(level1);
         levels.add(level2);
+        levels.add(level3);
         this.currentLevel = levels.get(currentLevelID);
         this.timerLeft = this.currentLevel.getTimerLeft();
         // Load images. Note we use png images with a transparent background.
@@ -187,7 +190,11 @@ public class Main extends Application {
     private void checkItems() {
         timerLeft += currentLevel.checkClocks(playerX / 2, playerY / 2);
         //TODO: implement door and level progression
-        currentLevelID += currentLevel.checkDoor(playerX / 2, playerY / 2);
+
+        if(currentLevel.checkDoor(playerX / 2, playerY / 2)>0){
+            currentLevelID += currentLevel.checkDoor(playerX / 2, playerY / 2);
+            currentLevel = levels.get(currentLevelID);
+        }
         score += currentLevel.checkLoots(playerX / 2, playerY / 2);
         scoreText.setText("Score: " + this.score);
         scoreText.setFont(Font.font("arial",20));
@@ -242,6 +249,8 @@ public class Main extends Application {
     public void resetGame() {
         //TODO: change filename
         currentLevelID = 0;
+        currentLevel = levels.get(0);
+
         resetPlayerLocation();
         score = 0;
         timerLeft = 10;
