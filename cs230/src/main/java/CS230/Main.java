@@ -369,14 +369,16 @@ public class Main extends Application {
         Button startGame = new Button("Start game");
         toolbar.getChildren().addAll(startGame);
         startGame.setOnAction(e -> {
-            player.play();
-            this.hasGameStarted = true;
-            timerTimeline.play();
-            scoreColourChanger.play();
-            this.player.play();
-            this.username = usernameIn.getText();
-            System.out.printf(this.username);
-
+            if(usernameIn.getText().equals("")){
+                System.err.println("ERROR! Player name is required!");
+            }
+            else{player.play();
+                this.hasGameStarted = true;
+                timerTimeline.play();
+                scoreColourChanger.play();
+                this.player.play();
+                this.username = usernameIn.getText();
+            }
         });
 
         timerText.setText("Time remaining: " + this.timerLeft );
