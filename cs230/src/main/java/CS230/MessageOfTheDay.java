@@ -31,15 +31,13 @@ public class MessageOfTheDay {
         for(int i = 0; i < this.breakdown.length; i++) {
             for (int j = 0; j < this.alphabet.length; j++){
                 if (this.breakdown[i].equals(this.alphabet[j])){
-                    if (i % 2 == 0){
-                        j = j + i;
+                    if ((i + 1) % 2 != 0){
+                        j = j - i - 1;
                     }
                     else{
-                        j = j - i;
+                        j = j + i + 1;
                     }
-                    if (j > 25){
-                        j = 0;
-                    }
+
                     if (j <0){
                         j = 25;
                     }

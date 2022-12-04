@@ -91,7 +91,9 @@ public class Main extends Application {
     private Text scoreText = new Text();
 
     private MessageOfTheDay m;
-
+    private String backgroundMusic = "gamemusic.mp3";
+    private Media music = new Media(new File(this.backgroundMusic).toURI().toString());
+    private MediaPlayer player = new MediaPlayer(this.music);
 
 //8-Bit March by Twin Musicom is licensed under a Creative Commons Attribution 4.0 licence.
 // https://creativecommons.org/licenses/by/4.0/
@@ -312,6 +314,7 @@ public class Main extends Application {
         System.out.println("---------------------------------");
         System.out.println("Leaderboard:");
         l.getTopScores();
+        this.player.play();
         System.exit(0);
     }
 
@@ -366,13 +369,11 @@ public class Main extends Application {
         Button startGame = new Button("Start game");
         toolbar.getChildren().addAll(startGame);
         startGame.setOnAction(e -> {
-            String backgroundMusic = "gamemusic.mp3";
-            Media music = new Media(new File(backgroundMusic).toURI().toString());
-            MediaPlayer player = new MediaPlayer(music);
             player.play();
             this.hasGameStarted = true;
             timerTimeline.play();
             scoreColourChanger.play();
+            this.player.play();
             this.username = usernameIn.getText();
             System.out.printf(this.username);
 
@@ -394,7 +395,7 @@ public class Main extends Application {
     public static void main(String[] args) throws IOException {
         MessageOfTheDay m = new MessageOfTheDay();
        // m.getMessage();
-        launch(args);
+       // launch(args);
 
     }
 }
