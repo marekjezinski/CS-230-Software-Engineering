@@ -40,7 +40,6 @@ import java.util.ArrayList;
  * @author Liam O'Reilly
  */
 public class Main extends Application {
-    Music jeff = new Music();
     // The dimensions of the window
     private static final int WINDOW_WIDTH = 1000;
     private static final int WINDOW_HEIGHT = 700;

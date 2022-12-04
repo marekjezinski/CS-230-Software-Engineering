@@ -8,6 +8,11 @@ import java.io.FileNotFoundException;
 import java.util.Scanner;
 import java.util.ArrayList;
 
+/**
+ * Class for reading the text file for levels/maps
+ * @author Tom Stevens
+ * @version 1.0
+ */
 public class MapReader {
     private Tile[][] tiles = null;
     private int maxTileX;
@@ -23,6 +28,11 @@ public class MapReader {
     private final int DOLLAR_VALUE = 20;
     private final int RUBY_VALUE = 30;
     private final int DIAMOND_VALUE = 40;
+
+    /**
+     * Constructor for the class
+     * @param fileName
+     */
     public MapReader(String fileName) {
         this.fileName = fileName;
         Scanner in = null;
@@ -104,30 +114,60 @@ public class MapReader {
         }
         in.close();
     }
+
+    /**
+     * Get method for maxTileX
+     * @return maxTileX
+     */
     public int getMaxTileX() {
         return maxTileX;
     }
+    /**
+     * Get method for maxTileY
+     * @return maxTileY
+     */
     public int getMaxTileY() {
         return maxTileY;
     }
+    /**
+     * Get method for tiles
+     * @return tiles
+     */
     public Tile[][] getTiles() {
         return tiles;
     }
+    /**
+     * Get method for timer
+     * @return timer
+     */
     public int getTimer(){
         return this.timer;
     }
+    /**
+     * Get method for items
+     * @return items
+     */
     public ArrayList<Item> getItems() {
         return items;
     }
-
+    /**
+     * Get method for loot
+     * @return loot
+     */
     public ArrayList<Loot> getLoot() {
         return loot;
     }
-
+    /**
+     * Get method for clocks
+     * @return clocks
+     */
     public ArrayList<Clock> getClocks() {
         return clocks;
     }
-
+    /**
+     * Get method for door
+     * @return door
+     */
     public Door getDoor() {
         return door;
     }

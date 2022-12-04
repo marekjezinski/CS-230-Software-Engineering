@@ -7,10 +7,21 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * Class for adding scores to the leaderboard as well
+ * as obtaining the top 10 scores
+ * @author Tom Stevens
+ * @version 1.0
+ */
 public class Leaderboard extends SaveLoad {
     private ArrayList<String> names = new ArrayList<String>();
     private ArrayList<Integer> scores = new ArrayList<Integer>();
 
+    /**
+     * Method for adding scores to the text document
+     * @param username
+     * @param score
+     */
     public void addScore (String username, int score) {
         try{
             FileWriter fI = new FileWriter("scores.txt", true);
@@ -24,27 +35,9 @@ public class Leaderboard extends SaveLoad {
 
     }
 
-
-    private void addUser(){
-        String username = null;
-        //collect inputs in gui
-        //upload to txt file
-    }
-    public String getAllScores(){
-        String scores = "";
-        File f = new File("scores.txt");
-        try  {
-            Scanner in = new Scanner(f);
-            while(in.hasNextLine()){
-                scores = scores + in.nextLine();
-            }
-        }
-        catch (FileNotFoundException exception) {
-            exception.printStackTrace();
-        }
-        return scores;
-    }
-
+    /**
+     * method for printing out the top 10 scores
+     */
     public void getTopScores(){
         File f = new File("scores.txt");
         try  {
@@ -76,17 +69,4 @@ public class Leaderboard extends SaveLoad {
         }
     }
 
-    private Object showTop10Scores(){
-        return null;
-    }
-
-    /*
-    what else would a leaderboard need to do?
-
-    figure out the best way to change top scores
-
-    maybe store top 10 in some array or file
-    then add the new score, sort and then remove the last score.
-    ^ first compare new score with the lowest score on the list
-     */
 }
