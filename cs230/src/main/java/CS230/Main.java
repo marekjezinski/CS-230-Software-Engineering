@@ -12,6 +12,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
+
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
@@ -20,12 +21,16 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Text;
 import javafx.scene.text.Font;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-import java.lang.reflect.Array;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Random;
-
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 
@@ -85,7 +90,13 @@ public class Main extends Application {
     private Text timerText = new Text();
     private Text scoreText = new Text();
 
+    private MessageOfTheDay m;
 
+
+//8-Bit March by Twin Musicom is licensed under a Creative Commons Attribution 4.0 licence.
+// https://creativecommons.org/licenses/by/4.0/
+//
+//Artist: http://www.twinmusicom.org/
 
     private int currentLevelID = 0;
     private ArrayList<Map> levels = new ArrayList<Map>();
@@ -355,11 +366,16 @@ public class Main extends Application {
         Button startGame = new Button("Start game");
         toolbar.getChildren().addAll(startGame);
         startGame.setOnAction(e -> {
+            String backgroundMusic = "gamemusic.mp3";
+            Media music = new Media(new File(backgroundMusic).toURI().toString());
+            MediaPlayer player = new MediaPlayer(music);
+            player.play();
             this.hasGameStarted = true;
             timerTimeline.play();
             scoreColourChanger.play();
             this.username = usernameIn.getText();
             System.out.printf(this.username);
+
         });
 
         timerText.setText("Time remaining: " + this.timerLeft );
@@ -375,7 +391,9 @@ public class Main extends Application {
         return root;
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
+        MessageOfTheDay m = new MessageOfTheDay();
+       // m.getMessage();
         launch(args);
 
     }
