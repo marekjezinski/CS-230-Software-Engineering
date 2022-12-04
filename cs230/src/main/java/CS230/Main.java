@@ -12,6 +12,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
+
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
@@ -20,14 +21,18 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Text;
 import javafx.scene.text.Font;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
-import java.lang.reflect.Array;
+import java.io.InputStream;
 import java.util.Random;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
-
 
 /**
  * Sample application that demonstrates the use of JavaFX Canvas for a Game.
@@ -361,6 +366,10 @@ public class Main extends Application {
         Button startGame = new Button("Start game");
         toolbar.getChildren().addAll(startGame);
         startGame.setOnAction(e -> {
+            String backgroundMusic = "gamemusic.mp3";
+            Media music = new Media(new File(backgroundMusic).toURI().toString());
+            MediaPlayer player = new MediaPlayer(music);
+            player.play();
             this.hasGameStarted = true;
             timerTimeline.play();
             scoreColourChanger.play();
