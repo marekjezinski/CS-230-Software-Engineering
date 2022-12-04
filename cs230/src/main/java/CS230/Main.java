@@ -22,12 +22,12 @@ import javafx.scene.text.Text;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-
+import java.io.IOException;
 import java.lang.reflect.Array;
 import java.util.Random;
-
 import java.net.URISyntaxException;
 import java.util.ArrayList;
+
 
 /**
  * Sample application that demonstrates the use of JavaFX Canvas for a Game.
@@ -40,6 +40,7 @@ import java.util.ArrayList;
  * @author Liam O'Reilly
  */
 public class Main extends Application {
+    Music jeff = new Music();
     // The dimensions of the window
     private static final int WINDOW_WIDTH = 1000;
     private static final int WINDOW_HEIGHT = 700;
@@ -85,7 +86,13 @@ public class Main extends Application {
     private Text timerText = new Text();
     private Text scoreText = new Text();
 
+    private MessageOfTheDay m;
 
+
+//8-Bit March by Twin Musicom is licensed under a Creative Commons Attribution 4.0 licence.
+// https://creativecommons.org/licenses/by/4.0/
+//
+//Artist: http://www.twinmusicom.org/
 
     private int currentLevelID = 0;
     private ArrayList<Map> levels = new ArrayList<Map>();
@@ -360,6 +367,7 @@ public class Main extends Application {
             scoreColourChanger.play();
             this.username = usernameIn.getText();
             System.out.printf(this.username);
+
         });
 
         timerText.setText("Time remaining: " + this.timerLeft );
@@ -375,7 +383,9 @@ public class Main extends Application {
         return root;
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
+        MessageOfTheDay m = new MessageOfTheDay();
+       // m.getMessage();
         launch(args);
 
     }
