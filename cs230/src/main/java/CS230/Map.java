@@ -14,6 +14,7 @@ public class Map {
     private Door door;
     private ArrayList<Loot> loots = new ArrayList<>();
     private Gate rgate;
+    private Lever rlever;
 
     public Map(String fileName) {
         this.mapRead = new MapReader(fileName);
@@ -24,7 +25,8 @@ public class Map {
         this.clocks = mapRead.getClocks();
         this.door = mapRead.getDoor();
         this.loots = mapRead.getLoot();
-        this.rgate = mapRead.getRgate();
+        this.rgate = mapRead.getRGate();
+        this.rlever = mapRead.getRLever();
     }
 
     public int moveRight(int playerX, int playerY) {
@@ -140,6 +142,9 @@ public class Map {
 
     public Gate getGate() {
         return rgate;
+    }
+    public Lever getRLever() {
+        return rlever;
     }
     public ArrayList<Loot> getLoots() {
         return loots;

@@ -238,6 +238,9 @@ public class Main extends Application {
         Gate rgate =  currentLevel.getGate();
         gc.drawImage(rgate.getImg(), rgate.getX() * GRID_CELL_WIDTH * 2, rgate.getY() * GRID_CELL_HEIGHT * 2);
 
+        Lever rlever =  currentLevel.getRLever();
+        gc.drawImage(rlever.getImg(), rlever.getX() * GRID_CELL_WIDTH * 2, rlever.getY() * GRID_CELL_HEIGHT * 2);
+
         ArrayList<Clock> clocks = currentLevel.getClocks();
         clocks.forEach(e ->  gc.drawImage(e.getImg(),
                 e.getX() * GRID_CELL_WIDTH * 2, e.getY() * GRID_CELL_HEIGHT * 2));
