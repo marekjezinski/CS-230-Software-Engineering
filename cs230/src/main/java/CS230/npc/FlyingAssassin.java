@@ -1,10 +1,9 @@
 package CS230.npc;
 
 import javafx.scene.image.Image;
-import javafx.scene.transform.Translate;
-
 import java.io.FileInputStream;
 
+//heavy wip
 public class FlyingAssassin {
     private String direction;
     private Image sprite;
@@ -19,7 +18,6 @@ public class FlyingAssassin {
     }
 
     public void movement(){
-        Translate translate = new Translate();
 
     }
 
