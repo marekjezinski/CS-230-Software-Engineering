@@ -395,9 +395,9 @@ public class Main extends Application {
     }
 
     public static void main(String[] args) throws IOException {
-        //MessageOfTheDay m = new MessageOfTheDay();
-       // m.getMessage();
-       launch(args);
+        MessageOfTheDay m = new MessageOfTheDay();
+        //m.getMessage();
+        //launch(args);
 
     }
 }
