@@ -64,9 +64,6 @@ public class Main extends Application {
 
     // Loaded images
     private Image playerImage;
-    private Image clock;
-    private Image loot;
-    private Image door;
 
     // X and Y coordinate of player on the grid.
     private int playerX = 0;
@@ -237,6 +234,9 @@ public class Main extends Application {
 
         Door door = currentLevel.getDoor();
         gc.drawImage(door.getImg(), door.getX() * GRID_CELL_WIDTH * 2, door.getY() * GRID_CELL_HEIGHT * 2);
+
+        Gate rgate =  currentLevel.getGate();
+        gc.drawImage(rgate.getImg(), rgate.getX() * GRID_CELL_WIDTH * 2, rgate.getY() * GRID_CELL_HEIGHT * 2);
 
         ArrayList<Clock> clocks = currentLevel.getClocks();
         clocks.forEach(e ->  gc.drawImage(e.getImg(),
