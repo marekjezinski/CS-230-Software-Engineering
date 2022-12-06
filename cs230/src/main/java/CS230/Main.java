@@ -64,9 +64,6 @@ public class Main extends Application {
 
     // Loaded images
     private Image playerImage;
-    private Image clock;
-    private Image loot;
-    private Image door;
 
     // X and Y coordinate of player on the grid.
     private int playerX = 0;
@@ -91,7 +88,9 @@ public class Main extends Application {
     private Text scoreText = new Text();
 
     private MessageOfTheDay m;
-
+    private String backgroundMusic = "gamemusic.mp3";
+    private Media music = new Media(new File(this.backgroundMusic).toURI().toString());
+    private MediaPlayer player = new MediaPlayer(this.music);
 
 //8-Bit March by Twin Musicom is licensed under a Creative Commons Attribution 4.0 licence.
 // https://creativecommons.org/licenses/by/4.0/
@@ -159,28 +158,36 @@ public class Main extends Application {
         switch (event.getCode()) {
             case RIGHT:
                 // Right key was pressed. So move the player right by one cell.
-                if (playerX < 28 && this.hasGameStarted == true) {
+                if (playerX < 28 && this.hasGameStarted == true &&
+                        currentLevel.checkRGate((playerX / 2) + 1, playerY / 2) == 0
+                && currentLevel.checkWGate((playerX / 2) + 1, playerY / 2) == 0) {
                     playerX = currentLevel.moveRight(playerX, playerY);
                 }
                 break;
 
             case LEFT:
                 // Left key was pressed. So move the player left by one cell.
-                if (playerX > 0 && this.hasGameStarted == true) {
+                if (playerX > 0 && this.hasGameStarted == true &&
+                        currentLevel.checkRGate((playerX / 2)-1, playerY / 2) == 0
+                        && currentLevel.checkWGate((playerX / 2) - 1, playerY / 2) == 0) {
                     playerX = currentLevel.moveLeft(playerX, playerY);
                 }
                 break;
 
             case UP:
                 // Up key was pressed. So move the player up by one cell.
-                if (playerY > 0 && this.hasGameStarted == true) {
+                if (playerY > 0 && this.hasGameStarted == true &&
+                        currentLevel.checkRGate(playerX / 2, (playerY / 2) - 1) == 0
+                        && currentLevel.checkWGate(playerX / 2, (playerY / 2) - 1) == 0) {
                     playerY = currentLevel.moveUp(playerX, playerY);
                 }
                 break;
 
             case DOWN:
                 // Down key was pressed. So move the player down by one cell.
-                if (playerY < 18 && this.hasGameStarted == true) {
+                if (playerY < 18 && this.hasGameStarted == true &&
+                        currentLevel.checkRGate(playerX / 2, (playerY / 2) + 1) == 0
+                        && currentLevel.checkWGate(playerX / 2, (playerY / 2) + 1) == 0) {
                     playerY = currentLevel.moveDown(playerX, playerY);
                 }
                 break;
@@ -198,6 +205,7 @@ public class Main extends Application {
         event.consume();
     }
 
+
     private void checkItems() {
         timerLeft += currentLevel.checkClocks(playerX / 2, playerY / 2);
         //TODO: implement door and level progression
@@ -209,6 +217,9 @@ public class Main extends Application {
         score += currentLevel.checkLoots(playerX / 2, playerY / 2);
         scoreText.setText("Score: " + this.score);
         scoreText.setFont(Font.font("arial",20));
+
+        currentLevel.checkRLever(playerX / 2, playerY / 2);
+        currentLevel.checkWLever(playerX / 2, playerY / 2);
     }
 
     /**
@@ -235,6 +246,18 @@ public class Main extends Application {
 
         Door door = currentLevel.getDoor();
         gc.drawImage(door.getImg(), door.getX() * GRID_CELL_WIDTH * 2, door.getY() * GRID_CELL_HEIGHT * 2);
+
+        Gate rgate =  currentLevel.getRGate();
+        gc.drawImage(rgate.getImg(), rgate.getX() * GRID_CELL_WIDTH * 2, rgate.getY() * GRID_CELL_HEIGHT * 2);
+
+        Lever rlever =  currentLevel.getRLever();
+        gc.drawImage(rlever.getImg(), rlever.getX() * GRID_CELL_WIDTH * 2, rlever.getY() * GRID_CELL_HEIGHT * 2);
+
+        Gate wgate =  currentLevel.getWGate();
+        gc.drawImage(wgate.getImg(), wgate.getX() * GRID_CELL_WIDTH * 2, wgate.getY() * GRID_CELL_HEIGHT * 2);
+
+        Lever wlever =  currentLevel.getWLever();
+        gc.drawImage(wlever.getImg(), wlever.getX() * GRID_CELL_WIDTH * 2, wlever.getY() * GRID_CELL_HEIGHT * 2);
 
         ArrayList<Clock> clocks = currentLevel.getClocks();
         clocks.forEach(e ->  gc.drawImage(e.getImg(),
@@ -312,6 +335,7 @@ public class Main extends Application {
         System.out.println("---------------------------------");
         System.out.println("Leaderboard:");
         l.getTopScores();
+        this.player.play();
         System.exit(0);
     }
 
@@ -366,16 +390,16 @@ public class Main extends Application {
         Button startGame = new Button("Start game");
         toolbar.getChildren().addAll(startGame);
         startGame.setOnAction(e -> {
-            String backgroundMusic = "gamemusic.mp3";
-            Media music = new Media(new File(backgroundMusic).toURI().toString());
-            MediaPlayer player = new MediaPlayer(music);
-            player.play();
-            this.hasGameStarted = true;
-            timerTimeline.play();
-            scoreColourChanger.play();
-            this.username = usernameIn.getText();
-            System.out.printf(this.username);
-
+            if(usernameIn.getText().equals("")){
+                System.err.println("ERROR! Player name is required!");
+            }
+            else{player.play();
+                this.hasGameStarted = true;
+                timerTimeline.play();
+                scoreColourChanger.play();
+                this.player.play();
+                this.username = usernameIn.getText();
+            }
         });
 
         timerText.setText("Time remaining: " + this.timerLeft );
@@ -392,8 +416,8 @@ public class Main extends Application {
     }
 
     public static void main(String[] args) throws IOException {
-        MessageOfTheDay m = new MessageOfTheDay();
-       // m.getMessage();
+        //MessageOfTheDay m = new MessageOfTheDay();
+        //m.getMessage();
         launch(args);
 
     }

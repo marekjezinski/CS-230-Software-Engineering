@@ -22,6 +22,10 @@ public class MapReader {
     private ArrayList<Loot> loot = new ArrayList<>();
     private ArrayList<Clock> clocks = new ArrayList<>();
     private Door door;
+    private Gate rgate;
+    private Lever rlever;
+    private Gate wgate;
+    private Lever wlever;
     private String fileName;
     private final int CLOCK_TIME_ADDED = 20;
     private final int CENT_VALUE = 10;
@@ -65,6 +69,29 @@ public class MapReader {
                 if (type.equals("timer")) {
                     this.timer = in.nextInt();
                 }
+                else if (type.equals("rgate")) {
+                    Gate rgatein = new Gate(new Image(getClass().getResource("rustygate.png").toURI().toString()),
+                            in.nextInt(), in.nextInt());
+                    rgate = rgatein;
+                }
+                else if (type.equals("rlever")) {
+                    Lever rleverin = new Lever(new Image(getClass().getResource("rustylever.png").toURI().toString()),
+                            in.nextInt(), in.nextInt());
+                    rlever = rleverin;
+                }
+                else if (type.equals("wgate")) {
+                    Gate wgatein = new Gate(new Image(getClass().getResource("woodengate.png")
+                            .toURI().toString()),
+                            in.nextInt(), in.nextInt());
+                    wgate = wgatein;
+                }
+                else if (type.equals("wlever")) {
+                    Lever wleverin = new Lever(new Image(getClass().getResource("woodenlever.png")
+                            .toURI().toString()),
+                            in.nextInt(), in.nextInt());
+                    wlever = wleverin;
+                }
+                //
                 else if (type.equals("clock")) {
                     Clock c = new Clock(new Image(getClass().getResource("clock.png").toURI().toString()),
                             in.nextInt(), in.nextInt(), CLOCK_TIME_ADDED);
@@ -171,5 +198,21 @@ public class MapReader {
     public Door getDoor() {
         return door;
     }
+
+    public Gate getRGate() {
+        return rgate;
+    }
+
+    public Lever getRLever() {
+        return rlever;
+    }
+    public Gate getWGate() {
+        return wgate;
+    }
+
+    public Lever getWLever() {
+        return wlever;
+    }
+
 }
 
