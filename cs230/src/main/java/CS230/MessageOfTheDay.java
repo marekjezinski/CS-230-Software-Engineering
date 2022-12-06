@@ -31,26 +31,26 @@ public class MessageOfTheDay {
         for(int i = 0; i < this.breakdown.length; i++) {
             for (int j = 0; j < this.alphabet.length; j++){
                 int a = i;
-                if (this.breakdown[i].equals(this.alphabet[j])){
+                if (this.breakdown[i].equals(this.alphabet[j]) && a>1){
                     if ((i + 1) % 2 != 0){
                         j = j - 1;
                         while (a > 0){
+                            j = j - 1;
+                            a = a - 1;
                             if (j == -1) {
                                 j = 25;
                             }
-                            j = j - 1;
-                            a = a - 1;
                         }
 
                     }
                     else{
                         j = j + 1;
                         while (a > 0){
+                            j = j + 1;
+                            a = a - 1;
                             if (j == 27) {
                                 j = 0;
                             }
-                            j = j + 1;
-                            a = a - 1;
                         };
                     }
 

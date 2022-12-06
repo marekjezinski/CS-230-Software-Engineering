@@ -28,3 +28,7 @@ n 0
 sfdghjk 50
 sadfghj 0
 waesrdtfhyjguk 30
+a 90
+, 0
+m 30
+g 90
