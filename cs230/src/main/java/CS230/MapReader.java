@@ -24,6 +24,8 @@ public class MapReader {
     private Door door;
     private Gate rgate;
     private Lever rlever;
+    private Gate wgate;
+    private Lever wlever;
     private String fileName;
     private final int CLOCK_TIME_ADDED = 20;
     private final int CENT_VALUE = 10;
@@ -76,6 +78,18 @@ public class MapReader {
                     Lever rleverin = new Lever(new Image(getClass().getResource("rustylever.png").toURI().toString()),
                             in.nextInt(), in.nextInt());
                     rlever = rleverin;
+                }
+                else if (type.equals("wgate")) {
+                    Gate wgatein = new Gate(new Image(getClass().getResource("woodengate.png")
+                            .toURI().toString()),
+                            in.nextInt(), in.nextInt());
+                    wgate = wgatein;
+                }
+                else if (type.equals("wlever")) {
+                    Lever wleverin = new Lever(new Image(getClass().getResource("woodenlever.png")
+                            .toURI().toString()),
+                            in.nextInt(), in.nextInt());
+                    wlever = wleverin;
                 }
                 //
                 else if (type.equals("clock")) {
@@ -191,6 +205,13 @@ public class MapReader {
 
     public Lever getRLever() {
         return rlever;
+    }
+    public Gate getWGate() {
+        return wgate;
+    }
+
+    public Lever getWLever() {
+        return wlever;
     }
 
 }

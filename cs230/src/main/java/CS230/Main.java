@@ -159,7 +159,8 @@ public class Main extends Application {
             case RIGHT:
                 // Right key was pressed. So move the player right by one cell.
                 if (playerX < 28 && this.hasGameStarted == true &&
-                        currentLevel.checkRGate((playerX / 2) + 1, playerY / 2) == 0) {
+                        currentLevel.checkRGate((playerX / 2) + 1, playerY / 2) == 0
+                && currentLevel.checkWGate((playerX / 2) + 1, playerY / 2) == 0) {
                     playerX = currentLevel.moveRight(playerX, playerY);
                 }
                 break;
@@ -167,7 +168,8 @@ public class Main extends Application {
             case LEFT:
                 // Left key was pressed. So move the player left by one cell.
                 if (playerX > 0 && this.hasGameStarted == true &&
-                        currentLevel.checkRGate((playerX / 2)-1, playerY / 2) == 0) {
+                        currentLevel.checkRGate((playerX / 2)-1, playerY / 2) == 0
+                        && currentLevel.checkWGate((playerX / 2) - 1, playerY / 2) == 0) {
                     playerX = currentLevel.moveLeft(playerX, playerY);
                 }
                 break;
@@ -175,7 +177,8 @@ public class Main extends Application {
             case UP:
                 // Up key was pressed. So move the player up by one cell.
                 if (playerY > 0 && this.hasGameStarted == true &&
-                        currentLevel.checkRGate(playerX / 2, (playerY / 2) - 1) == 0) {
+                        currentLevel.checkRGate(playerX / 2, (playerY / 2) - 1) == 0
+                        && currentLevel.checkWGate(playerX / 2, (playerY / 2) - 1) == 0) {
                     playerY = currentLevel.moveUp(playerX, playerY);
                 }
                 break;
@@ -183,7 +186,8 @@ public class Main extends Application {
             case DOWN:
                 // Down key was pressed. So move the player down by one cell.
                 if (playerY < 18 && this.hasGameStarted == true &&
-                        currentLevel.checkRGate(playerX / 2, (playerY / 2) + 1) == 0) {
+                        currentLevel.checkRGate(playerX / 2, (playerY / 2) + 1) == 0
+                        && currentLevel.checkWGate(playerX / 2, (playerY / 2) + 1) == 0) {
                     playerY = currentLevel.moveDown(playerX, playerY);
                 }
                 break;
@@ -215,6 +219,7 @@ public class Main extends Application {
         scoreText.setFont(Font.font("arial",20));
 
         currentLevel.checkRLever(playerX / 2, playerY / 2);
+        currentLevel.checkWLever(playerX / 2, playerY / 2);
     }
 
     /**
@@ -247,6 +252,12 @@ public class Main extends Application {
 
         Lever rlever =  currentLevel.getRLever();
         gc.drawImage(rlever.getImg(), rlever.getX() * GRID_CELL_WIDTH * 2, rlever.getY() * GRID_CELL_HEIGHT * 2);
+
+        Gate wgate =  currentLevel.getWGate();
+        gc.drawImage(wgate.getImg(), wgate.getX() * GRID_CELL_WIDTH * 2, wgate.getY() * GRID_CELL_HEIGHT * 2);
+
+        Lever wlever =  currentLevel.getWLever();
+        gc.drawImage(wlever.getImg(), wlever.getX() * GRID_CELL_WIDTH * 2, wlever.getY() * GRID_CELL_HEIGHT * 2);
 
         ArrayList<Clock> clocks = currentLevel.getClocks();
         clocks.forEach(e ->  gc.drawImage(e.getImg(),
