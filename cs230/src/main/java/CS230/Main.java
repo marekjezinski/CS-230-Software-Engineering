@@ -158,28 +158,32 @@ public class Main extends Application {
         switch (event.getCode()) {
             case RIGHT:
                 // Right key was pressed. So move the player right by one cell.
-                if (playerX < 28 && this.hasGameStarted == true) {
+                if (playerX < 28 && this.hasGameStarted == true &&
+                        currentLevel.checkRGate((playerX / 2) + 1, playerY / 2) == 0) {
                     playerX = currentLevel.moveRight(playerX, playerY);
                 }
                 break;
 
             case LEFT:
                 // Left key was pressed. So move the player left by one cell.
-                if (playerX > 0 && this.hasGameStarted == true) {
+                if (playerX > 0 && this.hasGameStarted == true &&
+                        currentLevel.checkRGate((playerX / 2)-1, playerY / 2) == 0) {
                     playerX = currentLevel.moveLeft(playerX, playerY);
                 }
                 break;
 
             case UP:
                 // Up key was pressed. So move the player up by one cell.
-                if (playerY > 0 && this.hasGameStarted == true) {
+                if (playerY > 0 && this.hasGameStarted == true &&
+                        currentLevel.checkRGate(playerX / 2, (playerY / 2) - 1) == 0) {
                     playerY = currentLevel.moveUp(playerX, playerY);
                 }
                 break;
 
             case DOWN:
                 // Down key was pressed. So move the player down by one cell.
-                if (playerY < 18 && this.hasGameStarted == true) {
+                if (playerY < 18 && this.hasGameStarted == true &&
+                        currentLevel.checkRGate(playerX / 2, (playerY / 2) + 1) == 0) {
                     playerY = currentLevel.moveDown(playerX, playerY);
                 }
                 break;
@@ -197,6 +201,7 @@ public class Main extends Application {
         event.consume();
     }
 
+
     private void checkItems() {
         timerLeft += currentLevel.checkClocks(playerX / 2, playerY / 2);
         //TODO: implement door and level progression
@@ -208,6 +213,8 @@ public class Main extends Application {
         score += currentLevel.checkLoots(playerX / 2, playerY / 2);
         scoreText.setText("Score: " + this.score);
         scoreText.setFont(Font.font("arial",20));
+
+        currentLevel.checkRLever(playerX / 2, playerY / 2);
     }
 
     /**
@@ -235,7 +242,7 @@ public class Main extends Application {
         Door door = currentLevel.getDoor();
         gc.drawImage(door.getImg(), door.getX() * GRID_CELL_WIDTH * 2, door.getY() * GRID_CELL_HEIGHT * 2);
 
-        Gate rgate =  currentLevel.getGate();
+        Gate rgate =  currentLevel.getRGate();
         gc.drawImage(rgate.getImg(), rgate.getX() * GRID_CELL_WIDTH * 2, rgate.getY() * GRID_CELL_HEIGHT * 2);
 
         Lever rlever =  currentLevel.getRLever();

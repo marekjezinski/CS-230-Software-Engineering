@@ -15,6 +15,8 @@ public class Map {
     private ArrayList<Loot> loots = new ArrayList<>();
     private Gate rgate;
     private Lever rlever;
+    private Gate wgate;
+    private Lever wlever;
 
     public Map(String fileName) {
         this.mapRead = new MapReader(fileName);
@@ -132,6 +134,31 @@ public class Map {
         return(0);
     }
 
+
+    public void checkRLever(int playerX, int playerY) {
+
+            Lever current = this.getRLever();
+            int leverX = current.getX();
+            int leverY = current.getY();
+            if(leverX == playerX && leverY == playerY) {
+                this.rgate.setX(-1);
+                this.rgate.setY(-1);
+        }
+    }
+
+    public int checkRGate(int playerX, int playerY) {
+
+            Gate current = this.getRGate();
+            int gateX = current.getX();
+            int gateY = current.getY();
+            if(gateX == playerX && gateY == playerY) {
+                return 1;
+        }
+            else {
+                return 0;
+            }
+    }
+
     public ArrayList<Clock> getClocks() {
         return clocks;
     }
@@ -140,7 +167,7 @@ public class Map {
         return door;
     }
 
-    public Gate getGate() {
+    public Gate getRGate() {
         return rgate;
     }
     public Lever getRLever() {
