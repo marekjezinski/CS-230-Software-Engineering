@@ -236,7 +236,6 @@ public class Map {
 
 
     public void bombActivate() throws URISyntaxException {
-        boolean neighbour = false;
         if (this.countdownForBomb <= 0) {
             for (int i = 0; i < this.loots.size(); i++) {
                 Loot loot = this.loots.get(i);
@@ -295,7 +294,7 @@ public class Map {
                 this.rlever.setY(-1);
             }
 
-            /*for(int i = 0; i < this.bombs.size(); i++) {
+            for (int i = 0; i < this.bombs.size(); i++) {
                 Bomb bomb = this.bombs.get(i);
                 int bombX = bomb.getX();
                 int bombY = bomb.getY();
@@ -307,34 +306,33 @@ public class Map {
                         || (this.explodeX == bombX - 1 && this.explodeY == bombY - 1)
                         || (this.explodeX == bombX - 1 && this.explodeY == bombY + 1)
                         || (this.explodeX == bombX + 1 && this.explodeY == bombY - 1)) {
-                    for (int j = 0; j < bombs.size(); j ++) {
+                    for (int j = 0; j < bombs.size(); j++) {
                         Bomb moveBomb = bombs.get(j);
                         if (moveBomb.getX() == explodeX
                                 && moveBomb.getY() == explodeY) {
-                            neighbour = true;
                             bombs.get(j).setX(-1);
                             bombs.get(j).setY(-1);
+                            this.explodeX = bombX;
+                            this.explodeY = bombY;
+                            this.countdownForBomb = 3;
+                            this.bombActivate();
                         }
-                        this.explodeX = bombX;
-                        this.explodeY = bombY;
-                        System.out.println(bombX);
-                        System.out.println(bombY);
-                        bombActivate();
+
                     }
                 }
 
             }
-            if (neighbour == false){*/
-            for (int j = 0; j < bombs.size(); j++) {
-                Bomb moveBomb = bombs.get(j);
-                if (moveBomb.getX() == explodeX
-                        && moveBomb.getY() == explodeY) {
-                    System.out.println("jeff2");
-                    bombs.get(j).setX(-1);
-                    bombs.get(j).setY(-1);
+                for (int j = 0; j < bombs.size(); j++) {
+                    Bomb moveBomb = bombs.get(j);
+                    if (moveBomb.getX() == explodeX
+                            && moveBomb.getY() == explodeY) {
+                        System.out.println("jeff2");
+                        bombs.get(j).setX(-1);
+                        bombs.get(j).setY(-1);
+                    }
                 }
             }
-        }
+
 
 
 
@@ -345,7 +343,9 @@ public class Map {
 
         }
         String bombImg = "bomb" + this.countdownForBomb + ".png";
+        System.out.println(countdownForBomb);
         bomb.setImg(new Image(getClass().getResource(bombImg).toURI().toString()));
+
         this.countdownForBomb = this.countdownForBomb - 1;
     }
 
