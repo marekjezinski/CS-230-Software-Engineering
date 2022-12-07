@@ -36,3 +36,6 @@ g 90
 dfghjkl 0
 m 0
 jhkkhkh 0
+l 0
+a 0
+m 40
