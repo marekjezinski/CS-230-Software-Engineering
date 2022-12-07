@@ -236,6 +236,7 @@ public class Map {
 
 
     public void bombActivate() throws URISyntaxException {
+        boolean neighbour = false;
         if (this.countdownForBomb <= 0) {
             for (int i = 0; i < this.loots.size(); i++) {
                 Loot loot = this.loots.get(i);
@@ -310,18 +311,22 @@ public class Map {
                         Bomb moveBomb = bombs.get(j);
                         if (moveBomb.getX() == explodeX
                                 && moveBomb.getY() == explodeY) {
-                            bombs.get(j).setX(-1);
-                            bombs.get(j).setY(-1);
+                            neighbour = true;
                             this.explodeX = bombX;
                             this.explodeY = bombY;
+                            System.out.println(bombX);
+                            System.out.println(bombY);
+                            bombs.get(j).setX(-1);
+                            bombs.get(j).setY(-1);
                             this.countdownForBomb = 3;
-                            this.bombActivate();
-                        }
+                            bombActivate();
 
+                        }
                     }
                 }
 
             }
+            if (neighbour == false) {
                 for (int j = 0; j < bombs.size(); j++) {
                     Bomb moveBomb = bombs.get(j);
                     if (moveBomb.getX() == explodeX
@@ -332,7 +337,7 @@ public class Map {
                     }
                 }
             }
-
+        }
 
 
 
@@ -343,9 +348,7 @@ public class Map {
 
         }
         String bombImg = "bomb" + this.countdownForBomb + ".png";
-        System.out.println(countdownForBomb);
         bomb.setImg(new Image(getClass().getResource(bombImg).toURI().toString()));
-
         this.countdownForBomb = this.countdownForBomb - 1;
     }
 
