@@ -201,7 +201,13 @@ public class Map {
         Bomb current = this.getBomb();
         int bombX = current.getX();
         int bombY = current.getY();
-        if(bombX == playerX && bombY == playerY) {
+        if((bombX == playerX+1 && bombY == playerY+1) || (bombX == playerX && bombY == playerY+1)
+                || (bombX == playerX-1 && bombY == playerY+1)
+                || (bombX == playerX+1 && bombY == playerY)
+                || (bombX == playerX-1 && bombY == playerY)
+                || (bombX == playerX+1 && bombY == playerY-1)
+                || (bombX == playerX-1 && bombY == playerY-1)
+                || (bombX == playerX-1 && bombY == playerY-1)) {
             this.countdownForBomb = 3;
             return 1;
         }
@@ -217,6 +223,10 @@ public class Map {
             this.bomb.setY(-1);
             this.loots.clear();
             this.clocks.clear();
+            this.wlever.setX(-1);
+            this.wlever.setY(-1);
+            this.rlever.setX(-1);
+            this.rlever.setY(-1);
         }
         String bombImg = "bomb"+this.countdownForBomb+".png";
         bomb.setImg(new Image(getClass().getResource(bombImg).toURI().toString()));
