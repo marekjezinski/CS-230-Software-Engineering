@@ -73,6 +73,7 @@ public class Main extends Application {
     private Timeline tickTimeline;
     private Timeline timerTimeline;
     private Timeline scoreColourChanger;
+    private Timeline bombTimeline;
     private Leaderboard l = new Leaderboard();
 
     private int timerLeft;
@@ -135,6 +136,15 @@ public class Main extends Application {
 
         timerTimeline = new Timeline(new KeyFrame(Duration.millis(1000), event -> timer()));
         timerTimeline.setCycleCount(Animation.INDEFINITE);
+
+        bombTimeline = new Timeline(new KeyFrame(Duration.millis(1000), event -> {
+            try {
+                bombActivate();
+            } catch (URISyntaxException e) {
+                throw new RuntimeException(e);
+            }
+        }));
+        bombTimeline.setCycleCount(Animation.INDEFINITE);
 
         scoreColourChanger = new Timeline(new KeyFrame(Duration.millis(500), event -> scoreColour()));
         scoreColourChanger.setCycleCount(Animation.INDEFINITE);
@@ -215,7 +225,17 @@ public class Main extends Application {
 
         currentLevel.checkRLever(playerX / 2, playerY / 2);
         currentLevel.checkWLever(playerX / 2, playerY / 2);
-        currentLevel.checkBomb(playerX / 2, playerY / 2);
+        if (currentLevel.bombCheck(playerX / 2, playerY / 2) == 1){
+            bombTimeline.play();
+        }
+    }
+
+    public void bombActivate() throws URISyntaxException {
+        if (currentLevel.getCountdownForBomb() == 0){
+            bombTimeline.stop();
+        }
+        currentLevel.bombActivate();
+        drawGame();
     }
 
     /**

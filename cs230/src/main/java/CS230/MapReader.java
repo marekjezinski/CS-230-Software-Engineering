@@ -38,7 +38,7 @@ public class MapReader {
      * Constructor for the class
      * @param fileName
      */
-    public MapReader(String fileName) {
+    public MapReader(String fileName)  {
         this.fileName = fileName;
         Scanner in = null;
         File f = new File(this.fileName);
@@ -100,7 +100,7 @@ public class MapReader {
                     clocks.add(c);
                 }
                 else if (type.equals("bomb")) {
-                    Bomb c = new Bomb(new Image(getClass().getResource("bomboff.png").toURI().toString()),
+                    Bomb c = new Bomb(new Image(getClass().getResource("bomb.png").toURI().toString()),
                             in.nextInt(), in.nextInt());
                     bomb = c;
                 }

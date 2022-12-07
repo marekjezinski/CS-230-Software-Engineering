@@ -1,4 +1,9 @@
 package CS230.items;
+/**
+ * Bomb item class for the game, is a subclass of item
+ * @author Tom Stevens
+ * @version 1.0
+ */
 
 import javafx.scene.image.Image;
 

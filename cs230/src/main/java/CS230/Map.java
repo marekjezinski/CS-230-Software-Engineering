@@ -41,6 +41,7 @@ public class Map {
         this.wgate = mapRead.getWGate();
         this.wlever = mapRead.getWLever();
         this.bomb = mapRead.getBomb();
+
     }
 
     public int moveRight(int playerX, int playerY) {
@@ -196,37 +197,30 @@ public class Map {
         }
     }
 
-    public void checkBomb(int playerX, int playerY) {
+    public int bombCheck(int playerX, int playerY) {
         Bomb current = this.getBomb();
         int bombX = current.getX();
         int bombY = current.getY();
         if(bombX == playerX && bombY == playerY) {
             this.countdownForBomb = 3;
-            bombTimeline = new Timeline(new KeyFrame(Duration.millis(1000), event -> {
-                try {
-                    bombActivate();
-                } catch (URISyntaxException e) {
-                    throw new RuntimeException(e);
-                }
-            }));
-            this.bombTimeline.play();
+            return 1;
+        }
+        else {
+            return 0;
         }
     }
 
-    private void bombActivate() throws URISyntaxException {
+    public void bombActivate() throws URISyntaxException {
         if (this.countdownForBomb == 0){
-            this.bomb.setImg(new Image(getClass().getResource("bomboff.png").toURI().toString()));
+            this.bomb.setImg(new Image(getClass().getResource("bomb.png").toURI().toString()));
             this.bomb.setX(-1);
             this.bomb.setY(-1);
-            this.bombTimeline.stop();
             this.loots.clear();
             this.clocks.clear();
         }
-        else {
-            bomb.setImg(new Image(getClass()
-                    .getResource("bomb"+this.countdownForBomb+".png").toURI().toString()));
-            this.countdownForBomb = this.countdownForBomb - 1;
-        }
+        String bombImg = "bomb"+this.countdownForBomb+".png";
+        bomb.setImg(new Image(getClass().getResource(bombImg).toURI().toString()));
+        this.countdownForBomb = this.countdownForBomb - 1;
     }
 
     public ArrayList<Clock> getClocks() {
@@ -254,5 +248,9 @@ public class Map {
     }
     public ArrayList<Loot> getLoots() {
         return loots;
+    }
+
+    public int getCountdownForBomb() {
+        return countdownForBomb;
     }
 }
