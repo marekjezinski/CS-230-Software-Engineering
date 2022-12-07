@@ -16,6 +16,10 @@ public abstract class Item {
         return img;
     }
 
+    public void setImg(Image img) {
+        this.img = img;
+    }
+
     public int getX() {
         return x;
     }

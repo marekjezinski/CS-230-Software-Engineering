@@ -2,7 +2,13 @@ package CS230;
 
 import CS230.items.*;
 
+import java.net.URISyntaxException;
 import java.util.ArrayList;
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.scene.image.Image;
+import javafx.util.Duration;
 
 public class Map {
     private MapReader mapRead = null;
@@ -19,7 +25,8 @@ public class Map {
     private Lever wlever;
 
     private Bomb bomb;
-
+    private Timeline bombTimeline;
+    private int countdownForBomb;
     public Map(String fileName) {
         this.mapRead = new MapReader(fileName);
         this.MAP_MAX_X = mapRead.getMaxTileX();
@@ -186,6 +193,39 @@ public class Map {
         }
         else {
             return 0;
+        }
+    }
+
+    public void checkBomb(int playerX, int playerY) {
+        Bomb current = this.getBomb();
+        int bombX = current.getX();
+        int bombY = current.getY();
+        if(bombX == playerX && bombY == playerY) {
+            this.countdownForBomb = 3;
+            bombTimeline = new Timeline(new KeyFrame(Duration.millis(1000), event -> {
+                try {
+                    bombActivate();
+                } catch (URISyntaxException e) {
+                    throw new RuntimeException(e);
+                }
+            }));
+            this.bombTimeline.play();
+        }
+    }
+
+    private void bombActivate() throws URISyntaxException {
+        if (this.countdownForBomb == 0){
+            this.bomb.setImg(new Image(getClass().getResource("bomboff.png").toURI().toString()));
+            this.bomb.setX(-1);
+            this.bomb.setY(-1);
+            this.bombTimeline.stop();
+            this.loots.clear();
+            this.clocks.clear();
+        }
+        else {
+            bomb.setImg(new Image(getClass()
+                    .getResource("bomb"+this.countdownForBomb+".png").toURI().toString()));
+            this.countdownForBomb = this.countdownForBomb - 1;
         }
     }
 

@@ -193,7 +193,6 @@ public class Main extends Application {
                 break;
         }
         checkItems();
-
         // Redraw game as the player may have moved.
         drawGame();
 
@@ -216,6 +215,7 @@ public class Main extends Application {
 
         currentLevel.checkRLever(playerX / 2, playerY / 2);
         currentLevel.checkWLever(playerX / 2, playerY / 2);
+        currentLevel.checkBomb(playerX / 2, playerY / 2);
     }
 
     /**
