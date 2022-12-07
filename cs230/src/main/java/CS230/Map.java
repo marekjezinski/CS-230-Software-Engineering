@@ -4,11 +4,9 @@ import CS230.items.*;
 
 import java.net.URISyntaxException;
 import java.util.ArrayList;
-import javafx.animation.Animation;
-import javafx.animation.KeyFrame;
+
 import javafx.animation.Timeline;
 import javafx.scene.image.Image;
-import javafx.util.Duration;
 
 public class Map {
     private MapReader mapRead = null;
@@ -25,8 +23,11 @@ public class Map {
     private Lever wlever;
 
     private Bomb bomb;
+
+    private ArrayList<Bomb> bombs = new ArrayList<>();
     private Timeline bombTimeline;
     private int countdownForBomb;
+
     public Map(String fileName) {
         this.mapRead = new MapReader(fileName);
         this.MAP_MAX_X = mapRead.getMaxTileX();
@@ -40,7 +41,7 @@ public class Map {
         this.rlever = mapRead.getRLever();
         this.wgate = mapRead.getWGate();
         this.wlever = mapRead.getWLever();
-        this.bomb = mapRead.getBomb();
+        this.bombs = mapRead.getBomb();
 
     }
 
@@ -48,8 +49,8 @@ public class Map {
         playerX = playerX / 2;
         playerY = playerY / 2;
         Tile currentTile = tilesArray[playerX][playerY];
-        for(int x = playerX + 1; x < MAP_MAX_X; x++) {
-            if(currentTile.isLegalMovement(tilesArray[x][playerY])) {
+        for (int x = playerX + 1; x < MAP_MAX_X; x++) {
+            if (currentTile.isLegalMovement(tilesArray[x][playerY])) {
                 return x * 2;
             }
         }
@@ -60,8 +61,8 @@ public class Map {
         playerX = playerX / 2;
         playerY = playerY / 2;
         Tile currentTile = tilesArray[playerX][playerY];
-        for(int x = playerX - 1; x >= 0; x--) {
-            if(currentTile.isLegalMovement(tilesArray[x][playerY])) {
+        for (int x = playerX - 1; x >= 0; x--) {
+            if (currentTile.isLegalMovement(tilesArray[x][playerY])) {
                 return x * 2;
             }
         }
@@ -72,8 +73,8 @@ public class Map {
         playerX = playerX / 2;
         playerY = playerY / 2;
         Tile currentTile = tilesArray[playerX][playerY];
-        for(int y = playerY + 1; y < MAP_MAX_Y; y++) {
-            if(currentTile.isLegalMovement(tilesArray[playerX][y])) {
+        for (int y = playerY + 1; y < MAP_MAX_Y; y++) {
+            if (currentTile.isLegalMovement(tilesArray[playerX][y])) {
                 return y * 2;
             }
         }
@@ -84,8 +85,8 @@ public class Map {
         playerX = playerX / 2;
         playerY = playerY / 2;
         Tile currentTile = tilesArray[playerX][playerY];
-        for(int y = playerY - 1; y >= 0; y--) {
-            if(currentTile.isLegalMovement(tilesArray[playerX][y])) {
+        for (int y = playerY - 1; y >= 0; y--) {
+            if (currentTile.isLegalMovement(tilesArray[playerX][y])) {
                 return y * 2;
             }
         }
@@ -98,8 +99,8 @@ public class Map {
 
     private Cell[][] convertTilesToCellsArray(Tile[][] tilesArray) {
         Cell[][] cellsArray = new Cell[MAP_MAX_X * 2][MAP_MAX_Y * 2];
-        for(int y = 0; y < MAP_MAX_Y; y++) {
-            for(int x = 0; x < MAP_MAX_X; x++) {
+        for (int y = 0; y < MAP_MAX_Y; y++) {
+            for (int x = 0; x < MAP_MAX_X; x++) {
                 cellsArray[x * 2][y * 2] = tilesArray[x][y].getTopLeftCell();
                 cellsArray[x * 2 + 1][y * 2] = tilesArray[x][y].getTopRightCell();
                 cellsArray[x * 2][y * 2 + 1] = tilesArray[x][y].getBottomLeftCell();
@@ -114,64 +115,62 @@ public class Map {
     }
 
     public int checkClocks(int playerX, int playerY) {
-        for(int i = 0; i < clocks.size(); i++) {
+        for (int i = 0; i < clocks.size(); i++) {
             Clock currentClock = clocks.get(i);
-            if(currentClock.getX() == playerX && currentClock.getY() == playerY) {
+            if (currentClock.getX() == playerX && currentClock.getY() == playerY) {
                 clocks.remove(i);
-                return(currentClock.getClockTime());
+                return (currentClock.getClockTime());
             }
         }
-        return(0);
+        return (0);
     }
 
     public int checkDoor(int playerX, int playerY) {
 
-            if (door.getX() == playerX && door.getY() == playerY) {
-                //TODO: add conditions to make door collectable
+        if (door.getX() == playerX && door.getY() == playerY) {
+            //TODO: add conditions to make door collectable
 
-                return (1);
-            }
+            return (1);
+        }
 
 
         return (0);
     }
 
     public int checkLoots(int playerX, int playerY) {
-        for(int i = 0; i < loots.size(); i++) {
+        for (int i = 0; i < loots.size(); i++) {
             Loot currentLoot = loots.get(i);
-            if(currentLoot.getX() == playerX && currentLoot.getY() == playerY) {
+            if (currentLoot.getX() == playerX && currentLoot.getY() == playerY) {
                 loots.remove(i);
-                return(currentLoot.getLootValue());
+                return (currentLoot.getLootValue());
             }
         }
-        return(0);
+        return (0);
     }
 
 
     public void checkRLever(int playerX, int playerY) {
 
-            Lever current = this.getRLever();
-            int leverX = current.getX();
-            int leverY = current.getY();
-            if(leverX == playerX && leverY == playerY) {
-                this.rgate.setX(-1);
-                this.rgate.setY(-1);
+        Lever current = this.getRLever();
+        int leverX = current.getX();
+        int leverY = current.getY();
+        if (leverX == playerX && leverY == playerY) {
+            this.rgate.setX(-1);
+            this.rgate.setY(-1);
         }
     }
 
 
-
     public int checkRGate(int playerX, int playerY) {
 
-            Gate current = this.getRGate();
-            int gateX = current.getX();
-            int gateY = current.getY();
-            if(gateX == playerX && gateY == playerY) {
-                return 1;
+        Gate current = this.getRGate();
+        int gateX = current.getX();
+        int gateY = current.getY();
+        if (gateX == playerX && gateY == playerY) {
+            return 1;
+        } else {
+            return 0;
         }
-            else {
-                return 0;
-            }
     }
 
     public void checkWLever(int playerX, int playerY) {
@@ -179,58 +178,72 @@ public class Map {
         Lever current = this.getWLever();
         int leverX = current.getX();
         int leverY = current.getY();
-        if(leverX == playerX && leverY == playerY) {
+        if (leverX == playerX && leverY == playerY) {
             this.wgate.setX(-1);
             this.wgate.setY(-1);
         }
     }
+
     public int checkWGate(int playerX, int playerY) {
 
         Gate current = this.getWGate();
         int gateX = current.getX();
         int gateY = current.getY();
-        if(gateX == playerX && gateY == playerY) {
+        if (gateX == playerX && gateY == playerY) {
             return 1;
-        }
-        else {
+        } else {
             return 0;
         }
     }
+
+    public int moveBomb(int playerX, int playerY) {
+        for (int i = 0; i < bombs.size(); i++) {
+            Bomb currentBomb = bombs.get(i);
+            int bombX = currentBomb.getX();
+            int bombY = currentBomb.getY();
+            if (bombX == playerX && bombY == playerY) {
+                return 1;
+
+            }
+            }
+        return 0;
+    }
+
 
     public int bombCheck(int playerX, int playerY) {
-        Bomb current = this.getBomb();
-        int bombX = current.getX();
-        int bombY = current.getY();
-        if((bombX == playerX+1 && bombY == playerY+1) || (bombX == playerX && bombY == playerY+1)
-                || (bombX == playerX-1 && bombY == playerY+1)
-                || (bombX == playerX+1 && bombY == playerY)
-                || (bombX == playerX-1 && bombY == playerY)
-                || (bombX == playerX+1 && bombY == playerY-1)
-                || (bombX == playerX-1 && bombY == playerY-1)
-                || (bombX == playerX-1 && bombY == playerY-1)) {
-            this.countdownForBomb = 3;
-            return 1;
+        for (int i = 0; i < bombs.size(); i++) {
+            Bomb currentBomb = bombs.get(i);
+            int bombX = currentBomb.getX();
+            int bombY = currentBomb.getY();
+            if ((bombX == playerX && bombY == playerY + 1)){
+
+                this.countdownForBomb = 3;
+                return 1;
+            }
         }
-        else {
-            return 0;
-        }
+        return 0;
     }
 
+
     public void bombActivate() throws URISyntaxException {
-        if (this.countdownForBomb == 0){
-            this.bomb.setImg(new Image(getClass().getResource("bomb.png").toURI().toString()));
-            this.bomb.setX(-1);
-            this.bomb.setY(-1);
-            this.loots.clear();
+        if (this.countdownForBomb <= 0){
+            this.bombs.clear();
             this.clocks.clear();
+            this.loots.clear();
             this.wlever.setX(-1);
             this.wlever.setY(-1);
             this.rlever.setX(-1);
             this.rlever.setY(-1);
         }
-        String bombImg = "bomb"+this.countdownForBomb+".png";
-        bomb.setImg(new Image(getClass().getResource(bombImg).toURI().toString()));
-        this.countdownForBomb = this.countdownForBomb - 1;
+            for (int i = 0; i < bombs.size(); i++) {
+                System.out.println("jeff");
+                bomb = bombs.get(i);
+                String bombImg = "bomb" + this.countdownForBomb + ".png";
+                bomb.setImg(new Image(getClass().getResource(bombImg).toURI().toString()));
+                this.countdownForBomb = this.countdownForBomb - 1;
+
+
+        }
     }
 
     public ArrayList<Clock> getClocks() {
@@ -244,8 +257,8 @@ public class Map {
     public Gate getRGate() {
         return rgate;
     }
-    public Bomb getBomb() {
-        return bomb;
+    public ArrayList<Bomb> getBomb() {
+        return bombs;
     }
     public Lever getRLever() {
         return rlever;

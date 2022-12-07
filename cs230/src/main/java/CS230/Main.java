@@ -166,7 +166,8 @@ public class Main extends Application {
                 // Right key was pressed. So move the player right by one cell.
                 if (playerX < 28 && this.hasGameStarted == true &&
                         currentLevel.checkRGate((playerX / 2) + 1, playerY / 2) == 0
-                && currentLevel.checkWGate((playerX / 2) + 1, playerY / 2) == 0) {
+                && currentLevel.checkWGate((playerX / 2) + 1, playerY / 2) == 0
+                && currentLevel.moveBomb((playerX / 2) + 1, playerY / 2) == 0) {
                     playerX = currentLevel.moveRight(playerX, playerY);
                 }
                 break;
@@ -175,7 +176,8 @@ public class Main extends Application {
                 // Left key was pressed. So move the player left by one cell.
                 if (playerX > 0 && this.hasGameStarted == true &&
                         currentLevel.checkRGate((playerX / 2)-1, playerY / 2) == 0
-                        && currentLevel.checkWGate((playerX / 2) - 1, playerY / 2) == 0) {
+                        && currentLevel.checkWGate((playerX / 2) - 1, playerY / 2) == 0
+                        && currentLevel.moveBomb((playerX / 2) - 1, playerY / 2) == 0) {
                     playerX = currentLevel.moveLeft(playerX, playerY);
                 }
                 break;
@@ -184,7 +186,8 @@ public class Main extends Application {
                 // Up key was pressed. So move the player up by one cell.
                 if (playerY > 0 && this.hasGameStarted == true &&
                         currentLevel.checkRGate(playerX / 2, (playerY / 2) - 1) == 0
-                        && currentLevel.checkWGate(playerX / 2, (playerY / 2) - 1) == 0) {
+                        && currentLevel.checkWGate(playerX / 2, (playerY / 2) - 1) == 0
+                        && currentLevel.moveBomb((playerX / 2), (playerY / 2) - 1) == 0) {
                     playerY = currentLevel.moveUp(playerX, playerY);
                 }
                 break;
@@ -193,7 +196,8 @@ public class Main extends Application {
                 // Down key was pressed. So move the player down by one cell.
                 if (playerY < 18 && this.hasGameStarted == true &&
                         currentLevel.checkRGate(playerX / 2, (playerY / 2) + 1) == 0
-                        && currentLevel.checkWGate(playerX / 2, (playerY / 2) + 1) == 0) {
+                        && currentLevel.checkWGate(playerX / 2, (playerY / 2) + 1) == 0
+                        && currentLevel.moveBomb((playerX / 2), (playerY / 2) + 1) == 0) {
                     playerY = currentLevel.moveDown(playerX, playerY);
                 }
                 break;
@@ -275,8 +279,9 @@ public class Main extends Application {
         Lever wlever =  currentLevel.getWLever();
         gc.drawImage(wlever.getImg(), wlever.getX() * GRID_CELL_WIDTH * 2, wlever.getY() * GRID_CELL_HEIGHT * 2);
 
-        Bomb bomb = currentLevel.getBomb();
-        gc.drawImage(bomb.getImg(), bomb.getX() * GRID_CELL_WIDTH * 2, bomb.getY() * GRID_CELL_HEIGHT * 2);
+        ArrayList<Bomb> bombs = currentLevel.getBomb();
+        bombs.forEach(e ->  gc.drawImage(e.getImg(),
+                e.getX() * GRID_CELL_WIDTH * 2, e.getY() * GRID_CELL_HEIGHT * 2));
 
         ArrayList<Clock> clocks = currentLevel.getClocks();
         clocks.forEach(e ->  gc.drawImage(e.getImg(),

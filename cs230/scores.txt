@@ -33,3 +33,6 @@ a 90
 m 30
 g 90
 , 0
+dfghjkl 0
+m 0
+jhkkhkh 0
