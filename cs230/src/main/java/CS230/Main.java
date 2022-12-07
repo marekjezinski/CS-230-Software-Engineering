@@ -255,6 +255,9 @@ public class Main extends Application {
         Lever wlever =  currentLevel.getWLever();
         gc.drawImage(wlever.getImg(), wlever.getX() * GRID_CELL_WIDTH * 2, wlever.getY() * GRID_CELL_HEIGHT * 2);
 
+        Bomb bomb = currentLevel.getBomb();
+        gc.drawImage(bomb.getImg(), bomb.getX() * GRID_CELL_WIDTH * 2, bomb.getY() * GRID_CELL_HEIGHT * 2);
+
         ArrayList<Clock> clocks = currentLevel.getClocks();
         clocks.forEach(e ->  gc.drawImage(e.getImg(),
                 e.getX() * GRID_CELL_WIDTH * 2, e.getY() * GRID_CELL_HEIGHT * 2));

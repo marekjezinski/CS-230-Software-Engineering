@@ -18,6 +18,8 @@ public class Map {
     private Gate wgate;
     private Lever wlever;
 
+    private Bomb bomb;
+
     public Map(String fileName) {
         this.mapRead = new MapReader(fileName);
         this.MAP_MAX_X = mapRead.getMaxTileX();
@@ -31,6 +33,7 @@ public class Map {
         this.rlever = mapRead.getRLever();
         this.wgate = mapRead.getWGate();
         this.wlever = mapRead.getWLever();
+        this.bomb = mapRead.getBomb();
     }
 
     public int moveRight(int playerX, int playerY) {
@@ -196,6 +199,9 @@ public class Map {
 
     public Gate getRGate() {
         return rgate;
+    }
+    public Bomb getBomb() {
+        return bomb;
     }
     public Lever getRLever() {
         return rlever;

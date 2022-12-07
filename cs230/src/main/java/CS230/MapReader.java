@@ -26,6 +26,7 @@ public class MapReader {
     private Lever rlever;
     private Gate wgate;
     private Lever wlever;
+    private Bomb bomb;
     private String fileName;
     private final int CLOCK_TIME_ADDED = 20;
     private final int CENT_VALUE = 10;
@@ -97,6 +98,11 @@ public class MapReader {
                             in.nextInt(), in.nextInt(), CLOCK_TIME_ADDED);
                     items.add(c);
                     clocks.add(c);
+                }
+                else if (type.equals("bomb")) {
+                    Bomb c = new Bomb(new Image(getClass().getResource("bomboff.png").toURI().toString()),
+                            in.nextInt(), in.nextInt());
+                    bomb = c;
                 }
                 //TODO: Change filename for all loot!
                 else if (type.equals("cent")) {
@@ -212,6 +218,9 @@ public class MapReader {
 
     public Lever getWLever() {
         return wlever;
+    }
+    public Bomb getBomb(){
+        return bomb;
     }
 
 }
