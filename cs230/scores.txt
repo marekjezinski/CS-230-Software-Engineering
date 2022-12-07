@@ -39,3 +39,7 @@ jhkkhkh 0
 l 0
 a 0
 m 40
+l 0
+a 0
+l 10
+l 0

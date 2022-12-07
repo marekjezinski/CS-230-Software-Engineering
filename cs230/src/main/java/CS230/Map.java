@@ -27,7 +27,6 @@ public class Map {
     private int explodeY;
 
     private ArrayList<Bomb> bombs = new ArrayList<>();
-    private Timeline bombTimeline;
     private int countdownForBomb;
 
     public Map(String fileName) {
@@ -311,13 +310,12 @@ public class Map {
                         Bomb moveBomb = bombs.get(j);
                         if (moveBomb.getX() == explodeX
                                 && moveBomb.getY() == explodeY) {
+                            System.out.println(this.explodeX + " " + this.explodeY);
                             neighbour = true;
-                            this.explodeX = bombX;
-                            this.explodeY = bombY;
-                            System.out.println(bombX);
-                            System.out.println(bombY);
                             bombs.get(j).setX(-1);
                             bombs.get(j).setY(-1);
+                            this.explodeX = bombX;
+                            this.explodeY = bombY;
                             this.countdownForBomb = 3;
                             bombActivate();
 
