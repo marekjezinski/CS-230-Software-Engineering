@@ -92,10 +92,6 @@ public class Main extends Application {
     private Media music = new Media(new File(this.backgroundMusic).toURI().toString());
     private MediaPlayer player = new MediaPlayer(this.music);
 
-//8-Bit March by Twin Musicom is licensed under a Creative Commons Attribution 4.0 licence.
-// https://creativecommons.org/licenses/by/4.0/
-//
-//Artist: http://www.twinmusicom.org/
 
     private int currentLevelID = 0;
     private ArrayList<Map> levels = new ArrayList<Map>();
