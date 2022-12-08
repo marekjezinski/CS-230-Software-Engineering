@@ -102,11 +102,11 @@ public class Main extends Application {
     Map currentLevel;
     //todo Change file name of map when NPC in mapreader is finished
     Map level1 = new Map("L0.0.txt");
-    Map level2 = new Map("L0.0.txt");
+    Map level2 = new Map("L1.0.txt");
 
     Map level3 = new Map("L0.0.txt");
 
-    Map level4 = new Map("L0.0.txt");
+    Map level4 = new Map("L1.0.txt");
 
     /**
      * Set up the new application.
@@ -488,7 +488,7 @@ public class Main extends Application {
             }
         });
 
-        timerText.setText("Time remaining: " + this.timerLeft + (currentLevelID + 1));
+        timerText.setText("Time remaining: " + this.timerLeft );
         timerText.setFont(Font.font("arial",20));
         toolbar.getChildren().add(timerText);
 

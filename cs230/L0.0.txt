@@ -12,7 +12,7 @@ YYYY YYYY YYYY YYYY YYYY BBBB MMMM MMMM BBBB BBBB BBBB BBBB BBBB BBBB BBBB
 player 0 0
 timer 30
 bomb 7 5
-Cent 7 6
+cent 7 6
 bomb 2 4
 bomb 2 5
 ruby 2 6

@@ -1,7 +1,7 @@
 package CS230;
 
 import CS230.items.*;
-import CS230.npc.FlyingAssassin;
+import CS230.npc.*;
 import javafx.scene.image.Image;
 
 import java.io.File;
@@ -143,6 +143,17 @@ public class MapReader {
                             in.nextInt(), in.nextInt());
                     items.add(d);
                     door = d;
+                }
+                else if (type.equals("thief")) {
+                    Thief thief = new Thief(in.nextInt(), in.nextInt(),
+                    new Image(getClass().getResource("thief.png").toURI().toString()));
+
+                }
+                else if (type.equals("smthief")) {
+                    SmartThief smart = new SmartThief(
+                            in.nextInt(), in.nextInt(),
+                            new Image(getClass().getResource("smthief.png").toURI().toString()));
+
                 }
                 else if (type.equals("flyingassassin")) {
                     FlyingAssassin fly = new FlyingAssassin(new Image(getClass().getResource("Flyingassassin.png").toURI().toString()),

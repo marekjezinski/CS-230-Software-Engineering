@@ -15,8 +15,11 @@ dollar 7 2
 wgate 4 3
 diamond 1 4
 wlever 8 4
+rgate 15 15
+rlever 15 16
 thief 8 6 
 ruby 2 7
 door 4 8 
 flyingassassin 5 8 n
 clock 7 8 
+bomb 8 7
