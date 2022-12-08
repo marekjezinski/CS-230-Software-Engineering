@@ -77,6 +77,7 @@ public class Main extends Application {
     private Timeline scoreColourChanger;
     private Timeline bombTimeline;
     private Leaderboard l = new Leaderboard();
+    private CurrentState c = new CurrentState();
 
     private int timerLeft;
 
@@ -226,6 +227,7 @@ public class Main extends Application {
         if(currentLevel.checkDoor(playerX / 2, playerY / 2)>0){
             currentLevelID += currentLevel.checkDoor(playerX / 2, playerY / 2);
             currentLevel = levels.get(currentLevelID);
+            c.levelSave(this.username,this.currentLevelID);
         }
         score += currentLevel.checkLoots(playerX / 2, playerY / 2);
         scoreText.setText("Score: " + this.score);
@@ -348,7 +350,7 @@ public class Main extends Application {
         }
         if (this.timerLeft > 0) {
             this.timerLeft = this.timerLeft - 1;
-            timerText.setText("Time remaining: " + this.timerLeft + "Level" + currentLevelID);
+            timerText.setText("Time remaining: " + this.timerLeft + " Level " + (currentLevelID + 1));
         }
         else {
             timerTimeline.stop();
@@ -375,10 +377,6 @@ public class Main extends Application {
         scoreText.setFill(Color.rgb(r,g,b));
     }
 
-    /**
-     * React when an object is dragged onto the canvas.
-     * @param event The drag event itself which contains data about the drag that occurred.
-     */
 
 
     /**
@@ -427,6 +425,12 @@ public class Main extends Application {
                 scoreColourChanger.play();
                 this.player.play();
                 this.username = usernameIn.getText();
+                this.currentLevelID =  c.levelLoad(this.username);
+                this.currentLevel = levels.get(currentLevelID);
+                System.out.println(currentLevelID);
+                timerText.setText("Time remaining: "
+                        + this.timerLeft + " Level " + (currentLevelID + 1));
+                drawGame();
             }
         });
 
