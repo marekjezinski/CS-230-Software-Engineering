@@ -217,7 +217,7 @@ public class Map {
             int bombX = currentBomb.getX();
             int bombY = currentBomb.getY();
             if ((bombX == playerX && bombY == playerY + 1)
-                    || (bombX == playerX  && bombY == playerY - 1)
+                    || (bombX == playerX && bombY == playerY - 1)
                     || (bombX == playerX - 1 && bombY == playerY)
                     || (bombX == playerX + 1 && bombY == playerY)
                     || (bombX == playerX - 1 && bombY == playerY - 1)
@@ -241,14 +241,7 @@ public class Map {
                 Loot loot = this.loots.get(i);
                 int lootX = loot.getX();
                 int lootY = loot.getY();
-                if ((this.explodeX == lootX && this.explodeY == lootY + 1)
-                        || (this.explodeX == lootX && this.explodeY == lootY - 1)
-                        || (this.explodeX == lootX + 1 && this.explodeY == lootY)
-                        || (this.explodeX == lootX - 1 && this.explodeY == lootY)
-                        || (this.explodeX == lootX + 1 && this.explodeY == lootY + 1)
-                        || (this.explodeX == lootX - 1 && this.explodeY == lootY - 1)
-                        || (this.explodeX == lootX - 1 && this.explodeY == lootY + 1)
-                        || (this.explodeX == lootX + 1 && this.explodeY == lootY - 1)) {
+                if (this.explodeX == lootX || this.explodeY == lootY) {
                     this.loots.remove(i);
                 }
             }
@@ -256,40 +249,19 @@ public class Map {
                 Clock clock = this.clocks.get(i);
                 int clockX = clock.getX();
                 int clockY = clock.getY();
-                if ((this.explodeX == clockX && this.explodeY == clockY + 1)
-                        || (this.explodeX == clockX && this.explodeY == clockY - 1)
-                        || (this.explodeX == clockX + 1 && this.explodeY == clockY)
-                        || (this.explodeX == clockX - 1 && this.explodeY == clockY)
-                        || (this.explodeX == clockX + 1 && this.explodeY == clockY + 1)
-                        || (this.explodeX == clockX - 1 && this.explodeY == clockY - 1)
-                        || (this.explodeX == clockX - 1 && this.explodeY == clockY + 1)
-                        || (this.explodeX == clockX + 1 && this.explodeY == clockY - 1)) {
+                if (this.explodeX == clockX || this.explodeY == clockY) {
                     this.clocks.remove(i);
                 }
             }
             int leverX = this.wlever.getX();
             int leverY = this.wlever.getY();
-            if ((this.explodeX == leverX && this.explodeY == leverY + 1)
-                    || (this.explodeX == leverX && this.explodeY == leverY - 1)
-                    || (this.explodeX == leverX + 1 && this.explodeY == leverY)
-                    || (this.explodeX == leverX - 1 && this.explodeY == leverY)
-                    || (this.explodeX == leverX + 1 && this.explodeY == leverY + 1)
-                    || (this.explodeX == leverX - 1 && this.explodeY == leverY - 1)
-                    || (this.explodeX == leverX - 1 && this.explodeY == leverY + 1)
-                    || (this.explodeX == leverX + 1 && this.explodeY == leverY - 1)) {
+            if (this.explodeY == leverX || this.explodeY == leverY) {
                 this.wlever.setX(-1);
                 this.wlever.setY(-1);
             }
             leverX = this.rlever.getX();
             leverY = this.rlever.getY();
-            if ((this.explodeX == leverX && this.explodeY == leverY + 1)
-                    || (this.explodeX == leverX && this.explodeY == leverY - 1)
-                    || (this.explodeX == leverX + 1 && this.explodeY == leverY)
-                    || (this.explodeX == leverX - 1 && this.explodeY == leverY)
-                    || (this.explodeX == leverX + 1 && this.explodeY == leverY + 1)
-                    || (this.explodeX == leverX - 1 && this.explodeY == leverY - 1)
-                    || (this.explodeX == leverX - 1 && this.explodeY == leverY + 1)
-                    || (this.explodeX == leverX + 1 && this.explodeY == leverY - 1)) {
+            if (this.explodeX == leverX || this.explodeY == leverY) {
                 this.rlever.setX(-1);
                 this.rlever.setY(-1);
             }
@@ -298,14 +270,7 @@ public class Map {
                 Bomb bomb = this.bombs.get(i);
                 int bombX = bomb.getX();
                 int bombY = bomb.getY();
-                if ((this.explodeX == bombX && this.explodeY == bombY + 1)
-                        || (this.explodeX == bombX && this.explodeY == bombY - 1)
-                        || (this.explodeX == bombX + 1 && this.explodeY == bombY)
-                        || (this.explodeX == bombX - 1 && this.explodeY == bombY)
-                        || (this.explodeX == bombX + 1 && this.explodeY == bombY + 1)
-                        || (this.explodeX == bombX - 1 && this.explodeY == bombY - 1)
-                        || (this.explodeX == bombX - 1 && this.explodeY == bombY + 1)
-                        || (this.explodeX == bombX + 1 && this.explodeY == bombY - 1)) {
+                if (this.explodeX == bombX || this.explodeY == bombY) {
                     for (int j = 0; j < bombs.size(); j++) {
                         Bomb moveBomb = bombs.get(j);
                         if (moveBomb.getX() == explodeX
@@ -324,27 +289,10 @@ public class Map {
                 }
 
             }
-            if (neighbour == false) {
-                for (int j = 0; j < bombs.size(); j++) {
-                    Bomb moveBomb = bombs.get(j);
-                    if (moveBomb.getX() == explodeX
-                            && moveBomb.getY() == explodeY) {
-                        System.out.println("jeff2");
-                        bombs.get(j).setX(-1);
-                        bombs.get(j).setY(-1);
-                    }
-                }
-            }
         }
 
 
 
-            for (int i = 0; i < bombs.size(); i++) {
-                if(bombs.get(i).getX() == this.explodeX && bombs.get(i).getY() == this.explodeY){
-                    bomb = bombs.get(i);
-                }
-
-        }
         String bombImg = "bomb" + this.countdownForBomb + ".png";
         bomb.setImg(new Image(getClass().getResource(bombImg).toURI().toString()));
         this.countdownForBomb = this.countdownForBomb - 1;
