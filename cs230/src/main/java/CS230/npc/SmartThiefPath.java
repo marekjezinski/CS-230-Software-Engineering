@@ -6,6 +6,7 @@ import CS230.items.Loot;
 import CS230.Tile;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 public class SmartThiefPath {
 
@@ -13,7 +14,7 @@ public class SmartThiefPath {
     private Map currentLevel;
     private Tile[][] currentTileArray;
     private int pathGoalX,pathGoalY;
-    //linked list queueforPath
+    //queue
 
     public SmartThiefPath(Map mapForLoots){
         currentLoot = mapForLoots.getLoots();
@@ -57,9 +58,13 @@ public class SmartThiefPath {
         this.pathGoalY = y;
     }
      //-- checks if theres a valid move between the 2 tiles before adding to queue
-    public boolean valid(int x1,int y1,int x2, int y2){
+    public boolean isValid(int x1,int y1,int x2, int y2){
         Tile current = currentTileArray[x1][y1];
         Tile nextTile =currentTileArray[x2][y2];
+
+        //returns whether smart thief can move to tile or not
+        return  current.isLegalMovement(nextTile);
+
     }
 
 
