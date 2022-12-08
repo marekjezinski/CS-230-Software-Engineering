@@ -5,7 +5,6 @@ import javafx.scene.image.Image;
 public class Character {
     private int xPos;
     private int yPos;
-    private String CharType;
     private boolean alive;
     private Image charImage;
 
@@ -28,10 +27,7 @@ public class Character {
         return alive;
     }
 
-    public String getCharType() {
-        return CharType;
-    }
-
+    
     public Image getCharImage() {
         return charImage;
     }
