@@ -313,6 +313,15 @@ public class Main extends Application {
 
         // Draw player at current location
         gc.drawImage(playerImage, playerX * GRID_CELL_WIDTH, playerY * GRID_CELL_HEIGHT);
+
+        gc.setFill(Color.GRAY);
+        //Draw lines in canvas
+        for(int x = -1; x < CANVAS_WIDTH; x += 50) {
+            gc.fillRect(x, 0, 3, canvas.getHeight());
+        }
+        for(int y = -1; y < CANVAS_HEIGHT; y += 50) {
+            gc.fillRect(0, y, canvas.getWidth(), 3);
+        }
     }
 
     /**
