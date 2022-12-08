@@ -442,9 +442,9 @@ public class Main extends Application {
     }
 
     public static void main(String[] args) throws IOException {
-        MessageOfTheDay m = new MessageOfTheDay();
+        //MessageOfTheDay m = new MessageOfTheDay();
         //m.getMessage();
-        //launch(args);
+        launch(args);
 
     }
 }
