@@ -223,7 +223,10 @@ public class Main extends Application {
         event.consume();
     }
 
-
+    /**
+     * Method for checking if any items are going to be picked up and if
+     * the bomb is going to be activated
+     */
     private void checkItems() {
         timerLeft += currentLevel.checkClocks(playerX / 2, playerY / 2);
         //TODO: implement door and level progression
@@ -244,6 +247,10 @@ public class Main extends Application {
         }
     }
 
+    /**
+     * Method for activating bomb explosions
+     * @throws URISyntaxException
+     */
     public void bombActivate() throws URISyntaxException {
         if (currentLevel.getCountdownForBomb() == 0){
             bombTimeline.stop();
