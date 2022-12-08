@@ -227,7 +227,7 @@ public class Main extends Application {
         if(currentLevel.checkDoor(playerX / 2, playerY / 2)>0){
             currentLevelID += currentLevel.checkDoor(playerX / 2, playerY / 2);
             currentLevel = levels.get(currentLevelID);
-            c.levelSave(this.username,this.currentLevelID);
+            c.levelSave(this.username,this.currentLevelID,this.score);
         }
         score += currentLevel.checkLoots(playerX / 2, playerY / 2);
         scoreText.setText("Score: " + this.score);
@@ -425,12 +425,14 @@ public class Main extends Application {
                 scoreColourChanger.play();
                 this.player.play();
                 this.username = usernameIn.getText();
-                this.currentLevelID =  c.levelLoad(this.username);
+                ArrayList<Integer> reload = c.levelLoad(this.username);
+                this.currentLevelID =  reload.get(0);
                 this.currentLevel = levels.get(currentLevelID);
                 System.out.println(currentLevelID);
+                this.score = reload.get(1);
+                scoreText.setText("Score: " + this.score );
                 timerText.setText("Time remaining: "
                         + this.timerLeft + " Level " + (currentLevelID + 1));
-                drawGame();
             }
         });
 
