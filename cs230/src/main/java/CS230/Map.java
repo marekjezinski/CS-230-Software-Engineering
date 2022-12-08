@@ -2,11 +2,7 @@ package CS230;
 
 import CS230.items.*;
 
-import java.net.URISyntaxException;
 import java.util.ArrayList;
-
-import javafx.animation.Timeline;
-import javafx.scene.image.Image;
 
 public class Map {
     private MapReader mapRead = null;
@@ -57,8 +53,10 @@ public class Map {
         playerY = playerY / 2;
         Tile currentTile = tilesArray[playerX][playerY];
         for (int x = playerX + 1; x < MAP_MAX_X; x++) {
-            if (currentTile.isLegalMovement(tilesArray[x][playerY])) {
-                return x * 2;
+            if (currentTile.isLegalJump(tilesArray[x][playerY])) {
+                if (isNoGate(x, playerY)) {
+                    return x * 2;
+                }
             }
         }
         return playerX * 2;
@@ -69,8 +67,10 @@ public class Map {
         playerY = playerY / 2;
         Tile currentTile = tilesArray[playerX][playerY];
         for (int x = playerX - 1; x >= 0; x--) {
-            if (currentTile.isLegalMovement(tilesArray[x][playerY])) {
-                return x * 2;
+            if (currentTile.isLegalJump(tilesArray[x][playerY])) {
+                if (isNoGate(x, playerY)) {
+                    return x * 2;
+                }
             }
         }
         return playerX * 2;
@@ -81,8 +81,10 @@ public class Map {
         playerY = playerY / 2;
         Tile currentTile = tilesArray[playerX][playerY];
         for (int y = playerY + 1; y < MAP_MAX_Y; y++) {
-            if (currentTile.isLegalMovement(tilesArray[playerX][y])) {
-                return y * 2;
+            if (currentTile.isLegalJump(tilesArray[playerX][y])) {
+                if (isNoGate(playerX, y)) {
+                    return y * 2;
+                }
             }
         }
         return playerY * 2;
@@ -93,11 +95,23 @@ public class Map {
         playerY = playerY / 2;
         Tile currentTile = tilesArray[playerX][playerY];
         for (int y = playerY - 1; y >= 0; y--) {
-            if (currentTile.isLegalMovement(tilesArray[playerX][y])) {
-                return y * 2;
+            if (currentTile.isLegalJump(tilesArray[playerX][y])) {
+                if (isNoGate(playerX, y)) {
+                    return y * 2;
+                }
             }
         }
         return playerY * 2;
+    }
+
+    private boolean isNoGate(int cordX, int cordY) {
+        if (rgate.getX() == cordX && rgate.getY() == cordY) {
+            return false;
+        }
+        else if (wgate.getX() == cordX && wgate.getY() == cordY) {
+            return false;
+        }
+        return true;
     }
 
     public Cell[][] getCellsArray() {
@@ -207,119 +221,11 @@ public class Map {
         }
     }
 
-    public int moveBomb(int playerX, int playerY) {
-        for (int i = 0; i < bombs.size(); i++) {
-            Bomb currentBomb = bombs.get(i);
-            int bombX = currentBomb.getX();
-            int bombY = currentBomb.getY();
-            if (bombX == playerX && bombY == playerY) {
-                return 1;
-
-            }
+    /*public int checkBomb(int playerX, int playerY) {
+        for(int i = 0; i < bombs.size(); i++) {
+            
         }
-        return 0;
-    }
-
-
-    public int bombCheck(int playerX, int playerY) {
-        for (int i = 0; i < bombs.size(); i++) {
-            Bomb currentBomb = bombs.get(i);
-            this.bombX = currentBomb.getX();
-            this.bombY = currentBomb.getY();
-            if ((bombX == playerX && bombY == playerY + 1)
-                    || (bombX == playerX && bombY == playerY - 1)
-                    || (bombX == playerX - 1 && bombY == playerY)
-                    || (bombX == playerX + 1 && bombY == playerY)
-                    || (bombX == playerX - 1 && bombY == playerY - 1)
-                    || (bombX == playerX + 1 && bombY == playerY + 1)
-                    || (bombX == playerX - 1 && bombY == playerY + 1)
-                    || (bombX == playerX + 1 && bombY == playerY - 1)) {
-                this.explodeX = bombX;
-                this.explodeY = bombY;
-                if (this.bombTouched == false) {
-                    this.countdownForBomb = 4;
-                    this.bombTouched = true;
-                }
-                return 1;
-            }
-        }
-        return 0;
-    }
-
-
-    public void bombActivate() throws URISyntaxException {
-        boolean neighbour = false;
-        for (int i = 0; i < this.bombs.size(); i++) {
-            if (this.bombs.size() > 0) {
-                Bomb tempBomb = this.bombs.get(i);
-                int tempBombX = tempBomb.getX();
-                int tempBombY = tempBomb.getY();
-                if (this.explodeX == tempBombX && this.explodeY == tempBombY) {
-                    this.bomb = tempBomb;
-                    bombX = tempBombX;
-                    bombY = tempBombY;
-                    int photoNum = this.countdownForBomb - 1;
-                    String bombImg = "bomb" + photoNum + ".png";
-                    bomb.setImg(new Image(getClass().getResource(bombImg).toURI().toString()));
-                    this.countdownForBomb = this.countdownForBomb - 1;
-                }
-            }
-        }
-
-
-            if (this.countdownForBomb <= 0) {
-                for (int i = 0; i < this.loots.size(); i++) {
-                    Loot loot = this.loots.get(i);
-                    int lootX = loot.getX();
-                    int lootY = loot.getY();
-                    if (this.explodeX == lootX || this.explodeY == lootY) {
-                        this.loots.remove(i);
-                    }
-                }
-                for (int i = 0; i < this.clocks.size(); i++) {
-                    Clock clock = this.clocks.get(i);
-                    int clockX = clock.getX();
-                    int clockY = clock.getY();
-                    if (this.explodeX == clockX || this.explodeY == clockY) {
-                        this.clocks.remove(i);
-                    }
-                }
-                int leverX = this.wlever.getX();
-                int leverY = this.wlever.getY();
-                if (this.explodeY == leverX || this.explodeY == leverY) {
-                    this.wlever.setX(-1);
-                    this.wlever.setY(-1);
-                }
-                leverX = this.rlever.getX();
-                leverY = this.rlever.getY();
-                if (this.explodeX == leverX || this.explodeY == leverY) {
-                    this.rlever.setX(-1);
-                    this.rlever.setY(-1);
-                }
-
-                for (int i = 0; i < this.bombs.size(); i++) {
-                    Bomb newBomb = this.bombs.get(i);
-                    int bombX = newBomb.getX();
-                    int bombY = newBomb.getY();
-                    if (newBomb != this.bomb &&
-                            (this.bomb.getX() == bombX || this.bomb.getY() == bombY)) {
-                        System.out.println(this.explodeX + " " + this.explodeY);
-                        neighbour = true;
-                        this.bombs.remove(this.bomb);
-                        this.explodeX = bombX;
-                        this.explodeY = bombY;
-                        this.countdownForBomb = 4;
-                        this.bombTouched = false;
-                        bombActivate();
-                    }
-                }
-                if (neighbour == false) {
-                    this.bombTouched = false;
-                    this.bombs.remove(this.bomb);
-                }
-
-            }
-        }
+    }*/
 
 
     public ArrayList<Clock> getClocks() {

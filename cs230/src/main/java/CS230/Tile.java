@@ -1,7 +1,5 @@
 package CS230;
 
-import CS230.items.Item;
-
 public class Tile {
     private Cell[] cells = new Cell[4];
 
@@ -14,7 +12,7 @@ public class Tile {
         }
     }
 
-    public boolean isLegalMovement(Tile t) {
+    public boolean isLegalJump(Tile t) {
         String colourCode1 = t.getTileColours();
         String colourCode2 = getTileColours();
         char[] charColourArray1 = colourCode1.toCharArray();

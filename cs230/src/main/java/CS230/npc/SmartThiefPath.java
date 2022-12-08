@@ -6,7 +6,6 @@ import CS230.items.Loot;
 import CS230.Tile;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 
 public class SmartThiefPath {
 
@@ -63,7 +62,7 @@ public class SmartThiefPath {
         Tile nextTile =currentTileArray[x2][y2];
 
         //returns whether smart thief can move to tile or not
-        return  current.isLegalMovement(nextTile);
+        return  current.isLegalJump(nextTile);
 
     }
 

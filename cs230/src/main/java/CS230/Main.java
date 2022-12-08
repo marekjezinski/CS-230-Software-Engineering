@@ -148,14 +148,10 @@ public class Main extends Application {
         timerTimeline = new Timeline(new KeyFrame(Duration.millis(1000), event -> timer()));
         timerTimeline.setCycleCount(Animation.INDEFINITE);
 
-        bombTimeline = new Timeline(new KeyFrame(Duration.millis(1000), event -> {
-            try {
-                bombActivate();
-            } catch (URISyntaxException e) {
-                throw new RuntimeException(e);
-            }
+        /*bombTimeline = new Timeline(new KeyFrame(Duration.millis(1000), event -> {
+
         }));
-        bombTimeline.setCycleCount(Animation.INDEFINITE);
+        bombTimeline.setCycleCount(Animation.INDEFINITE);*/
 
         scoreColourChanger = new Timeline(new KeyFrame(Duration.millis(500), event -> scoreColour()));
         scoreColourChanger.setCycleCount(Animation.INDEFINITE);
@@ -175,40 +171,28 @@ public class Main extends Application {
         switch (event.getCode()) {
             case RIGHT:
                 // Right key was pressed. So move the player right by one cell.
-                if (playerX < 28 && this.hasGameStarted == true &&
-                        currentLevel.checkRGate((playerX / 2) + 1, playerY / 2) == 0
-                && currentLevel.checkWGate((playerX / 2) + 1, playerY / 2) == 0
-                && currentLevel.moveBomb((playerX / 2) + 1, playerY / 2) == 0) {
+                if (playerX < 28 && this.hasGameStarted == true) {
                     playerX = currentLevel.moveRight(playerX, playerY);
                 }
                 break;
 
             case LEFT:
                 // Left key was pressed. So move the player left by one cell.
-                if (playerX > 0 && this.hasGameStarted == true &&
-                        currentLevel.checkRGate((playerX / 2)-1, playerY / 2) == 0
-                        && currentLevel.checkWGate((playerX / 2) - 1, playerY / 2) == 0
-                        && currentLevel.moveBomb((playerX / 2) - 1, playerY / 2) == 0) {
+                if (playerX > 0 && this.hasGameStarted == true) {
                     playerX = currentLevel.moveLeft(playerX, playerY);
                 }
                 break;
 
             case UP:
                 // Up key was pressed. So move the player up by one cell.
-                if (playerY > 0 && this.hasGameStarted == true &&
-                        currentLevel.checkRGate(playerX / 2, (playerY / 2) - 1) == 0
-                        && currentLevel.checkWGate(playerX / 2, (playerY / 2) - 1) == 0
-                        && currentLevel.moveBomb((playerX / 2), (playerY / 2) - 1) == 0) {
+                if (playerY > 0 && this.hasGameStarted == true) {
                     playerY = currentLevel.moveUp(playerX, playerY);
                 }
                 break;
 
             case DOWN:
                 // Down key was pressed. So move the player down by one cell.
-                if (playerY < 18 && this.hasGameStarted == true &&
-                        currentLevel.checkRGate(playerX / 2, (playerY / 2) + 1) == 0
-                        && currentLevel.checkWGate(playerX / 2, (playerY / 2) + 1) == 0
-                        && currentLevel.moveBomb((playerX / 2), (playerY / 2) + 1) == 0) {
+                if (playerY < 18 && this.hasGameStarted == true) {
                     playerY = currentLevel.moveDown(playerX, playerY);
                 }
                 break;
@@ -242,25 +226,15 @@ public class Main extends Application {
         score += currentLevel.checkLoots(playerX / 2, playerY / 2);
         scoreText.setText("Score: " + this.score);
         scoreText.setFont(Font.font("arial",20));
-
         currentLevel.checkRLever(playerX / 2, playerY / 2);
         currentLevel.checkWLever(playerX / 2, playerY / 2);
-        if (currentLevel.bombCheck(playerX / 2, playerY / 2) == 1){
-            bombTimeline.play();
-        }
+
     }
 
     /**
      * Method for activating bomb explosions
      * @throws URISyntaxException
      */
-    public void bombActivate() throws URISyntaxException {
-        if (currentLevel.getCountdownForBomb() == 0){
-            bombTimeline.stop();
-        }
-        currentLevel.bombActivate();
-        drawGame();
-    }
 
     /**
      * Draw the game on the canvas.
