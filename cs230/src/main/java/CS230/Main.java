@@ -413,26 +413,66 @@ public class Main extends Application {
         Label labelUsername = new Label("Username");
         TextField usernameIn = new TextField();
         toolbar.getChildren().addAll(labelUsername,usernameIn);
-        Button startGame = new Button("Start game");
-        toolbar.getChildren().addAll(startGame);
-        startGame.setOnAction(e -> {
+
+        Button nextButton = new Button("Next");
+        toolbar.getChildren().addAll(nextButton);
+        nextButton.setOnAction(e -> {
             if(usernameIn.getText().equals("")){
                 System.err.println("ERROR! Player name is required!");
             }
-            else{player.play();
-                this.hasGameStarted = true;
-                timerTimeline.play();
-                scoreColourChanger.play();
-                this.player.play();
+            else{
                 this.username = usernameIn.getText();
-                ArrayList<Integer> reload = c.levelLoad(this.username);
-                this.currentLevelID =  reload.get(0);
-                this.currentLevel = levels.get(currentLevelID);
-                System.out.println(currentLevelID);
-                this.score = reload.get(1);
-                scoreText.setText("Score: " + this.score );
-                timerText.setText("Time remaining: "
-                        + this.timerLeft + " Level " + (currentLevelID + 1));
+                toolbar.getChildren().removeAll(labelUsername,usernameIn,nextButton);
+                Label labelLevel = new Label("Level (blank for most recent save!):");
+                TextField levelIn = new TextField();
+                Button startButton = new Button("Start!");
+                toolbar.getChildren().addAll(labelLevel,levelIn,startButton);
+                startButton.setOnAction(f -> {
+                    String levelInput = levelIn.getText();
+                    if(levelInput.equals("")) {
+                        toolbar.getChildren().removeAll(labelLevel,levelIn,startButton);
+                        player.play();
+                        this.hasGameStarted = true;
+                        timerTimeline.play();
+                        scoreColourChanger.play();
+                        this.player.play();
+                        ArrayList<Integer> reload = c.levelLoad(this.username);
+                        this.currentLevelID = reload.get(0);
+                        this.currentLevel = levels.get(currentLevelID);
+                        System.out.println(currentLevelID);
+                        this.score = reload.get(1);
+                        scoreText.setText("Score: " + this.score);
+                        timerText.setText("Time remaining: "
+                                + this.timerLeft + " Level " + (currentLevelID + 1));
+                    }
+                    else if (levelInput.equals("1") || levelInput.equals("2") ||
+                            levelInput.equals("3")){
+                        int levelSelected = Integer.parseInt(levelInput);
+                        ArrayList<Integer> reload = c.levelLoad(this.username);
+                        if ((levelSelected - 1) <= reload.get(0)){
+                            toolbar.getChildren().removeAll(labelLevel,levelIn,startButton);
+                            player.play();
+                            this.hasGameStarted = true;
+                            timerTimeline.play();
+                            scoreColourChanger.play();
+                            this.player.play();
+                            this.currentLevelID = levelSelected - 1;
+                            this.currentLevel = levels.get(currentLevelID);
+                            System.out.println(currentLevelID);
+                            timerText.setText("Time remaining: "
+                                    + this.timerLeft + " Level " + (currentLevelID + 1));
+                        }
+                        else {
+                            System.err.println("ERROR! You haven't unlocked that level!");
+                            levelIn.clear();
+                        }
+                    }
+                    else {
+                        System.err.println("ERROR! You have an incorrect input");
+                        levelIn.clear();
+                    }
+                });
+
             }
         });
 
