@@ -100,10 +100,13 @@ public class Main extends Application {
     private int currentLevelID = 0;
     private ArrayList<Map> levels = new ArrayList<Map>();
     Map currentLevel;
-    Map level1 = new Map("15x10.txt");
-    Map level2 = new Map("15x10l2.txt");
+    //todo Change file name of map when NPC in mapreader is finished
+    Map level1 = new Map("L0.0.txt");
+    Map level2 = new Map("L0.0.txt");
 
-    Map level3 = new Map("15x10l3.txt");
+    Map level3 = new Map("L0.0.txt");
+
+    Map level4 = new Map("L0.0.txt");
 
     /**
      * Set up the new application.
@@ -113,6 +116,7 @@ public class Main extends Application {
         levels.add(level1);
         levels.add(level2);
         levels.add(level3);
+        levels.add(level4);
         this.currentLevel = levels.get(currentLevelID);
         playerX = this.currentLevel.getPlayerStartX() * 2;
         playerY = this.currentLevel.getPlayerStartY() * 2;
@@ -311,13 +315,13 @@ public class Main extends Application {
     }
 
     public void resetGame() {
-        //TODO: change filename
+        //TODO: FIX issue of map not reloading items on it
         currentLevelID = 0;
         currentLevel = levels.get(0);
 
         resetPlayerLocation();
         score = 0;
-        timerLeft = 10;
+        timerLeft = 30;
         timerTimeline.stop();
         hasGameStarted = false;
         drawGame();
@@ -429,6 +433,7 @@ public class Main extends Application {
                     Button l1 = new Button("1");
                     Button l2 = new Button("2");
                     Button l3 = new Button("3");
+                    Button l4 = new Button("4");
                     Button recent = new Button("Recent");
                     toolbar.getChildren().addAll(l1,l2,l3,recent);
 
@@ -451,6 +456,16 @@ public class Main extends Application {
                         if((c.checkLevel(username)) > 1){
                             toolbar.getChildren().removeAll(l1,l2,l3,recent);
                             begin(0,2);
+                        }
+                        else {
+                            System.err.println("ERROR! You haven't unlocked this yet");
+                        }
+
+                    });
+                    l4.setOnAction(g -> {
+                        if(c.checkLevel(username) > 0){
+                            toolbar.getChildren().removeAll(l1,l2,l3,recent);
+                            begin(0,3);
                         }
                         else {
                             System.err.println("ERROR! You haven't unlocked this yet");
