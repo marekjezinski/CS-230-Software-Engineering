@@ -15,6 +15,13 @@ public class Character {
         this.charImage = pic;
     }
 
+    //character constructor without image for testing
+    public Character(int x, int y){
+        this.xPos = x;
+        this.yPos = y;
+        this.alive = true;
+    }
+
     public int getYPos() {
         return yPos;
     }
