@@ -22,3 +22,7 @@
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
 /bin/
+cs230/src/main/java/.DS_Store
+cs230/src/.DS_Store
+cs230/src/main/.DS_Store
+cs230/src/main/java/CS230/.DS_Store
