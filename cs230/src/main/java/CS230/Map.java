@@ -27,6 +27,7 @@ public class Map {
     private Bomb bomb;
     private int bombX;
     private int bombY;
+    private boolean bombTouched = false;
     private int explodeX;
     private int explodeY;
 
@@ -231,7 +232,10 @@ public class Map {
                     || (bombX == playerX + 1 && bombY == playerY - 1)) {
                 this.explodeX = bombX;
                 this.explodeY = bombY;
-                this.countdownForBomb = 4;
+                if (this.bombTouched == false) {
+                    this.countdownForBomb = 4;
+                    this.bombTouched = true;
+                }
                 return 1;
             }
         }
@@ -301,10 +305,12 @@ public class Map {
                         this.explodeX = bombX;
                         this.explodeY = bombY;
                         this.countdownForBomb = 4;
+                        this.bombTouched = false;
                         bombActivate();
                     }
                 }
                 if (neighbour == false) {
+                    this.bombTouched = false;
                     this.bombs.remove(this.bomb);
                 }
 
