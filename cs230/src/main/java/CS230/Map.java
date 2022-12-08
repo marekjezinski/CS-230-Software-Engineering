@@ -23,6 +23,7 @@ public class Map {
     private Lever rlever;
     private Gate wgate;
     private Lever wlever;
+    private Player pl;
 
     private Bomb bomb;
     private int bombX;
@@ -47,8 +48,7 @@ public class Map {
         this.wgate = mapRead.getWGate();
         this.wlever = mapRead.getWLever();
         this.bombs = mapRead.getBomb();
-        this.playerStartX = mapRead.getPlayerStartX();
-        this.playerStartY = mapRead.getPlayerStartY();
+        this.pl = mapRead.getPlayer();
     }
 
     public int moveRight(int playerX, int playerY) {
@@ -343,11 +343,11 @@ public class Map {
         return countdownForBomb;
     }
 
-    public int getPlayerStartX() {
-        return playerStartX;
+    public Player getPlayer() {
+        return pl;
     }
 
-    public int getPlayerStartY() {
-        return playerStartY;
+    public void setPlayer(Player pl) {
+        this.pl = pl;
     }
 }
