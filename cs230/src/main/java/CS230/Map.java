@@ -228,7 +228,7 @@ public class Map {
                     || (bombX == playerX + 1 && bombY == playerY - 1)) {
                 this.explodeX = bombX;
                 this.explodeY = bombY;
-                this.countdownForBomb = 3;
+                this.countdownForBomb = 4;
                 return 1;
             }
         }
@@ -298,7 +298,7 @@ public class Map {
                         this.bombs.remove(this.bomb);
                         this.explodeX = bombX;
                         this.explodeY = bombY;
-                        this.countdownForBomb = 3;
+                        this.countdownForBomb = 4;
                         bombActivate();
                     }
                 }
@@ -308,7 +308,7 @@ public class Map {
 
             }
         }
-    
+
 
     public ArrayList<Clock> getClocks() {
         return clocks;
