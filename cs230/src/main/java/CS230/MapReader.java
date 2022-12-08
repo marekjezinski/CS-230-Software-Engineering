@@ -1,8 +1,6 @@
 package CS230;
 
 import CS230.items.*;
-import CS230.npc.FlyingAssassin;
-import CS230.npc.NPC;
 import javafx.scene.image.Image;
 
 import java.io.File;
@@ -28,12 +26,9 @@ public class MapReader {
     private Lever rlever;
     private Gate wgate;
     private Lever wlever;
-    private Player pl;
     private int playerStartX = 0;
     private int playerStartY = 0;
     private ArrayList<Bomb> bombs = new ArrayList<>();
-    private ArrayList<NPC> npcs = new ArrayList<>();
-    private ArrayList<FlyingAssassin> flyingAssassins = new ArrayList<>();
     private String fileName;
     private final int CLOCK_TIME_ADDED = 20;
     private final int CENT_VALUE = 10;
@@ -75,29 +70,33 @@ public class MapReader {
             while (in.hasNext()) {
                 String type = in.next().toLowerCase();
                 if (type.equals("player")) {
-                    pl = new Player(in.nextInt(), in.nextInt(), new Image(getClass().getResource("player.png")
-                            .toURI().toString()));
+                    this.playerStartX = in.nextInt();
+                    this.playerStartY = in.nextInt();
                 }
                 else if (type.equals("timer")) {
                     this.timer = in.nextInt();
                 }
                 else if (type.equals("rgate")) {
-                    rgate = new Gate(new Image(getClass().getResource("rustygate.png").toURI().toString()),
+                    Gate rgatein = new Gate(new Image(getClass().getResource("rustygate.png").toURI().toString()),
                             in.nextInt(), in.nextInt());
+                    rgate = rgatein;
                 }
                 else if (type.equals("rlever")) {
-                    rlever = new Lever(new Image(getClass().getResource("rustylever.png").toURI().toString()),
+                    Lever rleverin = new Lever(new Image(getClass().getResource("rustylever.png").toURI().toString()),
                             in.nextInt(), in.nextInt());
+                    rlever = rleverin;
                 }
                 else if (type.equals("wgate")) {
-                    wgate = new Gate(new Image(getClass().getResource("woodengate.png")
+                    Gate wgatein = new Gate(new Image(getClass().getResource("woodengate.png")
                             .toURI().toString()),
                             in.nextInt(), in.nextInt());
+                    wgate = wgatein;
                 }
                 else if (type.equals("wlever")) {
-                    wlever = new Lever(new Image(getClass().getResource("woodenlever.png")
+                    Lever wleverin = new Lever(new Image(getClass().getResource("woodenlever.png")
                             .toURI().toString()),
                             in.nextInt(), in.nextInt());
+                    wlever = wleverin;
                 }
                 //
                 else if (type.equals("clock")) {
@@ -143,12 +142,6 @@ public class MapReader {
                     items.add(d);
                     door = d;
                 }
-                else if (type.equals("flyingassasin")) {
-                    FlyingAssassin temp = new FlyingAssassin(new Image(getClass().getResource("flyingassassin.png")
-                            .toURI().toString()), in.nextInt(), in.nextInt(), in.next().toLowerCase().charAt(0));
-                    npcs.add(temp);
-                    flyingAssassins.add(temp);
-                }
                 else {
                     System.err.println("Please check level file, entity identifier mismatch");
                     throw new Exception();
@@ -156,7 +149,6 @@ public class MapReader {
             }
         }
         catch(Exception e) {
-            e.printStackTrace();
             System.err.println("Please check level file!");
             System.exit(1);
         }
@@ -238,8 +230,12 @@ public class MapReader {
         return bombs;
     }
 
-    public Player getPlayer() {
-        return pl;
+    public int getPlayerStartX() {
+        return playerStartX;
+    }
+
+    public int getPlayerStartY() {
+        return playerStartY;
     }
 }
 

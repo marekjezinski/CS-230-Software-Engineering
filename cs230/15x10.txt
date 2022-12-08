@@ -27,6 +27,4 @@ diamond 10 3
 dollar 4 7
 ruby 10 2
 door 10 5
-flyingAssasin 0 0 w
-flyingAssasin 1 1 s
 

@@ -4,8 +4,8 @@ import javafx.scene.image.Image;
 
 public abstract class NPC {
     private Image img;
-    protected int x;
-    protected int y;
+    private int x;
+    private int y;
 
     public NPC(Image img, int x, int y) {
         this.img = img;

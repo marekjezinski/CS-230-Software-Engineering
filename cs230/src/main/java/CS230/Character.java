@@ -5,12 +5,14 @@ import javafx.scene.image.Image;
 public class Character {
     private int xPos;
     private int yPos;
-    private Image img;
+    private boolean alive;
+    private Image charImage;
 
     public Character(int x, int y,Image pic){
         this.xPos = x;
         this.yPos = y;
-        this.img = pic;
+        this.alive = true;
+        this.charImage = pic;
     }
 
     public int getYPos() {
@@ -21,9 +23,13 @@ public class Character {
         return xPos;
     }
 
+    public boolean isAlive() {
+        return alive;
+    }
+
     
-    public Image getImg() {
-        return img;
+    public Image getCharImage() {
+        return charImage;
     }
 
     public void setXPos(int newX){
@@ -33,5 +39,10 @@ public class Character {
     public void setYPos(int newY){
         this.yPos = newY;
     }
+
+    public void killPlayer(){
+        this.alive = false;
+    }
+    // public void moveChar() to be implemented...
 
 }
