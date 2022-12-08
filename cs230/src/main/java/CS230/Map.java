@@ -30,10 +30,8 @@ public class Map {
     private int explodeX;
     private int explodeY;
 
-    private boolean bombTouched = false;
-
     private ArrayList<Bomb> bombs = new ArrayList<>();
-    private int countdownForBomb = 4;
+    private int countdownForBomb;
 
     public Map(String fileName) {
         this.mapRead = new MapReader(fileName);
@@ -233,39 +231,32 @@ public class Map {
                     || (bombX == playerX + 1 && bombY == playerY - 1)) {
                 this.explodeX = bombX;
                 this.explodeY = bombY;
-                if (this.bombTouched == false) {
-                    this.countdownForBomb = 4;
-                    this.bombTouched = true;
-                }
-
+                this.countdownForBomb = 4;
+                return 1;
             }
-            return 1;
         }
-
         return 0;
     }
 
 
-
     public void bombActivate() throws URISyntaxException {
         boolean neighbour = false;
-
-            for (int i = 0; i < this.bombs.size(); i++) {
-                if (this.bombs.size() > 0) {
-                    Bomb tempBomb = this.bombs.get(i);
-                    int tempBombX = tempBomb.getX();
-                    int tempBombY = tempBomb.getY();
-                    if (this.explodeX == tempBombX && this.explodeY == tempBombY) {
-                        this.bomb = tempBomb;
-                        bombX = tempBombX;
-                        bombY = tempBombY;
-                        int photoNum = this.countdownForBomb - 1;
-                        String bombImg = "bomb" + photoNum + ".png";
-                        bomb.setImg(new Image(getClass().getResource(bombImg).toURI().toString()));
-                        this.countdownForBomb = this.countdownForBomb - 1;
-                    }
+        for (int i = 0; i < this.bombs.size(); i++) {
+            if (this.bombs.size() > 0) {
+                Bomb tempBomb = this.bombs.get(i);
+                int tempBombX = tempBomb.getX();
+                int tempBombY = tempBomb.getY();
+                if (this.explodeX == tempBombX && this.explodeY == tempBombY) {
+                    this.bomb = tempBomb;
+                    bombX = tempBombX;
+                    bombY = tempBombY;
+                    int photoNum = this.countdownForBomb - 1;
+                    String bombImg = "bomb" + photoNum + ".png";
+                    bomb.setImg(new Image(getClass().getResource(bombImg).toURI().toString()));
+                    this.countdownForBomb = this.countdownForBomb - 1;
                 }
             }
+        }
 
 
             if (this.countdownForBomb <= 0) {
@@ -321,7 +312,6 @@ public class Map {
         }
 
 
-
     public ArrayList<Clock> getClocks() {
         return clocks;
     }
@@ -359,9 +349,5 @@ public class Map {
 
     public int getPlayerStartY() {
         return playerStartY;
-    }
-
-    public boolean isBombTouched() {
-        return bombTouched;
     }
 }
