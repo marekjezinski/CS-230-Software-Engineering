@@ -322,6 +322,10 @@ public class Map {
         return clocks;
     }
 
+    public Tile[][] getTilesArray() {
+        return tilesArray;
+    }
+
     public Door getDoor() {
         return door;
     }
