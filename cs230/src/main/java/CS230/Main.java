@@ -1,5 +1,7 @@
 package CS230;
 import CS230.items.*;
+import CS230.npc.SmartThief;
+import CS230.npc.SmartThiefPath;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
