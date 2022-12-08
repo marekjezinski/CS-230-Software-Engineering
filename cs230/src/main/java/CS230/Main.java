@@ -36,6 +36,8 @@ import java.util.Random;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 
+import static java.lang.Math.ceil;
+
 /**
  * Sample application that demonstrates the use of JavaFX Canvas for a Game.
  * This class is intentionally not structured very well. This is just a starting point to show
@@ -234,6 +236,7 @@ public class Main extends Application {
         if(currentLevel.checkDoor(playerX / 2, playerY / 2)>0){
             currentLevelID += currentLevel.checkDoor(playerX / 2, playerY / 2);
             currentLevel = levels.get(currentLevelID);
+            this.score = (int) (this.score + ceil(this.timerLeft / 3));
             c.levelSave(this.username,this.currentLevelID,this.score);
         }
         score += currentLevel.checkLoots(playerX / 2, playerY / 2);
