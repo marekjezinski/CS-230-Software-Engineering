@@ -1,6 +1,7 @@
 package CS230;
 
 import CS230.items.*;
+import CS230.npc.FlyingAssassin;
 import javafx.scene.image.Image;
 
 import java.io.File;
@@ -142,6 +143,11 @@ public class MapReader {
                             in.nextInt(), in.nextInt());
                     items.add(d);
                     door = d;
+                }
+                else if (type.equals("flyingassassin")) {
+                    FlyingAssassin fly = new FlyingAssassin(new Image(getClass().getResource("Flyingassassin.png").toURI().toString()),
+                            in.nextInt(), in.nextInt(), in.next().charAt(0));
+
                 }
                 else {
                     System.err.println("Please check level file, entity identifier mismatch");
