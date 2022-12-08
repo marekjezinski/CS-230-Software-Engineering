@@ -414,69 +414,66 @@ public class Main extends Application {
         TextField usernameIn = new TextField();
         toolbar.getChildren().addAll(labelUsername,usernameIn);
 
-        Button nextButton = new Button("Next");
-        toolbar.getChildren().addAll(nextButton);
-        nextButton.setOnAction(e -> {
+        Button startButton = new Button("Start!");
+        toolbar.getChildren().addAll(startButton);
+        startButton.setOnAction(e -> {
             if(usernameIn.getText().equals("")){
                 System.err.println("ERROR! Player name is required!");
             }
             else{
                 this.username = usernameIn.getText();
-                toolbar.getChildren().removeAll(labelUsername,usernameIn,nextButton);
-                Label labelLevel = new Label("Level (blank for most recent save!):");
-                TextField levelIn = new TextField();
-                Button startButton = new Button("Start!");
-                toolbar.getChildren().addAll(labelLevel,levelIn,startButton);
-                startButton.setOnAction(f -> {
-                    String levelInput = levelIn.getText();
-                    if(levelInput.equals("")) {
-                        toolbar.getChildren().removeAll(labelLevel,levelIn,startButton);
-                        player.play();
-                        this.hasGameStarted = true;
-                        timerTimeline.play();
-                        scoreColourChanger.play();
-                        this.player.play();
-                        ArrayList<Integer> reload = c.levelLoad(this.username);
-                        this.currentLevelID = reload.get(0);
-                        this.currentLevel = levels.get(currentLevelID);
-                        System.out.println(currentLevelID);
-                        this.score = reload.get(1);
-                        scoreText.setText("Score: " + this.score);
-                        timerText.setText("Time remaining: "
-                                + this.timerLeft + " Level " + (currentLevelID + 1));
-                    }
-                    else if (levelInput.equals("1") || levelInput.equals("2") ||
-                            levelInput.equals("3")){
-                        int levelSelected = Integer.parseInt(levelInput);
-                        ArrayList<Integer> reload = c.levelLoad(this.username);
-                        if ((levelSelected - 1) <= reload.get(0)){
-                            toolbar.getChildren().removeAll(labelLevel,levelIn,startButton);
-                            player.play();
-                            this.hasGameStarted = true;
-                            timerTimeline.play();
-                            scoreColourChanger.play();
-                            this.player.play();
-                            this.currentLevelID = levelSelected - 1;
-                            this.currentLevel = levels.get(currentLevelID);
-                            System.out.println(currentLevelID);
-                            timerText.setText("Time remaining: "
-                                    + this.timerLeft + " Level " + (currentLevelID + 1));
+                toolbar.getChildren().removeAll(labelUsername,usernameIn,startButton);
+                boolean playedBefore = c.newPlayer(username);
+                if (playedBefore == true) {
+                    Label labelLevel = new Label("Level select:");
+                    Button l1 = new Button("1");
+                    Button l2 = new Button("2");
+                    Button l3 = new Button("3");
+                    Button recent = new Button("Recent");
+                    toolbar.getChildren().addAll(l1,l2,l3,recent);
+
+                    l1.setOnAction(f -> {
+                        begin(0,0);
+                    });
+
+                    l2.setOnAction(g -> {
+                        if(c.checkLevel(username) > 0){
+                            toolbar.getChildren().removeAll(l1,l2,l3,recent);
+                            begin(0,1);
                         }
                         else {
-                            System.err.println("ERROR! You haven't unlocked that level!");
-                            levelIn.clear();
+                            System.err.println("ERROR! You haven't unlocked this yet");
                         }
-                    }
-                    else {
-                        System.err.println("ERROR! You have an incorrect input");
-                        levelIn.clear();
-                    }
-                });
+
+                    });
+
+                    l3.setOnAction(h -> {
+                        if((c.checkLevel(username)) > 1){
+                            toolbar.getChildren().removeAll(l1,l2,l3,recent);
+                            begin(0,2);
+                        }
+                        else {
+                            System.err.println("ERROR! You haven't unlocked this yet");
+                        }
+
+                    });
+
+                    recent.setOnAction(i -> {
+                        toolbar.getChildren().removeAll(l1,l2,l3,recent);
+                        ArrayList<Integer> reload = c.levelLoad(username);
+                        begin(reload.get(1),reload.get(0));
+
+                    });
+                }
+                else {
+                    begin(0,0);
+                }
+
 
             }
         });
 
-        timerText.setText("Time remaining: " + this.timerLeft );
+        timerText.setText("Time remaining: " + this.timerLeft + (currentLevelID + 1));
         timerText.setFont(Font.font("arial",20));
         toolbar.getChildren().add(timerText);
 
@@ -485,8 +482,22 @@ public class Main extends Application {
         toolbar.getChildren().add(scoreText);
 
 
+
         // Finally, return the border pane we built up.
         return root;
+    }
+
+    public void begin(int scoreIn, int levelIn){
+        this.hasGameStarted = true;
+        timerTimeline.play();
+        scoreColourChanger.play();
+        this.player.play();
+        this.score = scoreIn;
+        this.currentLevelID = levelIn;
+        timerText.setText("Time remaining: " + this.timerLeft + " Level " + (currentLevelID + 1));
+        scoreText.setText("Score: " + this.score);
+        drawGame();
+
     }
 
     public static void main(String[] args) throws IOException {

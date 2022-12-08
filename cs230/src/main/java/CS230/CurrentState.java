@@ -80,5 +80,58 @@ public class CurrentState {
         }
         return startState;
     }
+
+    public boolean newPlayer(String username){
+        int level = 0;
+        int indexPosition = 0;
+        File f = new File("savestate.txt");
+        try  {
+            Scanner in = new Scanner(f);
+            while(in.hasNext()) {
+                this.usernames.add(in.next());
+                this.levels.add(in.nextInt());
+                this.scores.add(in.nextInt());
+            }
+
+
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+       for (int i = 0; i < usernames.size(); i++) {
+           if (username.equals(this.usernames.get(i))){
+               return true;
+           }
+       }
+        return false;
+    }
+
+    public int checkLevel (String username) {
+        int level = 0;
+        File f = new File("savestate.txt");
+        try  {
+            Scanner in = new Scanner(f);
+            while(in.hasNext()) {
+                this.usernames.add(in.next());
+                this.levels.add(in.nextInt());
+                this.scores.add(in.nextInt());
+            }
+            for (int i = 0; i < usernames.size(); i++){
+                if (username.equals(this.usernames.get(i))){
+                    this.userLevels.add(this.levels.get(i));
+                    this.userScores.add(this.scores.get(i));
+                }
+            }
+            for (int i = 0; i < this.userLevels.size(); i++){
+                if (this.userLevels.get(i) > level){
+                    level = this.userLevels.get(i);
+
+                }
+            }
+
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        return level;
+    }
     }
 
