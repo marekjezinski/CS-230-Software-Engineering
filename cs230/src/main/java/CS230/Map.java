@@ -23,6 +23,8 @@ public class Map {
     private Lever wlever;
 
     private Bomb bomb;
+    private int bombX;
+    private int bombY;
     private int explodeX;
     private int explodeY;
 
@@ -214,8 +216,8 @@ public class Map {
     public int bombCheck(int playerX, int playerY) {
         for (int i = 0; i < bombs.size(); i++) {
             Bomb currentBomb = bombs.get(i);
-            int bombX = currentBomb.getX();
-            int bombY = currentBomb.getY();
+            this.bombX = currentBomb.getX();
+            this.bombY = currentBomb.getY();
             if ((bombX == playerX && bombY == playerY + 1)
                     || (bombX == playerX && bombY == playerY - 1)
                     || (bombX == playerX - 1 && bombY == playerY)
@@ -236,67 +238,77 @@ public class Map {
 
     public void bombActivate() throws URISyntaxException {
         boolean neighbour = false;
-        if (this.countdownForBomb <= 0) {
-            for (int i = 0; i < this.loots.size(); i++) {
-                Loot loot = this.loots.get(i);
-                int lootX = loot.getX();
-                int lootY = loot.getY();
-                if (this.explodeX == lootX || this.explodeY == lootY) {
-                    this.loots.remove(i);
-                }
-            }
-            for (int i = 0; i < this.clocks.size(); i++) {
-                Clock clock = this.clocks.get(i);
-                int clockX = clock.getX();
-                int clockY = clock.getY();
-                if (this.explodeX == clockX || this.explodeY == clockY) {
-                    this.clocks.remove(i);
-                }
-            }
-            int leverX = this.wlever.getX();
-            int leverY = this.wlever.getY();
-            if (this.explodeY == leverX || this.explodeY == leverY) {
-                this.wlever.setX(-1);
-                this.wlever.setY(-1);
-            }
-            leverX = this.rlever.getX();
-            leverY = this.rlever.getY();
-            if (this.explodeX == leverX || this.explodeY == leverY) {
-                this.rlever.setX(-1);
-                this.rlever.setY(-1);
-            }
 
-            for (int i = 0; i < this.bombs.size(); i++) {
-                Bomb bomb = this.bombs.get(i);
-                int bombX = bomb.getX();
-                int bombY = bomb.getY();
-                if (this.explodeX == bombX || this.explodeY == bombY) {
-                    for (int j = 0; j < bombs.size(); j++) {
-                        Bomb moveBomb = bombs.get(j);
-                        if (moveBomb.getX() == explodeX
-                                && moveBomb.getY() == explodeY) {
-                            System.out.println(this.explodeX + " " + this.explodeY);
-                            neighbour = true;
-                            bombs.get(j).setX(-1);
-                            bombs.get(j).setY(-1);
-                            this.explodeX = bombX;
-                            this.explodeY = bombY;
-                            this.countdownForBomb = 3;
-                            bombActivate();
-
-                        }
-                    }
+        for (int i = 0; i < this.bombs.size(); i++) {
+            if (this.bombs.size() > 0) {
+                Bomb tempBomb = this.bombs.get(i);
+                int tempBombX = tempBomb.getX();
+                int tempBombY = tempBomb.getY();
+                if (this.explodeX == tempBombX && this.explodeY == tempBombY) {
+                    this.bomb = tempBomb;
+                    bombX = tempBombX;
+                    bombY = tempBombY;
+                    int photoNum = this.countdownForBomb - 1;
+                    String bombImg = "bomb" + photoNum + ".png";
+                    bomb.setImg(new Image(getClass().getResource(bombImg).toURI().toString()));
+                    this.countdownForBomb = this.countdownForBomb - 1;
                 }
-
             }
         }
 
 
+            if (this.countdownForBomb <= 0) {
+                for (int i = 0; i < this.loots.size(); i++) {
+                    Loot loot = this.loots.get(i);
+                    int lootX = loot.getX();
+                    int lootY = loot.getY();
+                    if (this.explodeX == lootX || this.explodeY == lootY) {
+                        this.loots.remove(i);
+                    }
+                }
+                for (int i = 0; i < this.clocks.size(); i++) {
+                    Clock clock = this.clocks.get(i);
+                    int clockX = clock.getX();
+                    int clockY = clock.getY();
+                    if (this.explodeX == clockX || this.explodeY == clockY) {
+                        this.clocks.remove(i);
+                    }
+                }
+                int leverX = this.wlever.getX();
+                int leverY = this.wlever.getY();
+                if (this.explodeY == leverX || this.explodeY == leverY) {
+                    this.wlever.setX(-1);
+                    this.wlever.setY(-1);
+                }
+                leverX = this.rlever.getX();
+                leverY = this.rlever.getY();
+                if (this.explodeX == leverX || this.explodeY == leverY) {
+                    this.rlever.setX(-1);
+                    this.rlever.setY(-1);
+                }
 
-        String bombImg = "bomb" + this.countdownForBomb + ".png";
-        bomb.setImg(new Image(getClass().getResource(bombImg).toURI().toString()));
-        this.countdownForBomb = this.countdownForBomb - 1;
-    }
+                for (int i = 0; i < this.bombs.size(); i++) {
+                    Bomb newBomb = this.bombs.get(i);
+                    int bombX = newBomb.getX();
+                    int bombY = newBomb.getY();
+                    if (newBomb != this.bomb &&
+                            (this.bomb.getX() == bombX || this.bomb.getY() == bombY)) {
+                        System.out.println(this.explodeX + " " + this.explodeY);
+                        neighbour = true;
+                        this.bombs.remove(this.bomb);
+                        this.explodeX = bombX;
+                        this.explodeY = bombY;
+                        this.countdownForBomb = 3;
+                        bombActivate();
+                    }
+                }
+                if (neighbour == false) {
+                    this.bombs.remove(this.bomb);
+                }
+
+            }
+        }
+    
 
     public ArrayList<Clock> getClocks() {
         return clocks;
