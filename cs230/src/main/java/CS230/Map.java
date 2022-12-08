@@ -10,6 +10,8 @@ import javafx.scene.image.Image;
 
 public class Map {
     private MapReader mapRead = null;
+    private int playerStartX;
+    private int playerStartY;
     private int timerLeft;
     private final int MAP_MAX_X;
     private final int MAP_MAX_Y;
@@ -45,7 +47,8 @@ public class Map {
         this.wgate = mapRead.getWGate();
         this.wlever = mapRead.getWLever();
         this.bombs = mapRead.getBomb();
-
+        this.playerStartX = mapRead.getPlayerStartX();
+        this.playerStartY = mapRead.getPlayerStartY();
     }
 
     public int moveRight(int playerX, int playerY) {
@@ -238,7 +241,6 @@ public class Map {
 
     public void bombActivate() throws URISyntaxException {
         boolean neighbour = false;
-
         for (int i = 0; i < this.bombs.size(); i++) {
             if (this.bombs.size() > 0) {
                 Bomb tempBomb = this.bombs.get(i);
@@ -339,5 +341,13 @@ public class Map {
 
     public int getCountdownForBomb() {
         return countdownForBomb;
+    }
+
+    public int getPlayerStartX() {
+        return playerStartX;
+    }
+
+    public int getPlayerStartY() {
+        return playerStartY;
     }
 }

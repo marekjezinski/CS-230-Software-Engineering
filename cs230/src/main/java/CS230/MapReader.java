@@ -26,6 +26,8 @@ public class MapReader {
     private Lever rlever;
     private Gate wgate;
     private Lever wlever;
+    private int playerStartX = 0;
+    private int playerStartY = 0;
     private ArrayList<Bomb> bombs = new ArrayList<>();
     private String fileName;
     private final int CLOCK_TIME_ADDED = 20;
@@ -67,7 +69,11 @@ public class MapReader {
             }
             while (in.hasNext()) {
                 String type = in.next().toLowerCase();
-                if (type.equals("timer")) {
+                if (type.equals("player")) {
+                    this.playerStartX = in.nextInt();
+                    this.playerStartY = in.nextInt();
+                }
+                else if (type.equals("timer")) {
                     this.timer = in.nextInt();
                 }
                 else if (type.equals("rgate")) {
@@ -224,5 +230,12 @@ public class MapReader {
         return bombs;
     }
 
+    public int getPlayerStartX() {
+        return playerStartX;
+    }
+
+    public int getPlayerStartY() {
+        return playerStartY;
+    }
 }
 

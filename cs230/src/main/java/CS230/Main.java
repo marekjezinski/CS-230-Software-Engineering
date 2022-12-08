@@ -111,6 +111,8 @@ public class Main extends Application {
         levels.add(level2);
         levels.add(level3);
         this.currentLevel = levels.get(currentLevelID);
+        playerX = this.currentLevel.getPlayerStartX() * 2;
+        playerY = this.currentLevel.getPlayerStartY() * 2;
         this.timerLeft = this.currentLevel.getTimerLeft();
         // Load images. Note we use png images with a transparent background.
         playerImage = new Image(getClass().getResource("player.png").toURI().toString());
