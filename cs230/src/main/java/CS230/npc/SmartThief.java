@@ -11,6 +11,10 @@ public class SmartThief extends Character {
         super(x,y,smThiefPic);
     }
 
+    public SmartThief (int x, int y) {
+        super(x,y);
+    }
+
     //to be implemented after smartthief map BFS
     //public void moveSmartThief(){}
 }
