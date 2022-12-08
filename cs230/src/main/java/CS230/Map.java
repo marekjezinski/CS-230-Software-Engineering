@@ -164,6 +164,8 @@ public class Map {
         if (leverX == playerX && leverY == playerY) {
             this.rgate.setX(-1);
             this.rgate.setY(-1);
+            this.rlever.setX(-1);
+            this.rlever.setY(-1);
         }
     }
 
@@ -188,6 +190,8 @@ public class Map {
         if (leverX == playerX && leverY == playerY) {
             this.wgate.setX(-1);
             this.wgate.setY(-1);
+            this.wlever.setX(-1);
+            this.wlever.setY(-1);
         }
     }
 
