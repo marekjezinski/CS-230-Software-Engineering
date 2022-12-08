@@ -11,6 +11,7 @@ import java.util.ArrayList;
 /**
  * Class for reading the text file for levels/maps
  * @author Tom Stevens
+ * @author Wiktoria Bruzgo
  * @version 1.0
  */
 public class MapReader {
@@ -113,25 +114,25 @@ public class MapReader {
                 }
                 //TODO: Change filename for all loot!
                 else if (type.equals("cent")) {
-                    Cent c = new Cent(new Image(getClass().getResource("placeholder.png").toURI().toString()),
+                    Cent c = new Cent(new Image(getClass().getResource("cent.png").toURI().toString()),
                             in.nextInt(), in.nextInt(), CENT_VALUE);
                     items.add(c);
                     loot.add(c);
                 }
                 else if (type.equals("dollar")) {
-                    Dollar d = new Dollar(new Image(getClass().getResource("placeholder.png").toURI().toString()),
+                    Dollar d = new Dollar(new Image(getClass().getResource("dollar.png").toURI().toString()),
                             in.nextInt(), in.nextInt(), DOLLAR_VALUE);
                     items.add(d);
                     loot.add(d);
                 }
                 else if (type.equals("ruby")) {
-                    Ruby r = new Ruby(new Image(getClass().getResource("placeholder.png").toURI().toString()),
+                    Ruby r = new Ruby(new Image(getClass().getResource("ruby.png").toURI().toString()),
                             in.nextInt(), in.nextInt(), RUBY_VALUE);
                     items.add(r);
                     loot.add(r);
                 }
                 else if (type.equals("diamond")) {
-                    Diamond d = new Diamond(new Image(getClass().getResource("placeholder.png").toURI().toString()),
+                    Diamond d = new Diamond(new Image(getClass().getResource("diamond.png").toURI().toString()),
                             in.nextInt(), in.nextInt(), DIAMOND_VALUE);
                     items.add(d);
                     loot.add(d);
