@@ -1,5 +1,6 @@
 package CS230.npc;
 
+
 import CS230.Map;
 import CS230.items.Loot;
 import CS230.Tile;
@@ -10,12 +11,14 @@ public class SmartThiefPath {
 
     private ArrayList<Loot> currentLoot;
     private Map currentLevel;
+    private Tile[][] currentTileArray;
     private int pathGoalX,pathGoalY;
     //linked list queueforPath
 
-    public SmartThiefPath(Map mapforLoots){
-        currentLoot = mapforLoots.getLoots();
-        //currentLevel = mapforLoots.get
+    public SmartThiefPath(Map mapForLoots){
+        currentLoot = mapForLoots.getLoots();
+        currentLevel = mapForLoots;
+        currentTileArray = mapForLoots.getTilesArray();
     }
 
     //find the closest loot by calculating x & y distance from smartThief and sets it as the goal
@@ -54,9 +57,10 @@ public class SmartThiefPath {
         this.pathGoalY = y;
     }
      //-- checks if theres a valid move between the 2 tiles before adding to queue
-    /*public boolean valid(int x1,int y1,int x2, int y2){
-        Tile current =
-    }*/
+    public boolean valid(int x1,int y1,int x2, int y2){
+        Tile current = currentTileArray[x1][y1];
+        Tile nextTile =currentTileArray[x2][y2];
+    }
 
 
 
