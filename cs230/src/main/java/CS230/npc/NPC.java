@@ -15,9 +15,9 @@ public abstract class NPC {
 
     /**
      * constructs an NPC object
-     * @param img
-     * @param x
-     * @param y
+     * @param img image of NPC
+     * @param x X coordinate for NPC
+     * @param y Y coordinate of NPC
      */
     public NPC(Image img, int x, int y) {
         this.img = img;
@@ -35,7 +35,7 @@ public abstract class NPC {
 
     /**
      * method that gets the NPC's x coordinate
-     * @return x coordinate
+     * @return x  X coordinate of the NPC
      */
     public int getX() {
         return x;
@@ -43,7 +43,7 @@ public abstract class NPC {
 
     /**
      * method that gets the NPC's y coordinate
-     * @return y coordinate
+     * @return y Y coordinate of the NPC
      */
     public int getY() {
         return y;
@@ -51,7 +51,7 @@ public abstract class NPC {
 
     /**
      * method that sets an NPC's x coordinate
-     * @param x
+     * @param x input of NPC's X coordinate
      */
     public void setX(int x) {
         this.x = x;
@@ -59,7 +59,7 @@ public abstract class NPC {
 
     /**
      * method that sets an NPC's y coordinate
-     * @param y
+     * @param y input of NPC's y coordinate
      */
     public void setY(int y) {
         this.y = y;
