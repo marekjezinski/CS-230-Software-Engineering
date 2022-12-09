@@ -148,10 +148,44 @@ public class Main extends Application {
         timerTimeline = new Timeline(new KeyFrame(Duration.millis(1000), event -> timer()));
         timerTimeline.setCycleCount(Animation.INDEFINITE);
 
-        /*bombTimeline = new Timeline(new KeyFrame(Duration.millis(1000), event -> {
+        bombTimeline = new Timeline(new KeyFrame(Duration.millis(1000), event -> {
+            ArrayList<Bomb> bombs = currentLevel.getBombs();
+            for(int i = 0; i < bombs.size(); i++) {
+                int secToExplode = bombs.get(i).getSecondsToExplode();
+                if (secToExplode != -2) {
+                    try {
+                        if (secToExplode == 3) {
+                            bombs.get(i).setImg(new Image(getClass().getResource("bomb3.png").toURI().toString()));
+                            System.out.println("3");
+                        }
+                        else if (secToExplode == 2) {
+                            bombs.get(i).setImg(new Image(getClass().getResource("bomb2.png").toURI().toString()));
+                            System.out.println("2");
+                        }
+                        else if (secToExplode == 1) {
+                            bombs.get(i).setImg(new Image(getClass().getResource("bomb1.png").toURI().toString()));
+                            System.out.println("1");
+                        }
+                        else if (secToExplode == 0) {
+                            bombs.get(i).setImg(new Image(getClass().getResource("bomb0.png").toURI().toString()));
+                            System.out.println("0");
+                            currentLevel.explodeBomb(i);
 
+                        }
+                        else if (secToExplode == -1) {
+                            bombs.get(i).setX(-1);
+                            bombs.get(i).setY(-1);
+                        }
+                    } catch (URISyntaxException e) {
+
+                    }
+                    bombs.get(i).setSecondsToExplode(secToExplode - 1);
+                }
+                currentLevel.setBombs(bombs);
+                drawGame();
+            }
         }));
-        bombTimeline.setCycleCount(Animation.INDEFINITE);*/
+        bombTimeline.setCycleCount(Animation.INDEFINITE);
 
         scoreColourChanger = new Timeline(new KeyFrame(Duration.millis(500), event -> scoreColour()));
         scoreColourChanger.setCycleCount(Animation.INDEFINITE);
@@ -228,7 +262,9 @@ public class Main extends Application {
         scoreText.setFont(Font.font("arial",20));
         currentLevel.checkRLever(playerX / 2, playerY / 2);
         currentLevel.checkWLever(playerX / 2, playerY / 2);
-
+        if (currentLevel.isBombTriggered(playerX / 2, playerY / 2)) {
+            bombTimeline.play();
+        }
     }
 
     /**
@@ -273,7 +309,7 @@ public class Main extends Application {
         Lever wlever =  currentLevel.getWLever();
         gc.drawImage(wlever.getImg(), wlever.getX() * GRID_CELL_WIDTH * 2, wlever.getY() * GRID_CELL_HEIGHT * 2);
 
-        ArrayList<Bomb> bombs = currentLevel.getBomb();
+        ArrayList<Bomb> bombs = currentLevel.getBombs();
         bombs.forEach(e ->  gc.drawImage(e.getImg(),
                 e.getX() * GRID_CELL_WIDTH * 2, e.getY() * GRID_CELL_HEIGHT * 2));
 

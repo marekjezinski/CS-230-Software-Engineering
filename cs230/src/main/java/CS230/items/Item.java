@@ -3,8 +3,8 @@ import javafx.scene.image.Image;
 
 public abstract class Item {
     private Image img;
-    private int x;
-    private int y;
+    protected int x;
+    protected int y;
 
     public Item(Image img, int x, int y) {
         this.img = img;
