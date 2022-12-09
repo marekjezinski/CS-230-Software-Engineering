@@ -445,6 +445,7 @@ public class Main extends Application {
         resetGameButton.setOnAction(e -> {
             // We keep this method short and use a method for the bulk of the work.
             resetGame();
+
         });
 
         Label labelUsername = new Label("Username");
@@ -459,7 +460,7 @@ public class Main extends Application {
             }
             else{
                 this.username = usernameIn.getText();
-                toolbar.getChildren().removeAll(labelUsername,usernameIn,startButton);
+                toolbar.getChildren().removeAll(labelUsername,usernameIn);
                 boolean playedBefore = c.newPlayer(username);
                 if (playedBefore == true) {
                     Label labelLevel = new Label("Level select:");
@@ -471,6 +472,7 @@ public class Main extends Application {
                     toolbar.getChildren().addAll(l1,l2,l3,recent);
 
                     l1.setOnAction(f -> {
+                        toolbar.getChildren().removeAll(l1,l2,l3,recent);
                         begin(0,0);
 
                     });
