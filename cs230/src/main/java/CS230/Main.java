@@ -93,10 +93,7 @@ public class Main extends Application {
     private Text errorText = new Text();
 
     private MessageOfTheDay m;
-    private String backgroundMusic = "gamemusic.mp3";
-    private Media music = new Media(new File(this.backgroundMusic).toURI().toString());
-    private MediaPlayer player = new MediaPlayer(this.music);
-
+    private MediaPlayer player = new MediaPlayer(new Media(new File("gamemusic.mp3").toURI().toString()));
 
     private int currentLevelID = 0;
     private ArrayList<Map> levels = new ArrayList<>();
@@ -373,8 +370,6 @@ public class Main extends Application {
         thieves.forEach(e ->  gc.drawImage(e.getImg(),
                 e.getX() * GRID_CELL_WIDTH * 2, e.getY() * GRID_CELL_HEIGHT * 2));
 
-
-        // Draw player at current location
         gc.drawImage(playerImage, playerX * GRID_CELL_WIDTH, playerY * GRID_CELL_HEIGHT);
 
         gc.setFill(Color.GRAY);
@@ -470,11 +465,6 @@ public class Main extends Application {
         root.setTop(toolbar);
 
         // Create the toolbar content
-
-
-
-
-
         Label labelUsername = new Label("Username");
         TextField usernameIn = new TextField();
         toolbar.getChildren().addAll(labelUsername,usernameIn);
@@ -583,7 +573,8 @@ public class Main extends Application {
         this.hasGameStarted = true;
         timerTimeline.play();
         scoreColourChanger.play();
-        this.player.play();
+        //TODO: UNCOMMENT PLAY MUSIC - sorry I cant stand this music when I debug stuff lol
+        //this.player.play();
         this.score = scoreIn;
         this.currentLevelID = levelIn;
         this.timerText.setText("Time remaining: " + this.timerLeft + "| Level "
