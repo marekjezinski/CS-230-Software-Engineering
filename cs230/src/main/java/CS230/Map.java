@@ -4,6 +4,13 @@ import CS230.items.*;
 
 import java.util.ArrayList;
 
+
+/**
+ * Class for the Map
+ * @author
+ * @version 1.0
+ */
+
 public class Map {
     private MapReader mapRead = null;
     private int playerStartX;
