@@ -33,4 +33,4 @@ ruby 10 2
 bomb 10 5
 flyingAssassin 0 8 e
 flyingAssassin 1 8 n
-
+thief 0 1

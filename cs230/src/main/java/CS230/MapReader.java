@@ -30,6 +30,7 @@ public class MapReader {
     private Lever rlever;
     private Gate wgate;
     private Lever wlever;
+    private Thief thief;
     private int playerStartX = 0;
     private int playerStartY = 0;
     private ArrayList<Bomb> bombs = new ArrayList<>();
@@ -146,12 +147,10 @@ public class MapReader {
                 } else if (type.equals("thief")) {
                     Thief thief = new Thief(in.nextInt(), in.nextInt(),
                             new Image(getClass().getResource("thief.png").toURI().toString()));
-
                 } else if (type.equals("smartthief")) {
                     SmartThief smart = new SmartThief(
                             in.nextInt(), in.nextInt(),
                             new Image(getClass().getResource("smartthief.png").toURI().toString()));
-
                 } else if (type.equals("flyingassassin")) {
                     flyingAssassins.add(new FlyingAssassin(new Image(getClass().getResource("flyingassassin.png").toURI().toString()),
                             in.nextInt(), in.nextInt(), in.next().toLowerCase().charAt(0)));
@@ -314,6 +313,14 @@ public class MapReader {
 
     public ArrayList<FlyingAssassin> getFlyingAssassins() {
         return flyingAssassins;
+    }
+
+    /*
+    * get method that returns the value of thief
+    * @return thief
+    * */
+    public Thief getThief(){
+        return thief;
     }
 }
 

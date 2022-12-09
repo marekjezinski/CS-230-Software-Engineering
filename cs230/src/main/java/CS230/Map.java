@@ -2,7 +2,7 @@ package CS230;
 
 import CS230.items.*;
 import CS230.npc.FlyingAssassin;
-
+import CS230.npc.Thief;
 import java.util.ArrayList;
 
 /**
@@ -23,6 +23,7 @@ public class Map {
     private Door door;
     private ArrayList<Loot> loots = new ArrayList<>();
     private ArrayList<FlyingAssassin> flyingAssassins = new ArrayList<>();
+    private Thief thief;
     private Gate rgate;
     private Lever rlever;
     private Gate wgate;
@@ -35,7 +36,7 @@ public class Map {
     private ArrayList<Bomb> bombs = new ArrayList<>();
     /**
      * creates a Map object from a text file
-     * @param fileName - text file that specify how the Map will be layed out
+     * @param fileName - text file that specify how the Map will be laid out
      */
     public Map(String fileName) {
         this.mapRead = new MapReader(fileName);
@@ -55,6 +56,7 @@ public class Map {
         this.playerY = mapRead.getPlayerStartY();
         this.starttime = mapRead.getStarttimer();
         this.flyingAssassins = mapRead.getFlyingAssassins();
+        this.thief = mapRead.getThief();
     }
     /**
      * method that moves the player to the right
@@ -518,6 +520,9 @@ public class Map {
         this.flyingAssassins = flyingAssassins;
     }
 
+    public Thief getThief() {
+        return thief;
+    }
     public boolean checklever(){
         if(wlever.getX() == -1 && wlever.getY() == -1) {
             return (rlever.getX() == -1 && rlever.getY() == -1);
