@@ -326,6 +326,10 @@ public class Main extends Application {
         loots.forEach(e ->  gc.drawImage(e.getImg(),
                 e.getX() * GRID_CELL_WIDTH * 2, e.getY() * GRID_CELL_HEIGHT * 2));
 
+        ArrayList<FlyingAssassin> flyingAssassins = currentLevel.getFlyingAssassins();
+        flyingAssassins.forEach(e ->  gc.drawImage(e.getImg(),
+                e.getX() * GRID_CELL_WIDTH * 2, e.getY() * GRID_CELL_HEIGHT * 2));
+
 
         // Draw player at current location
         gc.drawImage(playerImage, playerX * GRID_CELL_WIDTH, playerY * GRID_CELL_HEIGHT);

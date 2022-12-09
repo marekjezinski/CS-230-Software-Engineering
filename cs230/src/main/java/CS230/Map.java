@@ -1,6 +1,7 @@
 package CS230;
 
 import CS230.items.*;
+import CS230.npc.FlyingAssassin;
 
 import java.util.ArrayList;
 
@@ -21,6 +22,7 @@ public class Map {
     private ArrayList<Clock> clocks = new ArrayList<>();
     private Door door;
     private ArrayList<Loot> loots = new ArrayList<>();
+    private ArrayList<FlyingAssassin> flyingAssassins = new ArrayList<>();
     private Gate rgate;
     private Lever rlever;
     private Gate wgate;
@@ -52,6 +54,7 @@ public class Map {
         this.playerStartX = mapRead.getPlayerStartX();
         this.playerStartY = mapRead.getPlayerStartY();
         this.starttime = mapRead.getStarttimer();
+        this.flyingAssassins = mapRead.getFlyingAssassins();
     }
     /**
      * method that moves the player to the right
@@ -496,7 +499,9 @@ public class Map {
         return starttime;
     }
 
-
+    public ArrayList<FlyingAssassin> getFlyingAssassins() {
+        return flyingAssassins;
+    }
 
     public boolean checklever(){
         if(wlever.getX() == -1 && wlever.getY() == -1) {
