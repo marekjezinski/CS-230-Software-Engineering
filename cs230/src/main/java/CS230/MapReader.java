@@ -33,6 +33,7 @@ public class MapReader {
     private int playerStartX = 0;
     private int playerStartY = 0;
     private ArrayList<Bomb> bombs = new ArrayList<>();
+    private ArrayList<FlyingAssassin> flyingAssassins = new ArrayList<>();
     private String fileName;
     private final int CLOCK_TIME_ADDED = 20;
     private final int CENT_VALUE = 10;
@@ -152,8 +153,8 @@ public class MapReader {
                             new Image(getClass().getResource("smartthief.png").toURI().toString()));
 
                 } else if (type.equals("flyingassassin")) {
-                    FlyingAssassin fly = new FlyingAssassin(new Image(getClass().getResource("flyingassassin.png").toURI().toString()),
-                            in.nextInt(), in.nextInt(), in.next().charAt(0));
+                    flyingAssassins.add(new FlyingAssassin(new Image(getClass().getResource("flyingassassin.png").toURI().toString()),
+                            in.nextInt(), in.nextInt(), in.next().toLowerCase().charAt(0)));
 
                 } else {
                     System.err.println("Please check level file, entity identifier mismatch");
@@ -309,6 +310,10 @@ public class MapReader {
      */
     public int getStarttimer() {
         return starttimer;
+    }
+
+    public ArrayList<FlyingAssassin> getFlyingAssassins() {
+        return flyingAssassins;
     }
 }
 

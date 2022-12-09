@@ -145,7 +145,15 @@ public class Main extends Application {
 
 
 
-        timerTimeline = new Timeline(new KeyFrame(Duration.millis(1000), event -> timer()));
+        timerTimeline = new Timeline(new KeyFrame(Duration.millis(1000), event -> {
+            timer();
+            ArrayList<FlyingAssassin> fl = currentLevel.getFlyingAssassins();
+            for(int i = 0; i < fl.size(); i++) {
+                fl.get(i).movement(currentLevel.getMAP_MAX_X(), currentLevel.getMAP_MAX_Y());
+            }
+            currentLevel.setFlyingAssassins(fl);
+            drawGame();
+        }));
         timerTimeline.setCycleCount(Animation.INDEFINITE);
 
         bombTimeline = new Timeline(new KeyFrame(Duration.millis(1000), event -> {
@@ -156,19 +164,15 @@ public class Main extends Application {
                     try {
                         if (secToExplode == 3) {
                             bombs.get(i).setImg(new Image(getClass().getResource("bomb3.png").toURI().toString()));
-                            System.out.println("3");
                         }
                         else if (secToExplode == 2) {
                             bombs.get(i).setImg(new Image(getClass().getResource("bomb2.png").toURI().toString()));
-                            System.out.println("2");
                         }
                         else if (secToExplode == 1) {
                             bombs.get(i).setImg(new Image(getClass().getResource("bomb1.png").toURI().toString()));
-                            System.out.println("1");
                         }
                         else if (secToExplode == 0) {
                             bombs.get(i).setImg(new Image(getClass().getResource("bomb0.png").toURI().toString()));
-                            System.out.println("0");
                             currentLevel.explodeBomb(i);
 
                         }
@@ -177,7 +181,8 @@ public class Main extends Application {
                             bombs.get(i).setY(-1);
                         }
                     } catch (URISyntaxException e) {
-
+                        System.err.println("Wrong bomb image!");
+                        System.exit(1);
                     }
                     bombs.get(i).setSecondsToExplode(secToExplode - 1);
                 }
@@ -324,6 +329,10 @@ public class Main extends Application {
 
         ArrayList<Loot> loots = currentLevel.getLoots();
         loots.forEach(e ->  gc.drawImage(e.getImg(),
+                e.getX() * GRID_CELL_WIDTH * 2, e.getY() * GRID_CELL_HEIGHT * 2));
+
+        ArrayList<FlyingAssassin> flyingAssassins = currentLevel.getFlyingAssassins();
+        flyingAssassins.forEach(e ->  gc.drawImage(e.getImg(),
                 e.getX() * GRID_CELL_WIDTH * 2, e.getY() * GRID_CELL_HEIGHT * 2));
 
 

@@ -27,18 +27,42 @@ public class FlyingAssassin extends NPC {
      * method that checks the FlyingAssassin's movement. Checks whether it goes north,
      * south, west or east and then it sets its x and y coordinates
      */
-    public void movement() {
+    public void movement(int MAP_MAX_X, int MAP_MAX_Y) {
         if(direction == 'n') {
-            super.setY(super.getY() - 1);
+            if(y == 0) {
+                direction = 's';
+                y += 1;
+            }
+            else {
+                y -= 1;
+            }
         }
         else if(direction == 's') {
-            super.setY(super.getY() + 1);
+            if(y == MAP_MAX_Y - 1) {
+                direction = 'n';
+                y -= 1;
+            }
+            else {
+                y += 1;
+            }
         }
         else if(direction == 'w') {
-            super.setX(super.getX() + 1);
+            if(x == 0) {
+                direction = 'e';
+                x += 1;
+            }
+            else {
+                x -= 1;
+            }
         }
         else if(direction == 'e') {
-            super.setX(super.getX() - 1);
+            if(x == MAP_MAX_X - 1) {
+                direction = 'w';
+                x -= 1;
+            }
+            else {
+                x += 1;
+            }
         }
     }
 
