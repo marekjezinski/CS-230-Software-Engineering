@@ -10,8 +10,8 @@ import javafx.scene.image.Image;
  */
 public abstract class NPC {
     private final Image img;
-    private int x;
-    private int y;
+    protected int x;
+    protected int y;
 
     /**
      * constructs an NPC object

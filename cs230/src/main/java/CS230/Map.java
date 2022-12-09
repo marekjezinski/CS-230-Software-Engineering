@@ -462,10 +462,13 @@ public class Map {
         return loots;
     }
 
+    public int getMAP_MAX_X() {
+        return MAP_MAX_X;
+    }
 
-
-
-
+    public int getMAP_MAX_Y() {
+        return MAP_MAX_Y;
+    }
 
     //public int lootleft = loots.size();
 
@@ -501,6 +504,10 @@ public class Map {
 
     public ArrayList<FlyingAssassin> getFlyingAssassins() {
         return flyingAssassins;
+    }
+
+    public void setFlyingAssassins(ArrayList<FlyingAssassin> flyingAssassins) {
+        this.flyingAssassins = flyingAssassins;
     }
 
     public boolean checklever(){
