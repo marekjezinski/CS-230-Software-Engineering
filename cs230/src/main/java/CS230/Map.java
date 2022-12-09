@@ -42,7 +42,7 @@ public class Map {
         this.playerStartX = mapRead.getPlayerStartX();
         this.playerStartY = mapRead.getPlayerStartY();
         this.starttime = mapRead.getStarttimer();
-        this.lootcount = mapRead.getLoot().size();
+        this.lootcount = loots.size();
     }
 
     public int moveRight(int playerX, int playerY) {
@@ -339,7 +339,7 @@ public class Map {
         return loots;
     }
 
-    public int lootleft = MapReader.gettotalloot();
+    public int lootleft = loots.size();
 
 
 

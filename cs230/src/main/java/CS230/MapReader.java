@@ -17,7 +17,7 @@ import java.util.ArrayList;
  * @version 1.0
  */
 public class MapReader {
-    public static int totalloot;
+
     private Tile[][] tiles = null;
     private int maxTileX;
     private int maxTileY;
@@ -124,28 +124,24 @@ public class MapReader {
                             in.nextInt(), in.nextInt(), CENT_VALUE);
                     items.add(c);
                     loot.add(c);
-                    totalloot++;
                 }
                 else if (type.equals("dollar")) {
                     Dollar d = new Dollar(new Image(getClass().getResource("dollar.png").toURI().toString()),
                             in.nextInt(), in.nextInt(), DOLLAR_VALUE);
                     items.add(d);
                     loot.add(d);
-                    totalloot++;
                 }
                 else if (type.equals("ruby")) {
                     Ruby r = new Ruby(new Image(getClass().getResource("ruby.png").toURI().toString()),
                             in.nextInt(), in.nextInt(), RUBY_VALUE);
                     items.add(r);
                     loot.add(r);
-                    totalloot++;
                 }
                 else if (type.equals("diamond")) {
                     Diamond d = new Diamond(new Image(getClass().getResource("diamond.png").toURI().toString()),
                             in.nextInt(), in.nextInt(), DIAMOND_VALUE);
                     items.add(d);
                     loot.add(d);
-                    totalloot++;
                 }
                 else if (type.equals("door")) {
                     Door d = new Door(new Image(getClass().getResource("door.png").toURI().toString()),
@@ -294,11 +290,5 @@ public class MapReader {
      * @return starttimer;
      */
     public int getStarttimer() {return starttimer;}
-    /**
-     * Get method for total loot count
-     * @return int totalloot;
-     */
-    public static int gettotalloot() {return totalloot;}
 
-}
 
