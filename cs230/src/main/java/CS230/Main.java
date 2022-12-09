@@ -252,10 +252,13 @@ public class Main extends Application {
         //TODO: implement door and level progression
 
         if(currentLevel.checkDoor(playerX / 2, playerY / 2)>0){
-            currentLevelID += currentLevel.checkDoor(playerX / 2, playerY / 2);
-            currentLevel = levels.get(currentLevelID);
-            this.score = (int) (this.score + ceil(this.timerLeft / 3));
-            c.levelSave(this.username,this.currentLevelID,this.score);
+            if(currentLevel.lootleft == 0) {
+                currentLevelID++;
+
+                currentLevel = levels.get(currentLevelID);
+                this.score = (int) (this.score + ceil(this.timerLeft / 3));
+                c.levelSave(this.username, this.currentLevelID, this.score);
+            }
         }
         score += currentLevel.checkLoots(playerX / 2, playerY / 2);
         scoreText.setText("Score: " + this.score);
@@ -383,7 +386,7 @@ public class Main extends Application {
         }
         if (this.timerLeft > 0) {
             this.timerLeft = this.timerLeft - 1;
-            timerText.setText("Time remaining: " + this.timerLeft + " Level " + (currentLevelID + 1));
+            timerText.setText("Time remaining: " + this.timerLeft + " Level " + (currentLevelID + 1) + "Loot:" + (currentLevel.lootleft));
         }
         else {
             timerTimeline.stop();

@@ -20,6 +20,8 @@ public class Map {
     private Gate wgate;
     private Lever wlever;
 
+    private int lootcount;
+
     private ArrayList<Bomb> bombs = new ArrayList<>();
 
     public Map(String fileName) {
@@ -332,6 +334,15 @@ public class Map {
     public ArrayList<Loot> getLoots() {
         return loots;
     }
+
+    public int lootleft = MapReader.totalloot;
+
+
+
+
+    //public int lootleft = loots.size();
+
+
 
     public int getPlayerStartX() {
         return playerStartX;
