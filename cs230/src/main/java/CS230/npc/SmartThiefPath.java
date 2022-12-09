@@ -7,6 +7,13 @@ import CS230.Tile;
 
 import java.util.ArrayList;
 
+//unsure about what this class does
+
+/**
+ * Class that creates...
+ * @author
+ * @version 1.0
+ */
 public class SmartThiefPath {
 
     private ArrayList<Loot> currentLoot;
@@ -15,13 +22,21 @@ public class SmartThiefPath {
     private int pathGoalX,pathGoalY;
     //queue
 
+    /**
+     * constructor
+     * @param mapForLoots
+     */
     public SmartThiefPath(Map mapForLoots){
         currentLoot = mapForLoots.getLoots();
         currentLevel = mapForLoots;
         currentTileArray = mapForLoots.getTilesArray();
     }
 
-    //find the closest loot by calculating x & y distance from smartThief and sets it as the goal
+    /**
+     * method that finds the closest loot by calculating x and y distance from
+     * the Smart Thief NPC and sets it as the goal
+     * @param s - a smartAssassin
+     */
     public void findClosestLoot(SmartThief s){
         int xDist,yDist;
         int minDist = 999;
@@ -44,19 +59,40 @@ public class SmartThiefPath {
 
     }
 
+    /**
+     * method that gets the x coordinate of the pathGoal
+     * @return pathGoalX
+     */
     public int getPathGoalX() {
         return pathGoalX;
     }
 
+    /**
+     * method that gets the y coordinate of the pathGoal
+     * @return pathGoalY
+     */
     public int getPathGoalY() {
         return pathGoalY;
     }
 
+    /**
+     * method that sets the PathGoal
+     * @param x
+     * @param y
+     */
     public void setPathGoal(int x, int y){
         this.pathGoalX = x;
         this.pathGoalY = y;
     }
-     //-- checks if theres a valid move between the 2 tiles before adding to queue
+
+    /**
+     * method that checks if there's a valid move between 2 tiles before adding to queue
+     * @param x1
+     * @param y1
+     * @param x2
+     * @param y2
+     * @return boolean, whether the move can be made or not
+     */
     public boolean isValid(int x1,int y1,int x2, int y2){
         Tile current = currentTileArray[x1][y1];
         Tile nextTile =currentTileArray[x2][y2];

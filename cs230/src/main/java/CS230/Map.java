@@ -4,6 +4,11 @@ import CS230.items.*;
 
 import java.util.ArrayList;
 
+/**
+ * Class that holds the Map where the player will play the game
+ * @author
+ * @version 1.0
+ */
 public class Map {
     private MapReader mapRead = null;
     private int playerStartX;
@@ -22,6 +27,10 @@ public class Map {
 
     private ArrayList<Bomb> bombs = new ArrayList<>();
 
+    /**
+     * creates a Map object from a text file
+     * @param fileName - text file that specify how the Map will be layed out
+     */
     public Map(String fileName) {
         this.mapRead = new MapReader(fileName);
         this.MAP_MAX_X = mapRead.getMaxTileX();
@@ -40,6 +49,12 @@ public class Map {
         this.playerStartY = mapRead.getPlayerStartY();
     }
 
+    /**
+     * method that moves the player to the right
+     * @param playerX - player's x coordinate
+     * @param playerY - player's y coordinate
+     * @return player's x coordinate * 2
+     */
     public int moveRight(int playerX, int playerY) {
         playerX = playerX / 2;
         playerY = playerY / 2;
@@ -54,6 +69,12 @@ public class Map {
         return playerX * 2;
     }
 
+    /**
+     * method that moves the player to the left
+     * @param playerX - player's x coordinate
+     * @param playerY - player's y coordinate
+     * @return player's x coordinate * 2
+     */
     public int moveLeft(int playerX, int playerY) {
         playerX = playerX / 2;
         playerY = playerY / 2;
@@ -68,6 +89,12 @@ public class Map {
         return playerX * 2;
     }
 
+    /**
+     * method that moves the player down in the Map
+     * @param playerX - player's x coordinate
+     * @param playerY - player's y coordinate
+     * @return player's y coordinate * 2
+     */
     public int moveDown(int playerX, int playerY) {
         playerX = playerX / 2;
         playerY = playerY / 2;
@@ -82,6 +109,12 @@ public class Map {
         return playerY * 2;
     }
 
+    /**
+     * method that moves the player up in the Map
+     * @param playerX - player's x coordinate
+     * @param playerY - player's y coordinate
+     * @return player's y coordinate * 2
+     */
     public int moveUp(int playerX, int playerY) {
         playerX = playerX / 2;
         playerY = playerY / 2;
@@ -96,6 +129,13 @@ public class Map {
         return playerY * 2;
     }
 
+    /**
+     * idk if this is what this class does (?)
+     * method that checks whether the Player's movement can be carried out or not
+     * @param cordX
+     * @param cordY
+     * @return true if the movement can happen, false otherwise
+     */
     private boolean isLegalMovement(int cordX, int cordY) {
         if (rgate.getX() == cordX && rgate.getY() == cordY) {
             return false;
@@ -111,6 +151,12 @@ public class Map {
         return true;
     }
 
+    /**
+     * method that checks whether a bomb is triggered or not
+     * @param playerX
+     * @param playerY
+     * @return true if a bomb is triggered, false otherwise
+     */
     public boolean isBombTriggered(int playerX, int playerY) {
         for(int i = 0; i < bombs.size(); i++) {
             if (bombs.get(i).isNextToBomb(playerX, playerY)) {
@@ -124,6 +170,10 @@ public class Map {
         return false;
     }
 
+    /**
+     * method that makes a bomb explode
+     * @param index (what does index do?)
+     */
     public void explodeBomb(int index) {
         ArrayList<Bomb> bombs = getBombs();
         int coordX = bombs.get(index).getX();
@@ -188,10 +238,19 @@ public class Map {
         }
     }
 
+    /**
+     * method that gets an array of Cells
+     * @return method that converts tiles to cells
+     */
     public Cell[][] getCellsArray() {
         return convertTilesToCellsArray(tilesArray);
     }
 
+    /**
+     * method that converts a tile array to cells
+     * @param tilesArray
+     * @return cells array
+     */
     private Cell[][] convertTilesToCellsArray(Tile[][] tilesArray) {
         Cell[][] cellsArray = new Cell[MAP_MAX_X * 2][MAP_MAX_Y * 2];
         for (int y = 0; y < MAP_MAX_Y; y++) {
@@ -205,10 +264,20 @@ public class Map {
         return cellsArray;
     }
 
+    /**
+     * method that shows how much time is left
+     * @return this.timerLeft
+     */
     public int getTimerLeft() {
         return this.timerLeft;
     }
 
+    /**
+     * method that checks how much time is left on the clock
+     * @param playerX
+     * @param playerY
+     * @return clockTime if it is larger than 0
+     */
     public int checkClocks(int playerX, int playerY) {
         for (int i = 0; i < clocks.size(); i++) {
             Clock currentClock = clocks.get(i);
@@ -220,6 +289,13 @@ public class Map {
         return (0);
     }
 
+
+    /**
+     * method that checks if a player is on a cell where a door is too
+     * @param playerX
+     * @param playerY
+     * @return
+     */
     public int checkDoor(int playerX, int playerY) {
 
         if (door.getX() == playerX && door.getY() == playerY) {
@@ -232,6 +308,13 @@ public class Map {
         return (0);
     }
 
+    /**
+     * method that checks if player is on the same tile as a loot and removes the loot from the tile
+     * if it is.
+     * @param playerX
+     * @param playerY
+     * @return loot value if player is on the same tile as loot, 0 otherwise
+     */
     public int checkLoots(int playerX, int playerY) {
         for (int i = 0; i < loots.size(); i++) {
             Loot currentLoot = loots.get(i);
@@ -243,7 +326,11 @@ public class Map {
         return (0);
     }
 
-
+    /**
+     * method that checks if rusty lever is on the same tile as plauer
+     * @param playerX
+     * @param playerY
+     */
     public void checkRLever(int playerX, int playerY) {
 
         Lever current = this.getRLever();
@@ -257,7 +344,12 @@ public class Map {
         }
     }
 
-
+    /**
+     * method that cheks if rusty gate is on the same tile as player
+     * @param playerX
+     * @param playerY
+     * @return 1 if gate has the same coordinates as player, 0 otherwise
+     */
     public int checkRGate(int playerX, int playerY) {
 
         Gate current = this.getRGate();
@@ -270,6 +362,11 @@ public class Map {
         }
     }
 
+    /**
+     * method that checks if player is on the same tile as wooden lever
+     * @param playerX
+     * @param playerY
+     */
     public void checkWLever(int playerX, int playerY) {
 
         Lever current = this.getWLever();
@@ -283,6 +380,12 @@ public class Map {
         }
     }
 
+    /**
+     * method that checks if player is on the same tile as wooden gate
+     * @param playerX
+     * @param playerY
+     * @return 1 if player has the same coordinates as gate, 0 otherwise
+     */
     public int checkWGate(int playerX, int playerY) {
 
         Gate current = this.getWGate();
@@ -302,45 +405,99 @@ public class Map {
     }*/
 
 
+    //unnecessary comments ???
+    /**
+     * method that gets clocks
+     * @return clocks
+     */
     public ArrayList<Clock> getClocks() {
         return clocks;
     }
 
+    /**
+     * method that gets the Tiles array
+     * @return tiles array
+     */
     public Tile[][] getTilesArray() {
         return tilesArray;
     }
 
+    /**
+     * method that gets door
+     * @return door
+     */
     public Door getDoor() {
         return door;
     }
 
+    /**
+     * method that gets rusty gate
+     * @return rgate
+     */
     public Gate getRGate() {
         return rgate;
     }
+
+    /**
+     * method that gets bombs
+     * @return bombs array
+     */
     public ArrayList<Bomb> getBombs() {
         return bombs;
     }
+
+    /**
+     * method that gets rusty lever
+     * @return rlever
+     */
     public Lever getRLever() {
         return rlever;
     }
+
+    /**
+     * method that gets wooden gate
+     * @return wgate
+     */
     public Gate getWGate() {
         return wgate;
     }
+
+    /**
+     * method that gets wooden lever
+     * @return wlever
+     */
     public Lever getWLever() {
         return wlever;
     }
+
+    /**
+     * method that gets loots
+     * @return loots array
+     */
     public ArrayList<Loot> getLoots() {
         return loots;
     }
 
+    /**
+     * method that gets the player's starting x coordinate
+     * @return player's starting x coordinate
+     */
     public int getPlayerStartX() {
         return playerStartX;
     }
 
+    /**
+     * method that gets the player's starting y coordinate
+     * @return player's starting y coordinate
+     */
     public int getPlayerStartY() {
         return playerStartY;
     }
 
+    /**
+     * method that sets the bombs array
+     * @param bombs
+     */
     public void setBombs(ArrayList<Bomb> bombs) {
         this.bombs = bombs;
     }

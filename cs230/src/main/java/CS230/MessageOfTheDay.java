@@ -5,6 +5,13 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Scanner;
 
+
+/**
+ * not sure if i'm correct, not finished
+ * Class that displays on screen a message of the day
+ * @author
+ * @version 1.0
+ */
 public class MessageOfTheDay {
     private String puzzle;
     private String message;

@@ -230,28 +230,58 @@ public class MapReader {
         return door;
     }
 
+    /**
+     * get method to get rusty gate
+     * @return rgate
+     */
     public Gate getRGate() {
         return rgate;
     }
 
+    /**
+     * method get rusty lever
+     * @return rlever
+     */
     public Lever getRLever() {
         return rlever;
     }
+
+    /**
+     * method to get wooden gate
+     * @return wgate
+     */
     public Gate getWGate() {
         return wgate;
     }
 
+    /**
+     * method to get wooden lever
+     * @return wlever
+     */
     public Lever getWLever() {
         return wlever;
     }
+
+    /**
+     * method to get bombs
+     * @return bombs
+     */
     public ArrayList<Bomb> getBomb(){
         return bombs;
     }
 
+    /**
+     * method to get player's starting x coordinate
+     * @return playerStartX
+     */
     public int getPlayerStartX() {
         return playerStartX;
     }
 
+    /**
+     * method to get player's starting y coordinate
+     * @return playerStartY
+     */
     public int getPlayerStartY() {
         return playerStartY;
     }

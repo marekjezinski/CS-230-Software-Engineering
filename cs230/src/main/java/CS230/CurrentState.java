@@ -81,6 +81,12 @@ public class CurrentState {
         return startState;
     }
 
+    /**
+     *
+     * method that creates a new Player
+     * @param username - the user's unique identifier (idk if it's unique)
+     * @return boolean, whether the Player can be created or not (?)
+     */
     public boolean newPlayer(String username){
         int level = 0;
         int indexPosition = 0;
@@ -105,6 +111,11 @@ public class CurrentState {
         return false;
     }
 
+    /**
+     * method that checks level (more detail ?)
+     * @param username
+     * @return level
+     */
     public int checkLevel (String username) {
         int level = 0;
         File f = new File("savestate.txt");

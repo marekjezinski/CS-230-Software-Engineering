@@ -2,11 +2,21 @@ package CS230;
 
 import javafx.scene.image.Image;
 
+/**
+ * Class that constructs a Cell object, which is a single component of a Tile. Tile consists of 4 cells
+ * @author
+ * @version 1.0
+ */
 public class Cell {
     private char colourCode;
 
     private Image cellImage;
 
+    /**
+     * method that sets a cell image's colour.
+     * @param colourCode - used to identify the colour of the cell
+     * @return cell image
+     */
     private Image setCellImage(char colourCode) {
         try {
             switch(colourCode) {
@@ -40,19 +50,35 @@ public class Cell {
         return cellImage;
     }
 
+    /**
+     * constructor that creates a cell
+     * @param colourCode - character that identifies a cell's colour
+     */
     public Cell(char colourCode) {
         this.colourCode = colourCode;
         this.cellImage = setCellImage(this.colourCode);
     }
 
+    /**
+     * method that gets a cell's colour code
+     * @return colourCode
+     */
     public char getColourCode() {
         return colourCode;
     }
 
+    /**
+     * method that sets a cell's colour code
+     * @param colourCode
+     */
     public void setColourCode(char colourCode) {
         this.colourCode = colourCode;
     }
 
+    /**
+     * method that gets a cell image
+     * @return cellImage
+     */
     public Image getCellImage() {
         return cellImage;
     }
