@@ -127,6 +127,23 @@ public class Main extends Application {
         // Load images. Note we use png images with a transparent background.
         playerImage = new Image(getClass().getResource("player.png").toURI().toString());
 
+        SmartThief s = new SmartThief(0,0); //create smart thief at 0,0
+        SmartThiefPath p = new SmartThiefPath(currentLevel); //pass the current level into the path goal finder
+
+        //so that it gets the closest item to smartthief
+
+        //passes levl array smartthief x and y and nearest item x and y to search for closest path
+        //if closest path exists iterate through all the tile coords stored in the path found
+        if (SmartThiefSearch.bfs(currentLevel.getTilesArray(),
+                s.getXPos(),s.getYPos(),p.getPathGoalX(),p.getPathGoalY())){
+            System.out.println(p.getPathGoalX()+" Y: "+ p.getPathGoalY()); //currently treats a player like loot idk why
+            for (int[] cell:SmartThiefSearch.path) {
+                System.out.println("X: "+cell[0]+" Y: "+cell[0]);
+
+            }
+        }
+
+
         // Build the GUI
         Pane root = buildGUI();
 
