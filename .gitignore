@@ -26,3 +26,5 @@ cs230/src/main/java/.DS_Store
 cs230/src/.DS_Store
 cs230/src/main/.DS_Store
 cs230/src/main/java/CS230/.DS_Store
+*.xml
+*.iml

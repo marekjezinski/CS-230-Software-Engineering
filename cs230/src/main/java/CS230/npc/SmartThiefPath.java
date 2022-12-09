@@ -54,7 +54,7 @@ public class SmartThiefPath {
 
         if (closest != null){ //set the goal and also print its coords - for testing
             setPathGoal(closest.getX(), closest.getY());
-            System.out.println("X: "+closest.getX()+" Y:"+closest.getY());
+            //System.out.println("X: "+closest.getX()+" Y:"+closest.getY());
         }
 
     }
