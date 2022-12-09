@@ -507,7 +507,7 @@ public class Main extends Application {
 
                     });
                     l4.setOnAction(g -> {
-                        if(c.checkLevel(username) > 0){
+                        if(c.checkLevel(username) > 2){
                             toolbar.getChildren().removeAll(l1,l2,l3,l4,recent);
                             errorText.setText("");
                             begin(0,3);
