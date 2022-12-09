@@ -1,5 +1,6 @@
 package CS230.npc;
 
+import CS230.Map;
 import javafx.scene.image.Image;
 
 /**
@@ -66,11 +67,10 @@ public class FlyingAssassin extends NPC {
         }
     }
 
-    /**
-     * method that sets the FlyingAssassin's direction
-     * @param direction the direction of FlyingAssassin
-     */
-    public void setDirection(char direction) {
-        this.direction = direction;
+    public boolean isCollidedWithPlayer(int playerX, int playerY) {
+        if(x == playerX && y == playerY) {
+            return true;
+        }
+        return false;
     }
 }

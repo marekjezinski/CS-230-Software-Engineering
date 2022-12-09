@@ -13,8 +13,8 @@ import java.util.ArrayList;
 
 public class Map {
     private MapReader mapRead = null;
-    private int playerStartX;
-    private int playerStartY;
+    private int playerX;
+    private int playerY;
     private int timerLeft;
     private final int MAP_MAX_X;
     private final int MAP_MAX_Y;
@@ -51,8 +51,8 @@ public class Map {
         this.wgate = mapRead.getWGate();
         this.wlever = mapRead.getWLever();
         this.bombs = mapRead.getBomb();
-        this.playerStartX = mapRead.getPlayerStartX();
-        this.playerStartY = mapRead.getPlayerStartY();
+        this.playerX = mapRead.getPlayerStartX();
+        this.playerY = mapRead.getPlayerStartY();
         this.starttime = mapRead.getStarttimer();
         this.flyingAssassins = mapRead.getFlyingAssassins();
     }
@@ -69,10 +69,12 @@ public class Map {
         for (int x = playerX + 1; x < MAP_MAX_X; x++) {
             if (currentTile.isLegalJump(tilesArray[x][playerY])) {
                 if (isLegalMovement(x, playerY)) {
-                    return x * 2;
+                    this.playerX = x;
+                    return this.playerX * 2;
                 }
             }
         }
+        this.playerX = playerX;
         return playerX * 2;
     }
     /**
@@ -88,10 +90,12 @@ public class Map {
         for (int x = playerX - 1; x >= 0; x--) {
             if (currentTile.isLegalJump(tilesArray[x][playerY])) {
                 if (isLegalMovement(x, playerY)) {
-                    return x * 2;
+                    this.playerX = x;
+                    return this.playerX * 2;
                 }
             }
         }
+        this.playerX = playerX;
         return playerX * 2;
     }
     /**
@@ -107,10 +111,12 @@ public class Map {
         for (int y = playerY + 1; y < MAP_MAX_Y; y++) {
             if (currentTile.isLegalJump(tilesArray[playerX][y])) {
                 if (isLegalMovement(playerX, y)) {
-                    return y * 2;
+                    this.playerY = y;
+                    return this.playerY * 2;
                 }
             }
         }
+        this.playerY = playerY;
         return playerY * 2;
     }
     /**
@@ -126,10 +132,12 @@ public class Map {
         for (int y = playerY - 1; y >= 0; y--) {
             if (currentTile.isLegalJump(tilesArray[playerX][y])) {
                 if (isLegalMovement(playerX, y)) {
-                    return y * 2;
+                    this.playerY = y;
+                    return this.playerY * 2;
                 }
             }
         }
+        this.playerY = playerY;
         return playerY * 2;
     }
     /**
@@ -477,15 +485,15 @@ public class Map {
      * @return player's starting x coordinate
      */
 
-    public int getPlayerStartX() {
-        return playerStartX;
+    public int getPlayerX() {
+        return playerX;
     }
     /**
      * method that gets the player's starting y coordinate
      * @return player's starting y coordinate
      */
-    public int getPlayerStartY() {
-        return playerStartY;
+    public int getPlayerY() {
+        return playerY;
     }
     /**
      * method that sets the bombs array
@@ -513,6 +521,14 @@ public class Map {
     public boolean checklever(){
         if(wlever.getX() == -1 && wlever.getY() == -1) {
             return (rlever.getX() == -1 && rlever.getY() == -1);
+        }
+        return false;
+    }
+    public boolean isFlAsCollidedWPlayer() {
+        for(int i = 0; i < flyingAssassins.size(); i++) {
+            if(flyingAssassins.get(i).isCollidedWithPlayer(playerX, playerY)) {
+                return true;
+            }
         }
         return false;
     }

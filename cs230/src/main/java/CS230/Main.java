@@ -28,9 +28,7 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.Random;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
@@ -120,8 +118,8 @@ public class Main extends Application {
         levels.add(level3);
         levels.add(level4);
         this.currentLevel = levels.get(currentLevelID);
-        playerX = this.currentLevel.getPlayerStartX() * 2;
-        playerY = this.currentLevel.getPlayerStartY() * 2;
+        playerX = this.currentLevel.getPlayerX() * 2;
+        playerY = this.currentLevel.getPlayerY() * 2;
         this.timerLeft = this.currentLevel.getTimerLeft();
         // Load images. Note we use png images with a transparent background.
         playerImage = new Image(getClass().getResource("player.png").toURI().toString());
@@ -152,6 +150,10 @@ public class Main extends Application {
                 fl.get(i).movement(currentLevel.getMAP_MAX_X(), currentLevel.getMAP_MAX_Y());
             }
             currentLevel.setFlyingAssassins(fl);
+            //TODO: ADD KILLING NPCS
+            if(currentLevel.isFlAsCollidedWPlayer()) {
+                gameOver();
+            }
             drawGame();
         }));
         timerTimeline.setCycleCount(Animation.INDEFINITE);
@@ -240,6 +242,9 @@ public class Main extends Application {
                 // Do nothing for all other keys.
                 break;
         }
+        if(currentLevel.isFlAsCollidedWPlayer()) {
+            gameOver();
+        }
         checkItems();
         // Redraw game as the player may have moved.
         drawGame();
@@ -261,8 +266,8 @@ public class Main extends Application {
                 currentLevelID++;
 
                 currentLevel = levels.get(currentLevelID);
-                playerX = currentLevel.getPlayerStartX();
-                playerY = currentLevel.getPlayerStartY();
+                playerX = currentLevel.getPlayerX();
+                playerY = currentLevel.getPlayerY();
                 this.score = (int) (this.score + ceil(this.timerLeft / 3));
                 c.levelSave(this.username, this.currentLevelID, this.score);
             }
@@ -551,8 +556,8 @@ public class Main extends Application {
         scoreText.setText("Score: " + this.score);
         currentLevel = levels.get(currentLevelID);
 
-        playerX = currentLevel.getPlayerStartX();
-        playerY = currentLevel.getPlayerStartY();
+        playerX = currentLevel.getPlayerX();
+        playerY = currentLevel.getPlayerY();
         timerLeft = currentLevel.getStartTimer();
         drawGame();
 
