@@ -26,6 +26,9 @@ public class MessageOfTheDay {
         String together = "";
         URL url = new URL("http://cswebcat.swansea.ac.uk/puzzle");
         HttpURLConnection con = (HttpURLConnection)url.openConnection();
+        for(Scanner in = new Scanner(con.getInputStream());
+            in.hasNextLine(); this.puzzle = in.nextLine()) {
+        }
         this.breakdown = this.puzzle.split("");
         for (int i = 0; i < this.breakdown.length-1; i++){
             this.breakdown2.add(this.breakdown[i]);

@@ -551,7 +551,7 @@ public class Main extends Application {
 
     public static void main(String[] args) throws IOException {
         //MessageOfTheDay m = new MessageOfTheDay();
-       //System.out.println(m.getMessage());
+        //System.out.println(m.getMessage());
         launch(args);
     }
 }
