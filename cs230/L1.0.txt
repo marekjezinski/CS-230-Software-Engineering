@@ -8,18 +8,18 @@ RRRR RRRR RRRR YYYY YYYM MMMM MMMM MMMM
 GGGG GGGG GGGG YYGG YYGG GGGG GGGG GGGG
 GGGG GGGG GGGG GGGG GGGG GGGG GGGG GGGG
 
-player 1 1
+player 0 0
 timer 45
-cent 2 1
-dollar 7 2
-wgate 4 3
-diamond 1 4
-wlever 8 4
-rgate 15 15
-rlever 15 16
-thief 8 6 
-ruby 2 7
-door 4 8 
-flyingassassin 5 8 n
-clock 7 8 
-bomb 8 7
+cent 1 0
+dollar 6 1
+wgate 3 2
+diamond 0 3
+wlever 7 3
+rgate 3 3
+rlever 7 4
+thief 7 5
+ruby 1 6
+door 3 7 
+flyingassassin 4 7 n
+clock 6 7
+bomb 7 6
