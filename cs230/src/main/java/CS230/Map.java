@@ -136,14 +136,12 @@ public class Map {
         for(int x = 0; x < MAP_MAX_X; x++) {
             for(int i = 0; i < loots.size(); i++) {
                 if(loots.get(i).getX() == x && loots.get(i).getY() == coordY) {
-                    loots.get(i).setX(-1);
-                    loots.get(i).setY(-1);
+                    loots.remove(i);
                 }
             }
             for(int i = 0; i < clocks.size(); i++) {
                 if(clocks.get(i).getX() == x && clocks.get(i).getY() == coordY) {
-                    clocks.get(i).setX(-1);
-                    clocks.get(i).setY(-1);
+                    loots.remove(i);
                 }
             }
             for(int i = 0; i < bombs.size(); i++) {
@@ -165,14 +163,12 @@ public class Map {
         for(int y = 0; y < MAP_MAX_Y; y++) {
             for(int i = 0; i < loots.size(); i++) {
                 if(loots.get(i).getX() == coordX && loots.get(i).getY() == y) {
-                    loots.get(i).setX(-1);
-                    loots.get(i).setY(-1);
+                    loots.remove(i);
                 }
             }
             for(int i = 0; i < clocks.size(); i++) {
                 if(clocks.get(i).getX() == coordX && clocks.get(i).getY() == y) {
-                    clocks.get(i).setX(-1);
-                    clocks.get(i).setY(-1);
+                    clocks.remove(i);
                 }
             }
             for(int i = 0; i < bombs.size(); i++) {

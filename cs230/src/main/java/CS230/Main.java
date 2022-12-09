@@ -252,7 +252,7 @@ public class Main extends Application {
         //TODO: implement door and level progression
 
         if(currentLevel.checkDoor(playerX / 2, playerY / 2)>0){
-            if(currentLevel.lootleft == 0) {
+            if( currentLevel.getLoots().size() == 0) {
                 currentLevelID++;
 
                 currentLevel = levels.get(currentLevelID);
@@ -323,8 +323,7 @@ public class Main extends Application {
         ArrayList<Loot> loots = currentLevel.getLoots();
         loots.forEach(e ->  gc.drawImage(e.getImg(),
                 e.getX() * GRID_CELL_WIDTH * 2, e.getY() * GRID_CELL_HEIGHT * 2));
-        //lootleft attempt
-        currentLevel.lootleft = currentLevel.getLoots().size();
+
 
         // Draw player at current location
         gc.drawImage(playerImage, playerX * GRID_CELL_WIDTH, playerY * GRID_CELL_HEIGHT);
@@ -388,7 +387,7 @@ public class Main extends Application {
         }
         if (this.timerLeft > 0) {
             this.timerLeft = this.timerLeft - 1;
-            timerText.setText("Time remaining: " + this.timerLeft + " Level " + (currentLevelID + 1) + "Loot:" + (currentLevel.lootleft));
+            timerText.setText("Time remaining: " + this.timerLeft + " Level " + (currentLevelID + 1) + "Loot:" + ( currentLevel.getLoots().size()));
         }
         else {
             timerTimeline.stop();
