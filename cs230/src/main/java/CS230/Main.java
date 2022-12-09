@@ -552,6 +552,7 @@ public class Main extends Application {
 
         playerX = currentLevel.getPlayerStartX();
         playerY = currentLevel.getPlayerStartY();
+        timerLeft = currentLevel.getStartTimer();
         drawGame();
 
     }
