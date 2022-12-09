@@ -472,6 +472,7 @@ public class Main extends Application {
 
                     l1.setOnAction(f -> {
                         begin(0,0);
+
                     });
 
                     l2.setOnAction(g -> {
@@ -544,6 +545,7 @@ public class Main extends Application {
         this.currentLevelID = levelIn;
         timerText.setText("Time remaining: " + this.timerLeft + " Level " + (currentLevelID + 1));
         scoreText.setText("Score: " + this.score);
+        currentLevel = levels.get(currentLevelID);
         drawGame();
 
     }
