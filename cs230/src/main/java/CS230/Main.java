@@ -323,6 +323,8 @@ public class Main extends Application {
         ArrayList<Loot> loots = currentLevel.getLoots();
         loots.forEach(e ->  gc.drawImage(e.getImg(),
                 e.getX() * GRID_CELL_WIDTH * 2, e.getY() * GRID_CELL_HEIGHT * 2));
+        //lootleft attempt
+        currentLevel.lootleft = currentLevel.getLoots().size();
 
         // Draw player at current location
         gc.drawImage(playerImage, playerX * GRID_CELL_WIDTH, playerY * GRID_CELL_HEIGHT);
