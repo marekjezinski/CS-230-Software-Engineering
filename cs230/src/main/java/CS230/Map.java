@@ -496,4 +496,12 @@ public class Map {
         return starttime;
     }
 
+
+
+    public boolean checklever(){
+        if(wlever.getX() == -1 && wlever.getY() == -1) {
+            return (rlever.getX() == -1 && rlever.getY() == -1);
+        }
+        return false;
+    }
 }
