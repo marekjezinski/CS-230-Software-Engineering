@@ -456,6 +456,7 @@ public class Main extends Application {
         errorText.setText("");
         errorText.setFont(Font.font("arial",20));
         errorText.setFill(Paint.valueOf("Red"));
+        toolbar.getChildren().addAll(errorText);
         Button startButton = new Button("Start!");
         toolbar.getChildren().addAll(startButton);
         startButton.setOnAction(e -> {
@@ -464,7 +465,7 @@ public class Main extends Application {
             }
             else{
                 this.username = usernameIn.getText();
-                toolbar.getChildren().removeAll(labelUsername,usernameIn);
+                toolbar.getChildren().removeAll(labelUsername,usernameIn,startButton);
                 boolean playedBefore = c.newPlayer(username);
                 if (playedBefore == true) {
                     Label labelLevel = new Label("Level select:");
@@ -490,6 +491,7 @@ public class Main extends Application {
                         }
                         else {
                             errorText.setText("ERROR! You haven't unlocked this yet");
+                            drawGame();
 
                         }
 
@@ -514,6 +516,7 @@ public class Main extends Application {
                         }
                         else {
                             errorText.setText("ERROR! You haven't unlocked this yet");
+                            drawGame();
                         }
 
                     });
