@@ -108,7 +108,7 @@ public class Main extends Application {
 
     Map level3 = new Map("L2.0.txt");
 
-    Map level4 = new Map("L0.0.txt");
+    Map level4 = new Map("L3.0.txt");
 
     /**
      * Set up the new application.

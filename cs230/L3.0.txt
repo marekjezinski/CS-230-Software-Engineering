@@ -9,23 +9,24 @@ GGGG GGGG BBBB BBBB GGGG GGGG BBBB OOOO MMMM RRRR RRRR MMMM MMMM RRRR RRRR
 GGGG GGGG BBBB BBBB GGGG GGGG BBBB OOOO MMMM RRRR RRRR MMMM MMMM RRRR RRRR
 GGOO GGOO BBOO BBOO GGOO GGOO BBOO OOOO MMOO RROO RROO MMOO MMOO RROO RROO
 GGGG GGGG BBBB BBBB GGGG GGGG BBBB OOOO MMMM RRRR RRRR MMMM MMMM RRRR RRRR
-player 4 8 
+
+player 3 7
 timer 70
-door 3 2
-cent 9 2
-dollar 13 2
-flyingassassin 8 7 w
-bomb 8 4
-ruby 1 5 
-wgate 7 5 
-diamond 8 5
-rgate 9 5
-bomb 8 6
-thief 1 7 
-cent 3 7 
-smartthief 15 7 
-rkey 13 7
-cent 7 8 
-dollar 9 8
-clock 8 9
-wkey 3 10
+door 2 1
+cent 8 1
+dollar 12 1
+flyingassassin 7 6 w
+bomb 7 3
+ruby 0 4
+wgate 2 9
+wlever 5 4
+diamond 7 4
+rgate 8 4
+rlever 12 6
+bomb 7 5
+thief 0 6
+cent 2 6
+smartthief 14 6
+cent 6 7
+dollar 8 7
+clock 7 8

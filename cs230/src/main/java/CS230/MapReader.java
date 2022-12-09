@@ -149,7 +149,7 @@ public class MapReader {
                 } else if (type.equals("smartthief")) {
                     SmartThief smart = new SmartThief(
                             in.nextInt(), in.nextInt(),
-                            new Image(getClass().getResource("smthief.png").toURI().toString()));
+                            new Image(getClass().getResource("smartthief.png").toURI().toString()));
 
                 } else if (type.equals("flyingassassin")) {
                     FlyingAssassin fly = new FlyingAssassin(new Image(getClass().getResource("flyingassassin.png").toURI().toString()),
