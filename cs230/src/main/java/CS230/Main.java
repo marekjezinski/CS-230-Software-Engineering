@@ -360,9 +360,7 @@ public class Main extends Application {
         }
     }
 
-    /**
-     * Reset the player's location and move them back to (0,0).
-     */
+
 
 
 
@@ -394,12 +392,13 @@ public class Main extends Application {
         }
         if (this.timerLeft > 0) {
             this.timerLeft = this.timerLeft - 1;
-            timerText.setText("Time remaining: " + this.timerLeft + " Level "
-                    + (currentLevelID + 1) + "Loot:" + ( currentLevel.getLoots().size()));
+            this.timerText.setText("Time remaining: " + this.timerLeft + "| Level "
+                    + (this.currentLevelID + 1)
+                    + "| Loot remaining: " + (this.currentLevel.getLoots().size()));
         }
         else {
-            timerTimeline.stop();
-            scoreColourChanger.stop();
+            this.timerTimeline.stop();
+            this.scoreColourChanger.stop();
             gameOver();
         }
     }
@@ -419,7 +418,7 @@ public class Main extends Application {
         int r = random.nextInt(255);
         int g = random.nextInt(255);
         int b = random.nextInt(255);
-        scoreText.setFill(Color.rgb(r,g,b));
+        this.scoreText.setFill(Color.rgb(r,g,b));
     }
 
 
@@ -539,11 +538,11 @@ public class Main extends Application {
             }
         });
 
-        timerText.setText("Time remaining: " + this.timerLeft );
+        this.timerText.setText("");
         timerText.setFont(Font.font("arial",20));
         toolbar.getChildren().add(timerText);
 
-        scoreText.setText("Score: " + this.score );
+        scoreText.setText("Score: " + this.score);
         scoreText.setFont(Font.font("arial",20));
         toolbar.getChildren().add(scoreText);
 
@@ -560,7 +559,9 @@ public class Main extends Application {
         this.player.play();
         this.score = scoreIn;
         this.currentLevelID = levelIn;
-        timerText.setText("Time remaining: " + this.timerLeft + " Level " + (currentLevelID + 1));
+        this.timerText.setText("Time remaining: " + this.timerLeft + "| Level "
+                + (this.currentLevelID + 1)
+                + "| Loot remaining: " + (this.currentLevel.getLoots().size()));
         scoreText.setText("Score: " + this.score);
         currentLevel = levels.get(currentLevelID);
         if (this.restartCheck == false) {

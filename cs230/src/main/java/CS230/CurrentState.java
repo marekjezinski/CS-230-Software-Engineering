@@ -7,7 +7,8 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
- * Class for saving the current state of the program
+ * Class for saving the current state of the program and seeing if
+ * the player is new or not and what levels they have unlocked
  * @author Tom Stevens
  * @version 1.0
  */
@@ -21,7 +22,8 @@ public class CurrentState {
     private ArrayList<Integer> startState =  new ArrayList<Integer>();
 
     /**
-     * method that saves current level the user is on
+     * method that saves current level the user is on and all the
+     * relevant details with it
      * @param username
      * @param score
      */
@@ -78,8 +80,8 @@ public class CurrentState {
     /**
      *
      * method that creates a new Player
-     * @param username - the user's unique identifier (idk if it's unique)
-     * @return boolean, whether the Player can be created or not (?)
+     * @param username
+     * @return boolean
      */
     public boolean newPlayer(String username){
         int level = 0;
@@ -106,7 +108,8 @@ public class CurrentState {
     }
 
     /**
-     * method that checks level (more detail ?)
+     * method that checks what levels
+     * are unlocked to the user
      * @param username
      * @return level
      */
