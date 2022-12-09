@@ -68,7 +68,7 @@ public class Character {
 
     /**
      * method that sets the Character's x position
-     * @param Character's x position
+     * @param newX Character's x position
      */
     public void setXPos(int newX){
         this.xPos = newX;
@@ -76,7 +76,7 @@ public class Character {
 
     /**
      * method that sets the Character's y position
-     * @param Character's y position
+     * @param newY Character's y position
      */
     public void setYPos(int newY){
         this.yPos = newY;

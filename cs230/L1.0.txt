@@ -15,8 +15,8 @@ dollar 6 1
 wgate 3 2
 diamond 0 3
 wlever 7 3
-rgate 3 3
-rlever 7 4
+rgate 4 5
+rlever 7 0
 thief 7 5
 ruby 1 6
 door 3 7 
