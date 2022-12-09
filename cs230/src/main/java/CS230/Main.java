@@ -343,23 +343,9 @@ public class Main extends Application {
     /**
      * Reset the player's location and move them back to (0,0).
      */
-    public void resetPlayerLocation() {
-        playerX = 0;
-        playerY = 0;
-        drawGame();
-    }
 
-    public void resetGame() {
-        //TODO: FIX issue of map not reloading items on it
-        currentLevelID = 0;
-        currentLevel = levels.get(0);
 
-        resetPlayerLocation();
-        score = 0;
-        timerTimeline.stop();
-        hasGameStarted = false;
-        drawGame();
-    }
+
 
 
     /**
@@ -439,16 +425,9 @@ public class Main extends Application {
 
         // Create the toolbar content
 
-        // Reset Player Location Button
-        Button resetGameButton = new Button("Reset Game");
-        toolbar.getChildren().add(resetGameButton);
 
-        // Set up the behaviour of the button.
-        resetGameButton.setOnAction(e -> {
-            // We keep this method short and use a method for the bulk of the work.
-            resetGame();
 
-        });
+        
 
         Label labelUsername = new Label("Username");
         TextField usernameIn = new TextField();
@@ -461,7 +440,7 @@ public class Main extends Application {
         toolbar.getChildren().addAll(startButton);
         startButton.setOnAction(e -> {
             if(usernameIn.getText().equals("")){
-                errorText.setText("ERROR! Player name is required!");
+                errorText.setText("Player name is required!");
             }
             else{
                 this.username = usernameIn.getText();
@@ -490,7 +469,7 @@ public class Main extends Application {
 
                         }
                         else {
-                            errorText.setText("ERROR! You haven't unlocked this yet");
+                            errorText.setText("You haven't unlocked this yet");
                             drawGame();
 
                         }
@@ -504,7 +483,7 @@ public class Main extends Application {
                             begin(0,2);
                         }
                         else {
-                            errorText.setText("ERROR! You haven't unlocked this yet");
+                            errorText.setText("You haven't unlocked this yet");
                         }
 
                     });
@@ -515,7 +494,7 @@ public class Main extends Application {
                             begin(0,3);
                         }
                         else {
-                            errorText.setText("ERROR! You haven't unlocked this yet");
+                            errorText.setText(" You haven't unlocked this yet");
                             drawGame();
                         }
 
