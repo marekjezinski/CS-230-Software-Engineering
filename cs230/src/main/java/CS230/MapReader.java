@@ -13,6 +13,7 @@ import java.util.ArrayList;
  * Class for reading the text file for levels/maps
  * @author Tom Stevens
  * @author Wiktoria Bruzgo
+ * @author Kam Leung
  * @version 1.0
  */
 public class MapReader {
@@ -38,6 +39,8 @@ public class MapReader {
     private final int DOLLAR_VALUE = 20;
     private final int RUBY_VALUE = 30;
     private final int DIAMOND_VALUE = 40;
+
+    private int starttimer;
 
     /**
      * Constructor for the class
@@ -78,6 +81,7 @@ public class MapReader {
                 }
                 else if (type.equals("timer")) {
                     this.timer = in.nextInt();
+                    starttimer = this.timer;
                 }
                 else if (type.equals("rgate")) {
                     Gate rgatein = new Gate(new Image(getClass().getResource("rustygate.png").toURI().toString()),
@@ -235,31 +239,66 @@ public class MapReader {
     public Door getDoor() {
         return door;
     }
-
+    /**
+     * Get method for rgate
+     * @return rgate
+     */
     public Gate getRGate() {
         return rgate;
     }
-
+    /**
+     * Get method for rlever
+     * @return rlever
+     */
     public Lever getRLever() {
         return rlever;
     }
+    /**
+     * Get method for wgate
+     * @return wgate
+     */
     public Gate getWGate() {
         return wgate;
     }
-
+    /**
+     * Get method for wlever
+     * @return wlever
+     */
     public Lever getWLever() {
         return wlever;
     }
+    /**
+     * Get method for bombs
+     * @return bombs
+     */
     public ArrayList<Bomb> getBomb(){
         return bombs;
     }
-
+    /**
+     * Get method for playerStartX
+     * @return playerStartX;
+     */
     public int getPlayerStartX() {
         return playerStartX;
     }
+    /**
+     * Get method for playerStartY
+     * @return playerStartY;
+     */
 
     public int getPlayerStartY() {
         return playerStartY;
     }
+    /**
+     * Get method for map's starting timer for level reset and level load.
+     * @return starttimer;
+     */
+    public int getStarttimer() {return starttimer;}
+    /**
+     * Get method for total loot count
+     * @return int totalloot;
+     */
+    public static int gettotalloot() {return totalloot;}
+
 }
 

@@ -21,6 +21,7 @@ public class Map {
     private Lever wlever;
 
     private int lootcount;
+     private int starttime;
 
     private ArrayList<Bomb> bombs = new ArrayList<>();
 
@@ -40,6 +41,8 @@ public class Map {
         this.bombs = mapRead.getBomb();
         this.playerStartX = mapRead.getPlayerStartX();
         this.playerStartY = mapRead.getPlayerStartY();
+        this.starttime = mapRead.getStarttimer();
+        this.lootcount = mapRead.getLoot().size();
     }
 
     public int moveRight(int playerX, int playerY) {
@@ -239,6 +242,7 @@ public class Map {
             Loot currentLoot = loots.get(i);
             if (currentLoot.getX() == playerX && currentLoot.getY() == playerY) {
                 loots.remove(i);
+                lootleft--;
                 return (currentLoot.getLootValue());
             }
         }
@@ -335,7 +339,7 @@ public class Map {
         return loots;
     }
 
-    public int lootleft = MapReader.totalloot;
+    public int lootleft = MapReader.gettotalloot();
 
 
 
@@ -355,4 +359,8 @@ public class Map {
     public void setBombs(ArrayList<Bomb> bombs) {
         this.bombs = bombs;
     }
+    public int getStartTimer(){
+        return starttime;
+    }
+
 }
