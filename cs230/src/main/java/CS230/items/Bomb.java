@@ -44,16 +44,10 @@ public class Bomb extends Item {
      * @return true if player is next to a bomb, false otherwise.
      */
     public boolean isNextToBomb(int playerX, int playerY) {
-        if (x == playerX - 1 && y == playerY) {
+        if ((x == playerX - 1 || x == playerX + 1 )&& y == playerY) {
             return true;
         }
-        else if (x == playerX + 1 && y == playerY) {
-            return true;
-        }
-        else if (x == playerX && y == playerY + 1) {
-            return true;
-        }
-        else if (x == playerX && y == playerY - 1) {
+        else if (x == playerX && (y == playerY + 1 || y == playerY - 1)) {
             return true;
         }
         return false;
