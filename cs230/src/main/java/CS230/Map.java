@@ -20,15 +20,7 @@ public class Map {
     private Gate wgate;
     private Lever wlever;
 
-    private Bomb bomb;
-    private int bombX;
-    private int bombY;
-    private boolean bombTouched = false;
-    private int explodeX;
-    private int explodeY;
-
     private ArrayList<Bomb> bombs = new ArrayList<>();
-    private int countdownForBomb;
 
     public Map(String fileName) {
         this.mapRead = new MapReader(fileName);
@@ -54,7 +46,7 @@ public class Map {
         Tile currentTile = tilesArray[playerX][playerY];
         for (int x = playerX + 1; x < MAP_MAX_X; x++) {
             if (currentTile.isLegalJump(tilesArray[x][playerY])) {
-                if (isNoGate(x, playerY)) {
+                if (isLegalMovement(x, playerY)) {
                     return x * 2;
                 }
             }
@@ -68,7 +60,7 @@ public class Map {
         Tile currentTile = tilesArray[playerX][playerY];
         for (int x = playerX - 1; x >= 0; x--) {
             if (currentTile.isLegalJump(tilesArray[x][playerY])) {
-                if (isNoGate(x, playerY)) {
+                if (isLegalMovement(x, playerY)) {
                     return x * 2;
                 }
             }
@@ -82,7 +74,7 @@ public class Map {
         Tile currentTile = tilesArray[playerX][playerY];
         for (int y = playerY + 1; y < MAP_MAX_Y; y++) {
             if (currentTile.isLegalJump(tilesArray[playerX][y])) {
-                if (isNoGate(playerX, y)) {
+                if (isLegalMovement(playerX, y)) {
                     return y * 2;
                 }
             }
@@ -96,7 +88,7 @@ public class Map {
         Tile currentTile = tilesArray[playerX][playerY];
         for (int y = playerY - 1; y >= 0; y--) {
             if (currentTile.isLegalJump(tilesArray[playerX][y])) {
-                if (isNoGate(playerX, y)) {
+                if (isLegalMovement(playerX, y)) {
                     return y * 2;
                 }
             }
@@ -104,14 +96,96 @@ public class Map {
         return playerY * 2;
     }
 
-    private boolean isNoGate(int cordX, int cordY) {
+    private boolean isLegalMovement(int cordX, int cordY) {
         if (rgate.getX() == cordX && rgate.getY() == cordY) {
             return false;
         }
         else if (wgate.getX() == cordX && wgate.getY() == cordY) {
             return false;
         }
+        for(int i = 0; i < bombs.size(); i++) {
+            if(bombs.get(i).getX() == cordX && bombs.get(i).getY() == cordY) {
+                return false;
+            }
+        }
         return true;
+    }
+
+    public boolean isBombTriggered(int playerX, int playerY) {
+        for(int i = 0; i < bombs.size(); i++) {
+            if (bombs.get(i).isNextToBomb(playerX, playerY)) {
+                int secToExplode = bombs.get(i).getSecondsToExplode();
+                if (secToExplode == -2) {
+                    bombs.get(i).setSecondsToExplode(3);
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public void explodeBomb(int index) {
+        ArrayList<Bomb> bombs = getBombs();
+        int coordX = bombs.get(index).getX();
+        int coordY = bombs.get(index).getY();
+        for(int x = 0; x < MAP_MAX_X; x++) {
+            for(int i = 0; i < loots.size(); i++) {
+                if(loots.get(i).getX() == x && loots.get(i).getY() == coordY) {
+                    loots.get(i).setX(-1);
+                    loots.get(i).setY(-1);
+                }
+            }
+            for(int i = 0; i < clocks.size(); i++) {
+                if(clocks.get(i).getX() == x && clocks.get(i).getY() == coordY) {
+                    clocks.get(i).setX(-1);
+                    clocks.get(i).setY(-1);
+                }
+            }
+            for(int i = 0; i < bombs.size(); i++) {
+                if(bombs.get(i).getX() == x && bombs.get(i).getY() == coordY) {
+                    if(index != i) {
+                        bombs.get(i).setSecondsToExplode(1);
+                    }
+                }
+            }
+            if(wlever.getX() == x && wlever.getY() == coordY) {
+                wlever.setX(-1);
+                wlever.setY(-1);
+            }
+            if(rlever.getX() == x && rlever.getY() == coordY) {
+                rlever.setX(-1);
+                rlever.setY(-1);
+            }
+        }
+        for(int y = 0; y < MAP_MAX_Y; y++) {
+            for(int i = 0; i < loots.size(); i++) {
+                if(loots.get(i).getX() == coordX && loots.get(i).getY() == y) {
+                    loots.get(i).setX(-1);
+                    loots.get(i).setY(-1);
+                }
+            }
+            for(int i = 0; i < clocks.size(); i++) {
+                if(clocks.get(i).getX() == coordX && clocks.get(i).getY() == y) {
+                    clocks.get(i).setX(-1);
+                    clocks.get(i).setY(-1);
+                }
+            }
+            for(int i = 0; i < bombs.size(); i++) {
+                if(bombs.get(i).getX() == coordX && bombs.get(i).getY() == y) {
+                    if(index != i) {
+                        bombs.get(i).setSecondsToExplode(1);
+                    }
+                }
+            }
+            if(wlever.getX() == coordX && wlever.getY() == y) {
+                wlever.setX(-1);
+                wlever.setY(-1);
+            }
+            if(rlever.getX() == coordY && rlever.getY() == y) {
+                rlever.setX(-1);
+                rlever.setY(-1);
+            }
+        }
     }
 
     public Cell[][] getCellsArray() {
@@ -243,7 +317,7 @@ public class Map {
     public Gate getRGate() {
         return rgate;
     }
-    public ArrayList<Bomb> getBomb() {
+    public ArrayList<Bomb> getBombs() {
         return bombs;
     }
     public Lever getRLever() {
@@ -259,15 +333,15 @@ public class Map {
         return loots;
     }
 
-    public int getCountdownForBomb() {
-        return countdownForBomb;
-    }
-
     public int getPlayerStartX() {
         return playerStartX;
     }
 
     public int getPlayerStartY() {
         return playerStartY;
+    }
+
+    public void setBombs(ArrayList<Bomb> bombs) {
+        this.bombs = bombs;
     }
 }
