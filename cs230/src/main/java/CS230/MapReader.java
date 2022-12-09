@@ -241,7 +241,7 @@ public class MapReader {
     }
 
     /**
-     * Get method for rgate
+     * Get method for rusty gate
      *
      * @return rgate
      */
@@ -250,7 +250,7 @@ public class MapReader {
     }
 
     /**
-     * Get method for rlever
+     * Get method for rusty lever
      *
      * @return rlever
      */
@@ -259,7 +259,7 @@ public class MapReader {
     }
 
     /**
-     * Get method for wgate
+     * Get method for wooden gate
      *
      * @return wgate
      */
@@ -268,7 +268,7 @@ public class MapReader {
     }
 
     /**
-     * Get method for wlever
+     * Get method for wooden lever
      *
      * @return wlever
      */
@@ -286,8 +286,7 @@ public class MapReader {
     }
 
     /**
-     * Get method for playerStartX
-     *
+     * method to get player's starting x coordinate
      * @return playerStartX;
      */
     public int getPlayerStartX() {
@@ -295,9 +294,8 @@ public class MapReader {
     }
 
     /**
-     * Get method for playerStartY
-     *
-     * @return playerStartY;
+     * method to get player's starting y coordinate
+     * @return playerStartY
      */
 
     public int getPlayerStartY() {
@@ -312,7 +310,6 @@ public class MapReader {
     public int getStarttimer() {
         return starttimer;
     }
-    public int getLootcount(){return lootcount;}
 }
 
 

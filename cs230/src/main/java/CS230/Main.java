@@ -354,7 +354,6 @@ public class Main extends Application {
 
         resetPlayerLocation();
         score = 0;
-        timerLeft = currentLevel.getStartTimer();
         timerTimeline.stop();
         hasGameStarted = false;
         drawGame();
