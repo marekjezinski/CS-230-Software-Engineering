@@ -3,7 +3,7 @@ package CS230.items;
 import javafx.scene.image.Image;
 
 /**
- * Class that creates a Diamond object, inhertis from the superclass Loot
+ * Class that creates a Diamond object, inheritance from the superclass Loot
  * @author
  * @version 1.0
  */

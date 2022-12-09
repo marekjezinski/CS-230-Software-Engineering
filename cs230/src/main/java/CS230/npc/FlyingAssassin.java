@@ -44,7 +44,7 @@ public class FlyingAssassin extends NPC {
 
     /**
      * method that sets the FlyingAssassin's direction
-     * @param direction
+     * @param direction the direction of FlyingAssassin
      */
     public void setDirection(char direction) {
         this.direction = direction;

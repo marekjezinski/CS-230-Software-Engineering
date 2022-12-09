@@ -1,13 +1,11 @@
 package CS230.items;
+
+
+import javafx.scene.image.Image;
 /**
  * Bomb item class for the game, is a subclass of item
  * @author Tom Stevens
  * @version 1.0
- */
-
-import javafx.scene.image.Image;
-/**
- * The class Bomb extends item
  */
 public class Bomb extends Item {
     private boolean isTriggered;
@@ -24,9 +22,6 @@ public class Bomb extends Item {
         super(img, x, y);
     }
 
-    /**
-     * method that triggers a bomb and sets its seconds before it explodes
-     */
 
 
     /**

@@ -1,7 +1,4 @@
 package CS230.items;
-import java.util.ArrayList;
-
-import CS230.MapReader;
 import javafx.scene.image.Image;
 
 /**

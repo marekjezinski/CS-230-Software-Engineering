@@ -5,7 +5,7 @@ import javafx.scene.image.Image;
  * Class that constructs a general item object, used as a general
  * template for more specifying item objects.
  * @author
- * @version
+ * @version 0
  */
 public abstract class Item {
     private Image img;
@@ -14,9 +14,9 @@ public abstract class Item {
 
     /**
      * constructs an Item object
-     * @param img
-     * @param x
-     * @param y
+     * @param img item image
+     * @param x item x coordinate
+     * @param y item y coordinate
      */
     public Item(Image img, int x, int y) {
         this.img = img;
@@ -34,7 +34,7 @@ public abstract class Item {
 
     /**
      * method that sets an item's image
-     * @param img
+     * @param img image of the item
      */
     public void setImg(Image img) {
         this.img = img;
@@ -49,7 +49,7 @@ public abstract class Item {
     }
 
     /**
-     * method that get's the item's y coordinate
+     * method that get the item's y coordinate
      * @return y
      */
     public int getY() {
@@ -58,7 +58,7 @@ public abstract class Item {
 
     /**
      * method that sets the x coordinate of an item
-     * @param newX
+     * @param newX the new X coordinate of the item
      */
     public void setX(int newX) {
         this.x = newX;
@@ -66,7 +66,7 @@ public abstract class Item {
 
     /**
      * method that set the y coordinate of an item
-     * @param newY
+     * @param newY the new Y coordinate of the item
      */
     public void setY(int newY) {
         this.y = newY;

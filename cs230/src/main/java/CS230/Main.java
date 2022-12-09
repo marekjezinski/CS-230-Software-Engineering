@@ -1,7 +1,6 @@
 package CS230;
 import CS230.items.*;
-import CS230.npc.SmartThief;
-import CS230.npc.SmartThiefPath;
+import CS230.npc.*;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -100,7 +99,7 @@ public class Main extends Application {
 
 
     private int currentLevelID = 0;
-    private ArrayList<Map> levels = new ArrayList<Map>();
+    private ArrayList<Map> levels = new ArrayList<>();
     Map currentLevel;
     //todo Change file name of map when NPC in mapreader is finished
     Map level1 = new Map("L0.0.txt");

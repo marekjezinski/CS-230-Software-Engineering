@@ -14,10 +14,10 @@ public class Clock extends Item {
     /**
      * Method to read positions of the clocks and how much extra time they
      * give to the player
-     * @param img
-     * @param x
-     * @param y
-     * @param clockTime
+     * @param img image of the clock
+     * @param x the x coordinate of the clock item
+     * @param y   the y coordinate of the clock item
+     * @param clockTime  the time of the clock item
      */
     public Clock(Image img, int x, int y, int clockTime) {
         super(img, x, y);

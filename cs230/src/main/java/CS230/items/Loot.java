@@ -1,8 +1,5 @@
 
 package CS230.items;
-import java.util.ArrayList;
-
-import CS230.MapReader;
 import javafx.scene.image.Image;
 
 /**
@@ -12,14 +9,14 @@ import javafx.scene.image.Image;
  * @version 1.0
  */
 public abstract class Loot extends Item {
-    private int lootValue;
+    private final int lootValue;
 
     /**
      * constructs a general loot object
-     * @param img
-     * @param x
-     * @param y
-     * @param lootValue
+     * @param img image of the loot object
+     * @param x the X coordinate of the loot object
+     * @param y the Y coordinate of the loot object
+     * @param lootValue the Value of the loot item.
      */
     public Loot(Image img, int x, int y, int lootValue) {
         super(img, x, y);
@@ -27,7 +24,7 @@ public abstract class Loot extends Item {
     }
 
     /**
-     * method that gets a loot value
+     * method that gets the value of the loot item
      * @return lootValue
      */
     public int getLootValue() {

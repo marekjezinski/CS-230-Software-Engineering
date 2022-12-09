@@ -6,10 +6,10 @@ import javafx.scene.image.Image;
  * Abstract class that creates a general NPC object, it's used
  * as a template for more specific NPCs
  * @author
- * @version
+ * @version 0
  */
 public abstract class NPC {
-    private Image img;
+    private final Image img;
     private int x;
     private int y;
 
@@ -35,7 +35,7 @@ public abstract class NPC {
 
     /**
      * method that gets the NPC's x coordinate
-     * @return x  X coordinate of the NPC
+     * @return x  the X coordinate of the NPC
      */
     public int getX() {
         return x;
@@ -43,7 +43,7 @@ public abstract class NPC {
 
     /**
      * method that gets the NPC's y coordinate
-     * @return y Y coordinate of the NPC
+     * @return y  the Y coordinate of the NPC
      */
     public int getY() {
         return y;

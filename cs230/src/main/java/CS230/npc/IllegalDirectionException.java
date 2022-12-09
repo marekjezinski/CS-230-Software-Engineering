@@ -1,7 +1,7 @@
 package CS230.npc;
 
 /**
- * Class that creates an exception, inhertis from the IllgalArgumentException superclass
+ * Class that creates an exception, inheritance from the IllegalArgumentException superclass
  * @author
  * @version 1.0
  */
