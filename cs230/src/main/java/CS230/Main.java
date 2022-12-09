@@ -427,7 +427,7 @@ public class Main extends Application {
 
 
 
-        
+
 
         Label labelUsername = new Label("Username");
         TextField usernameIn = new TextField();
@@ -550,7 +550,7 @@ public class Main extends Application {
 
     public static void main(String[] args) throws IOException {
         //MessageOfTheDay m = new MessageOfTheDay();
-        //m.getMessage();
+        //System.out.println(m.getMessage());
         launch(args);
 
     }

@@ -29,10 +29,6 @@ public class MessageOfTheDay {
         HttpURLConnection con = (HttpURLConnection)url.openConnection();
         con.setRequestMethod("GET");
 
-        for(Scanner in = new Scanner(con.getInputStream());
-            in.hasNextLine(); this.puzzle = in.nextLine()) {
-            getMessage();
-        }
 
         this.breakdown = this.puzzle.split("");
 

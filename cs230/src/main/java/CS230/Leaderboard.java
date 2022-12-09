@@ -46,20 +46,21 @@ public class Leaderboard extends SaveLoad {
                 this.names.add(in.next());
                 this.scores.add(in.nextInt());
             }
-            /*for(int i = 0; i < this.names.size(); i++){
+            for(int i = 0; i < this.names.size(); i++){
+                int score = 0;
                 for(int j = 1; j < this.names.size(); j++){
                     if (this.names.get(i) == this.names.get(j)){
-                        if (this.scores.get(i) > this.scores.get(j)){
+                        if (this.scores.get(i) >= score){
                             this.scores.remove(j);
                             this.names.remove(j);
                         }
-                        else {
+                        /*else {
                             this.scores.remove(i);
                             this.names.remove(i);
-                        }
+                        }*/
                     }
                 }
-            }*/
+            }
            for (int i = 0; i < 10; i++) {
                if (this.scores.size() > 0) {
                    int topScore = 0;
