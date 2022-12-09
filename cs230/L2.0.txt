@@ -22,9 +22,8 @@ ruby 0 2
 cent 8 6
 cent 9 3
 cent 6 8
-
 flyingassassin 0 3 e
-thief 9 9
+thief 9 9 b
 rlever 0 5
 rgate 5 5
 wlever 9 0

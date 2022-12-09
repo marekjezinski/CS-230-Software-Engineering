@@ -1,5 +1,6 @@
 package CS230;
 
+import CS230.npc.Character;
 import javafx.scene.image.Image;
 
 public class Player extends Character {

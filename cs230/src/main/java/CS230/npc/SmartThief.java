@@ -1,6 +1,5 @@
 package CS230.npc;
 
-import CS230.Character;
 import javafx.scene.image.Image;
 
 /**

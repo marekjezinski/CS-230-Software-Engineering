@@ -1,4 +1,4 @@
-package CS230;
+package CS230.npc;
 
 import javafx.scene.image.Image;
 

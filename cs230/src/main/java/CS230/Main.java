@@ -174,6 +174,12 @@ public class Main extends Application {
             if(currentLevel.isFlAsCollidedWPlayer()) {
                 gameOver();
             }
+            ArrayList<Thief> th = currentLevel.getThieves();
+            for(int i = 0; i < th.size(); i++) {
+                th.get(i).movement(currentLevel.getTilesArray(), currentLevel.getMAP_MAX_X(),
+                        currentLevel.getMAP_MAX_Y());
+            }
+            currentLevel.setThieves(th);
             drawGame();
         }));
         timerTimeline.setCycleCount(Animation.INDEFINITE);
@@ -361,6 +367,10 @@ public class Main extends Application {
 
         ArrayList<FlyingAssassin> flyingAssassins = currentLevel.getFlyingAssassins();
         flyingAssassins.forEach(e ->  gc.drawImage(e.getImg(),
+                e.getX() * GRID_CELL_WIDTH * 2, e.getY() * GRID_CELL_HEIGHT * 2));
+
+        ArrayList<Thief> thieves = currentLevel.getThieves();
+        thieves.forEach(e ->  gc.drawImage(e.getImg(),
                 e.getX() * GRID_CELL_WIDTH * 2, e.getY() * GRID_CELL_HEIGHT * 2));
 
 

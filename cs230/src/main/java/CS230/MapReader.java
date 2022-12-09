@@ -30,11 +30,11 @@ public class MapReader {
     private Lever rlever;
     private Gate wgate;
     private Lever wlever;
-    private Thief thief;
     private int playerStartX = 0;
     private int playerStartY = 0;
     private ArrayList<Bomb> bombs = new ArrayList<>();
     private ArrayList<FlyingAssassin> flyingAssassins = new ArrayList<>();
+    private ArrayList<Thief> thieves = new ArrayList<>();
     private String fileName;
     private final int CLOCK_TIME_ADDED = 20;
     private final int CENT_VALUE = 10;
@@ -145,21 +145,23 @@ public class MapReader {
                     items.add(d);
                     door = d;
                 } else if (type.equals("thief")) {
-                    Thief thief = new Thief(in.nextInt(), in.nextInt(),
-                            new Image(getClass().getResource("thief.png").toURI().toString()));
+                    thieves.add(new Thief(in.nextInt(), in.nextInt(),
+                            new Image(getClass().getResource("thief.png").toURI().toString()),
+                            in.next().toUpperCase().charAt(0)));
+                    /*Thief thief = new Thief(in.nextInt(), in.nextInt(),
+                            new Image(getClass().getResource("thief.png").toURI().toString()));*/
                 } else if (type.equals("smartthief")) {
                     SmartThief smart = new SmartThief(
                             in.nextInt(), in.nextInt(),
                             new Image(getClass().getResource("smartthief.png").toURI().toString()));
                 } else if (type.equals("flyingassassin")) {
-                    flyingAssassins.add(new FlyingAssassin(new Image(getClass().getResource("flyingassassin.png").toURI().toString()),
-                            in.nextInt(), in.nextInt(), in.next().toLowerCase().charAt(0)));
+                    flyingAssassins.add(new FlyingAssassin(new Image(getClass().getResource("flyingassassin.png")
+                            .toURI().toString()), in.nextInt(), in.nextInt(), in.next().toLowerCase().charAt(0)));
 
                 } else {
-                    System.err.println("Please check level file, entity identifier mismatch");
+                    System.err.println("Please check level file, entity identifier mismatch: " + type);
                     throw new Exception();
                 }
-
             }
         } catch (Exception e) {
             System.err.println("Please check level file!");
@@ -319,8 +321,9 @@ public class MapReader {
     * get method that returns the value of thief
     * @return thief
     * */
-    public Thief getThief(){
-        return thief;
+
+    public ArrayList<Thief> getThieves() {
+        return thieves;
     }
 }
 

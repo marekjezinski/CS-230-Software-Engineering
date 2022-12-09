@@ -23,7 +23,7 @@ public class Map {
     private Door door;
     private ArrayList<Loot> loots = new ArrayList<>();
     private ArrayList<FlyingAssassin> flyingAssassins = new ArrayList<>();
-    private Thief thief;
+    private ArrayList<Thief> thieves = new ArrayList<>();
     private Gate rgate;
     private Lever rlever;
     private Gate wgate;
@@ -56,7 +56,7 @@ public class Map {
         this.playerY = mapRead.getPlayerStartY();
         this.starttime = mapRead.getStarttimer();
         this.flyingAssassins = mapRead.getFlyingAssassins();
-        this.thief = mapRead.getThief();
+        this.thieves = mapRead.getThieves();
     }
     /**
      * method that moves the player to the right
@@ -512,16 +512,20 @@ public class Map {
         return starttime;
     }
 
+    public ArrayList<Thief> getThieves() {
+        return thieves;
+    }
+
+    public void setThieves(ArrayList<Thief> thieves) {
+        this.thieves = thieves;
+    }
+
     public ArrayList<FlyingAssassin> getFlyingAssassins() {
         return flyingAssassins;
     }
 
     public void setFlyingAssassins(ArrayList<FlyingAssassin> flyingAssassins) {
         this.flyingAssassins = flyingAssassins;
-    }
-
-    public Thief getThief() {
-        return thief;
     }
     public boolean checklever(){
         if(wlever.getX() == -1 && wlever.getY() == -1) {
