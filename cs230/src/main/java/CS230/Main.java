@@ -256,6 +256,8 @@ public class Main extends Application {
                 currentLevelID++;
 
                 currentLevel = levels.get(currentLevelID);
+                playerX = currentLevel.getPlayerStartX();
+                playerY = currentLevel.getPlayerStartY();
                 this.score = (int) (this.score + ceil(this.timerLeft / 3));
                 c.levelSave(this.username, this.currentLevelID, this.score);
             }
@@ -468,17 +470,17 @@ public class Main extends Application {
                     Button l3 = new Button("3");
                     Button l4 = new Button("4");
                     Button recent = new Button("Recent");
-                    toolbar.getChildren().addAll(l1,l2,l3,recent);
+                    toolbar.getChildren().addAll(l1,l2,l3,l4,recent);
 
                     l1.setOnAction(f -> {
-                        toolbar.getChildren().removeAll(l1,l2,l3,recent);
+                        toolbar.getChildren().removeAll(l1,l2,l3,l4,recent);
                         begin(0,0);
 
                     });
 
                     l2.setOnAction(g -> {
                         if(c.checkLevel(username) > 0){
-                            toolbar.getChildren().removeAll(l1,l2,l3,recent);
+                            toolbar.getChildren().removeAll(l1,l2,l3,l4,recent);
                             begin(0,1);
                         }
                         else {
@@ -489,7 +491,7 @@ public class Main extends Application {
 
                     l3.setOnAction(h -> {
                         if((c.checkLevel(username)) > 1){
-                            toolbar.getChildren().removeAll(l1,l2,l3,recent);
+                            toolbar.getChildren().removeAll(l1,l2,l3,l4,recent);
                             begin(0,2);
                         }
                         else {
@@ -499,11 +501,11 @@ public class Main extends Application {
                     });
                     l4.setOnAction(g -> {
                         if(c.checkLevel(username) > 0){
-                            toolbar.getChildren().removeAll(l1,l2,l3,recent);
+                            toolbar.getChildren().removeAll(l1,l2,l3,l4,recent);
                             begin(0,3);
                         }
                         else {
-                            System.err.println("ERROR! You haven't unlocked this yet");
+                            System.err.println("ERROR! You haven't unlocked this level yet");
                         }
 
                     });
@@ -547,6 +549,9 @@ public class Main extends Application {
         timerText.setText("Time remaining: " + this.timerLeft + " Level " + (currentLevelID + 1));
         scoreText.setText("Score: " + this.score);
         currentLevel = levels.get(currentLevelID);
+
+        playerX = currentLevel.getPlayerStartX();
+        playerY = currentLevel.getPlayerStartY();
         drawGame();
 
     }
