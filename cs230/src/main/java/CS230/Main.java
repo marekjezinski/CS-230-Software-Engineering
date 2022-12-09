@@ -443,6 +443,7 @@ public class Main extends Application {
                 errorText.setText("Player name is required!");
             }
             else{
+                errorText.setText("");
                 this.username = usernameIn.getText();
                 toolbar.getChildren().removeAll(labelUsername,usernameIn,startButton);
                 boolean playedBefore = c.newPlayer(username);
@@ -550,8 +551,7 @@ public class Main extends Application {
 
     public static void main(String[] args) throws IOException {
         //MessageOfTheDay m = new MessageOfTheDay();
-        //System.out.println(m.getMessage());
+       //System.out.println(m.getMessage());
         launch(args);
-
     }
 }
