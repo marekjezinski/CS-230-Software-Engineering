@@ -25,10 +25,11 @@ public class CurrentState {
      * @param username
      * @param score
      */
-    public void levelSave (String username,int level, int score) {
+    public void levelSave (String username,int level, int score, int playerX, int playerY, int timerLeft) {
         try{
             FileWriter fI = new FileWriter("savestate.txt",true);
-            fI.write(System.lineSeparator() + username +" "+ level + " " + score);
+            fI.write(System.lineSeparator() + username +" "+ level
+                    + " " + score + " " + playerX + " " + playerY + " " + timerLeft);
             fI.close();
         }
         catch (IOException e) {
@@ -45,38 +46,31 @@ public class CurrentState {
      */
     public ArrayList<Integer> levelLoad (String username) {
         int level = 0;
-        int indexPosition = 0;
+        int timer = 0;
+        int score = 0;
+        int playerX = 0;
+        int playerY = 0;
+
         File f = new File("savestate.txt");
         try  {
             Scanner in = new Scanner(f);
             while(in.hasNext()) {
-                this.usernames.add(in.next());
-                this.levels.add(in.nextInt());
-                this.scores.add(in.nextInt());
-            }
-            for (int i = 0; i < usernames.size(); i++){
-                if (username.equals(this.usernames.get(i))){
-                    this.userLevels.add(this.levels.get(i));
-                    this.userScores.add(this.scores.get(i));
+                if (in.next().equals(username)){
+                    level = in.nextInt();
+                    score = in.nextInt();
+                    playerX = in.nextInt();
+                    playerY = in.nextInt();
+                    timer = in.nextInt();
                 }
             }
-            for (int i = 0; i < this.userLevels.size(); i++){
-                if (this.userLevels.get(i) > level){
-                    level = this.userLevels.get(i);
-                    indexPosition = i;
-                }
-            }
+            startState.add(level);
+            startState.add(score);
+            startState.add(playerX);
+            startState.add(playerY);
+            startState.add(timer);
 
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
-        }
-        if (this.userLevels.size() > 0) {
-            this.startState.add(this.userLevels.get(indexPosition));
-            this.startState.add(this.userScores.get(indexPosition));
-        }
-        else {
-            this.startState.add(0);
-            this.startState.add(0);
         }
         return startState;
     }
@@ -144,5 +138,6 @@ public class CurrentState {
         }
         return level;
     }
+
     }
 

@@ -86,6 +86,7 @@ public class Main extends Application {
     private String username;
 
     private ArrayList<Item> items;
+    ArrayList<Integer> reload;
     private boolean hasGameStarted = false;
     private Text timerText = new Text();
     private Text scoreText = new Text();
@@ -107,6 +108,8 @@ public class Main extends Application {
     Map level3 = new Map("L2.0.txt");
 
     Map level4 = new Map("L3.0.txt");
+
+    private boolean restartCheck = false;
 
     /**
      * Set up the new application.
@@ -249,6 +252,8 @@ public class Main extends Application {
         // Redraw game as the player may have moved.
         drawGame();
 
+
+
         // Consume the event. This means we mark it as dealt with. This stops other GUI nodes (buttons etc.) responding to it.
         event.consume();
     }
@@ -269,7 +274,6 @@ public class Main extends Application {
                 playerX = currentLevel.getPlayerX();
                 playerY = currentLevel.getPlayerY();
                 this.score = (int) (this.score + ceil(this.timerLeft / 3));
-                c.levelSave(this.username, this.currentLevelID, this.score);
             }
         }
         score += currentLevel.checkLoots(playerX / 2, playerY / 2);
@@ -280,6 +284,8 @@ public class Main extends Application {
         if (currentLevel.isBombTriggered(playerX / 2, playerY / 2)) {
             bombTimeline.play();
         }
+        c.levelSave(this.username, this.currentLevelID, this.score,
+                this.playerX,this.playerY, this.timerLeft);
     }
 
     /**
@@ -517,8 +523,10 @@ public class Main extends Application {
 
                     recent.setOnAction(i -> {
                         toolbar.getChildren().removeAll(l1,l2,l3,recent);
-                        ArrayList<Integer> reload = c.levelLoad(username);
+                        this.reload = c.levelLoad(username);
+                        this.restartCheck = true;
                         begin(reload.get(1),reload.get(0));
+
 
                     });
                 }
@@ -555,11 +563,18 @@ public class Main extends Application {
         timerText.setText("Time remaining: " + this.timerLeft + " Level " + (currentLevelID + 1));
         scoreText.setText("Score: " + this.score);
         currentLevel = levels.get(currentLevelID);
-
-        playerX = currentLevel.getPlayerX();
-        playerY = currentLevel.getPlayerY();
-        timerLeft = currentLevel.getStartTimer();
-        drawGame();
+        if (this.restartCheck == false) {
+            playerX = currentLevel.getPlayerX();
+            playerY = currentLevel.getPlayerY();
+            timerLeft = currentLevel.getStartTimer();
+            drawGame();
+        }
+        else {
+            playerX = this.reload.get(2);
+            playerY = this.reload.get(3);
+            timerLeft = this.reload.get(4);
+            drawGame();
+        }
 
     }
 
