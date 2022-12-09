@@ -31,6 +31,7 @@ public class MessageOfTheDay {
 
         for(Scanner in = new Scanner(con.getInputStream());
             in.hasNextLine(); this.puzzle = in.nextLine()) {
+            getMessage();
         }
 
         this.breakdown = this.puzzle.split("");
