@@ -91,6 +91,7 @@ public class Main extends Application {
     private boolean hasGameStarted = false;
     private Text timerText = new Text();
     private Text scoreText = new Text();
+    private Text errorText = new Text();
 
     private MessageOfTheDay m;
     private String backgroundMusic = "gamemusic.mp3";
@@ -387,7 +388,8 @@ public class Main extends Application {
         }
         if (this.timerLeft > 0) {
             this.timerLeft = this.timerLeft - 1;
-            timerText.setText("Time remaining: " + this.timerLeft + " Level " + (currentLevelID + 1) + "Loot:" + ( currentLevel.getLoots().size()));
+            timerText.setText("Time remaining: " + this.timerLeft + " Level "
+                    + (currentLevelID + 1) + "Loot:" + ( currentLevel.getLoots().size()));
         }
         else {
             timerTimeline.stop();
@@ -451,12 +453,14 @@ public class Main extends Application {
         Label labelUsername = new Label("Username");
         TextField usernameIn = new TextField();
         toolbar.getChildren().addAll(labelUsername,usernameIn);
-
+        errorText.setText("");
+        errorText.setFont(Font.font("arial",20));
+        errorText.setFill(Paint.valueOf("Red"));
         Button startButton = new Button("Start!");
         toolbar.getChildren().addAll(startButton);
         startButton.setOnAction(e -> {
             if(usernameIn.getText().equals("")){
-                System.err.println("ERROR! Player name is required!");
+                errorText.setText("ERROR! Player name is required!");
             }
             else{
                 this.username = usernameIn.getText();
@@ -480,10 +484,13 @@ public class Main extends Application {
                     l2.setOnAction(g -> {
                         if(c.checkLevel(username) > 0){
                             toolbar.getChildren().removeAll(l1,l2,l3,l4,recent);
+                            errorText.setText("");
                             begin(0,1);
+
                         }
                         else {
-                            System.err.println("ERROR! You haven't unlocked this yet");
+                            errorText.setText("ERROR! You haven't unlocked this yet");
+
                         }
 
                     });
@@ -491,20 +498,22 @@ public class Main extends Application {
                     l3.setOnAction(h -> {
                         if((c.checkLevel(username)) > 1){
                             toolbar.getChildren().removeAll(l1,l2,l3,l4,recent);
+                            errorText.setText("");
                             begin(0,2);
                         }
                         else {
-                            System.err.println("ERROR! You haven't unlocked this yet");
+                            errorText.setText("ERROR! You haven't unlocked this yet");
                         }
 
                     });
                     l4.setOnAction(g -> {
                         if(c.checkLevel(username) > 0){
                             toolbar.getChildren().removeAll(l1,l2,l3,l4,recent);
+                            errorText.setText("");
                             begin(0,3);
                         }
                         else {
-                            System.err.println("ERROR! You haven't unlocked this level yet");
+                            errorText.setText("ERROR! You haven't unlocked this yet");
                         }
 
                     });
@@ -517,6 +526,7 @@ public class Main extends Application {
                     });
                 }
                 else {
+                    errorText.setText("");
                     begin(0,0);
                 }
 
