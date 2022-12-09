@@ -252,7 +252,7 @@ public class Main extends Application {
         //TODO: implement door and level progression
 
         if(currentLevel.checkDoor(playerX / 2, playerY / 2)>0){
-            if( currentLevel.getLoots().size() == 0) {
+            if( currentLevel.getLoots().size() == 0 && currentLevel.checklever()) {
                 currentLevelID++;
 
                 currentLevel = levels.get(currentLevelID);
