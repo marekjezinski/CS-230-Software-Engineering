@@ -146,13 +146,13 @@ public class MapReader {
                     Thief thief = new Thief(in.nextInt(), in.nextInt(),
                             new Image(getClass().getResource("thief.png").toURI().toString()));
 
-                } else if (type.equals("smthief")) {
+                } else if (type.equals("smartthief")) {
                     SmartThief smart = new SmartThief(
                             in.nextInt(), in.nextInt(),
                             new Image(getClass().getResource("smthief.png").toURI().toString()));
 
                 } else if (type.equals("flyingassassin")) {
-                    FlyingAssassin fly = new FlyingAssassin(new Image(getClass().getResource("Flyingassassin.png").toURI().toString()),
+                    FlyingAssassin fly = new FlyingAssassin(new Image(getClass().getResource("flyingassassin.png").toURI().toString()),
                             in.nextInt(), in.nextInt(), in.next().charAt(0));
 
                 } else {
