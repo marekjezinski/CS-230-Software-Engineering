@@ -142,14 +142,14 @@ public class Main extends Application {
         //create player
         player1 = new Player(this.currentLevel.getPlayerX() * 2,this.currentLevel.getPlayerY() * 2,playerImage);
 
-
-        findClosestLoot(s);//pass the current level into the path goal finder
+            // uncomment to try smart thief
+//        findClosestLoot(s);//pass the current level into the path goal finder
 
         //so that it gets the closest item to smartthief
 
         //passes levl array smartthief x and y and nearest item x and y to search for closest path
         //if closest path exists iterate through all the tile coords stored in the path found
-        if (bfs(currentLevel.getTilesArray(),
+        /*if (bfs(currentLevel.getTilesArray(),
                 s.getX(),s.getY(),getPathGoalX(),getPathGoalY())){
             System.out.println("path X; "+getPathGoalX()+" Y: "+ getPathGoalY()); //currently treats a player like loot idk why
             for (int[] cell: path) {
@@ -158,7 +158,7 @@ public class Main extends Application {
             }
         } else {
             System.out.println("No path found");
-        }
+        }*/
 
 
 
@@ -409,10 +409,10 @@ public class Main extends Application {
 
         gc.drawImage(player1.getCharImage(), player1.getX() * GRID_CELL_WIDTH, player1.getY() * GRID_CELL_HEIGHT);
 
-        int[] smThiefCoords = path.poll();
+        /*int[] smThiefCoords = path.poll();
         if (smThiefCoords != null) {
             gc.drawImage(s.getImg(), smThiefCoords[0]*2  * GRID_CELL_WIDTH, smThiefCoords[1]*2 * GRID_CELL_HEIGHT);
-        }
+        }*/
 
         gc.setFill(Color.GRAY);
         //Draw lines in canvas
