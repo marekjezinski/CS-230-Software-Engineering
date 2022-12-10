@@ -10,8 +10,8 @@ import java.util.ArrayList;
 //unsure about what this class does
 
 /**
- * Class that creates...
- * @author
+ * Class that creates a path for the smart thief to follow
+ * @author Caleb Ocansey
  * @version 1.0
  */
 public class SmartThiefPath {

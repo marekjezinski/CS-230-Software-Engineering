@@ -6,6 +6,11 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 
+/**
+ * Class for conducting BFS to find a path for the smart thief
+ * @author Caleb Ocansey
+ * @version 1.0
+ */
 public class SmartThiefSearch {
 
     public static List<int[]> path = new LinkedList<>();
