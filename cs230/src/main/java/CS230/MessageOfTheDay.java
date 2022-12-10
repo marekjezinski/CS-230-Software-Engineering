@@ -16,6 +16,7 @@ public class MessageOfTheDay {
 
 
     public MessageOfTheDay() {
+
     }
 
     public String getMessage() throws IOException {
@@ -30,7 +31,7 @@ public class MessageOfTheDay {
             in.hasNextLine(); this.puzzle = in.nextLine()) {
         }
         this.breakdown = this.puzzle.split("");
-        for (int i = 0; i < this.breakdown.length-1; i++){
+        for (int i = 0; i < this.breakdown.length; i++){
             this.breakdown2.add(this.breakdown[i]);
         }
 
