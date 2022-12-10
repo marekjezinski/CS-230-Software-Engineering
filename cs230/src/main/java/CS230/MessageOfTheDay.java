@@ -7,6 +7,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
 
+/**
+ * Class for finding the message of the day
+ * @author Tom Stevens
+ * @author
+ */
 public class MessageOfTheDay {
     private String puzzle;
     private String message;
@@ -43,7 +48,6 @@ public class MessageOfTheDay {
                         int a = 0;
                         boolean first = true;
                         b = j;
-                        System.out.print(this.alphabet.get(b));
                         while (a <= i || first == true) {
                             first = false;
                             if ((i + 1) % 2 == 0) {
@@ -64,7 +68,6 @@ public class MessageOfTheDay {
                                 }
                             }
                         }
-                        System.out.println(","+this.alphabet.get(b));
                         this.breakdown2.set(i,this.alphabet.get(b));
                         found = true;
                     }
