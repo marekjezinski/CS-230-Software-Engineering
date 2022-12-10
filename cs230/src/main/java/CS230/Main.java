@@ -130,7 +130,7 @@ public class Main extends Application {
         //passes levl array smartthief x and y and nearest item x and y to search for closest path
         //if closest path exists iterate through all the tile coords stored in the path found
         if (SmartThiefSearch.bfs(currentLevel.getTilesArray(),
-                s.getXPos(),s.getYPos(),p.getPathGoalX(),p.getPathGoalY())){
+                s.getX(),s.getY(),p.getPathGoalX(),p.getPathGoalY())){
             System.out.println(p.getPathGoalX()+" Y: "+ p.getPathGoalY()); //currently treats a player like loot idk why
             for (int[] cell:SmartThiefSearch.path) {
                 System.out.println("X: "+cell[0]+" Y: "+cell[0]);

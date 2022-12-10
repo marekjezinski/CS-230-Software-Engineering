@@ -9,7 +9,7 @@ import javafx.scene.image.Image;
  * @version 0
  */
 public abstract class NPC {
-    private final Image img;
+    private Image img; //will change back to final after smartthief
     protected int x;
     protected int y;
 
@@ -21,6 +21,12 @@ public abstract class NPC {
      */
     public NPC(Image img, int x, int y) {
         this.img = img;
+        this.x = x;
+        this.y = y;
+    }
+
+    //for smart thief testing
+    public NPC(int x, int y){
         this.x = x;
         this.y = y;
     }

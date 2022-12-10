@@ -42,8 +42,8 @@ public class SmartThiefPath {
         int minDist = 999;
         Loot closest = null;
         for (Loot l: currentLoot) {
-            xDist = s.getXPos() - l.getX();
-            yDist = s.getYPos() - l.getY();
+            xDist = s.getX() - l.getX();
+            yDist = s.getY() - l.getY();
             int dist = xDist + yDist;
             if (dist < minDist){
                 closest = l;

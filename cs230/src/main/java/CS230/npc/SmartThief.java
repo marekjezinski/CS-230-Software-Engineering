@@ -7,7 +7,7 @@ import javafx.scene.image.Image;
  * @author
  * @version 1.0
  */
-public class SmartThief extends Character {
+public class SmartThief extends NPC {
 
     //private currentPath --  a current path for the npc to move on
     /**
@@ -17,7 +17,7 @@ public class SmartThief extends Character {
      * @param smThiefPic - graphic that represents SmartThief
      */
     public SmartThief (int x, int y, Image smThiefPic) {
-        super(x,y,smThiefPic);
+        super(smThiefPic,x,y);
     }
 
     public SmartThief (int x, int y) {
