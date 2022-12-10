@@ -117,12 +117,12 @@ public class Main extends Application {
         levels.add(level3);
         levels.add(level4);
         this.currentLevel = levels.get(currentLevelID);
-        playerX = this.currentLevel.getPlayerX() * 2;
-        playerY = this.currentLevel.getPlayerY() * 2;
         this.timerLeft = this.currentLevel.getTimerLeft();
         // Load images. Note we use png images with a transparent background.
         playerImage = new Image(getClass().getResource("player.png").toURI().toString());
-        player1 = new Player(playerX,playerY,playerImage);
+
+        //create player
+        player1 = new Player(this.currentLevel.getPlayerX() * 2,this.currentLevel.getPlayerY() * 2,playerImage);
 
         //SmartThief s = new SmartThief(0,0); //create smart thief at 0,0
         //SmartThiefPath p = new SmartThiefPath(currentLevel); //pass the current level into the path goal finder
