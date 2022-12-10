@@ -44,7 +44,7 @@ import static java.lang.Math.ceil;
 //TODO: please put names here
 public class Main extends Application {
     // The dimensions of the window
-    private static final int WINDOW_WIDTH = 1000;
+    private static final int WINDOW_WIDTH = 1200;
     private static final int WINDOW_HEIGHT = 700;
 
     // The dimensions of the canvas
