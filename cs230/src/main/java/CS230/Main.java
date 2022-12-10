@@ -307,6 +307,8 @@ public class Main extends Application {
                 currentLevel = levels.get(currentLevelID);
                 player1.setX(currentLevel.getPlayerX());
                 player1.setY(currentLevel.getPlayerY());
+                timerLeft = currentLevel.getStartTimer();
+
                 this.score = (int) (this.score + ceil(this.timerLeft / 3));
             }
         }
