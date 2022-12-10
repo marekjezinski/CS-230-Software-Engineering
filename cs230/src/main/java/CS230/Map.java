@@ -404,10 +404,21 @@ public class Map {
         }
     }*/
     //unnecessary comments ???
+
+    public void setRgate(Gate rgate) {
+        this.rgate = rgate;
+    }
+
+    public void setWgate(Gate wgate) {
+        this.wgate = wgate;
+    }
+
+
     /**
      * method that gets clocks
      * @return clocks
      */
+
 
     public ArrayList<Clock> getClocks() {
         return clocks;

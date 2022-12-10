@@ -73,7 +73,7 @@ public class Main extends Application {
     private Timeline scoreColourChanger;
     private Timeline bombTimeline;
     private Leaderboard l = new Leaderboard();
-    private CurrentState c = new CurrentState();
+    private FileHandler c = new FileHandler();
 
     private int timerLeft;
 
@@ -283,7 +283,7 @@ public class Main extends Application {
 
     /**
      * Method for checking if any items are going to be picked up and if
-     * the bomb is going to be activated
+     * the bomb is going to be activated. It also autosaves the current progress
      */
     private void checkItems() {
         timerLeft += currentLevel.checkClocks(playerX / 2, playerY / 2);
@@ -308,7 +308,8 @@ public class Main extends Application {
             bombTimeline.play();
         }
         c.levelSave(this.username, this.currentLevelID, this.score,
-                this.playerX,this.playerY, this.timerLeft);
+                this.playerX,this.playerY, this.timerLeft, this.currentLevel.getRGate().getX(),
+                this.currentLevel.getWGate().getX());
     }
 
     /**
@@ -547,7 +548,8 @@ public class Main extends Application {
                     });
 
                     recent.setOnAction(i -> {
-                        toolbar.getChildren().removeAll(l1,l2,l3,recent);
+                        toolbar.getChildren().removeAll(l1,l2,l3,l4,recent);
+                        this.errorText.setText("");
                         this.reload = c.levelLoad(username);
                         this.restartCheck = true;
                         begin(reload.get(1),reload.get(0));
@@ -601,6 +603,14 @@ public class Main extends Application {
             playerX = this.reload.get(2);
             playerY = this.reload.get(3);
             timerLeft = this.reload.get(4);
+            if (this.reload.get(5) == -1) {
+                this.currentLevel.getRGate().setX(-1);
+                this.currentLevel.getRGate().setY(-1);
+            }
+            if (this.reload.get(6) == -1) {
+                this.currentLevel.getWGate().setX(-1);
+                this.currentLevel.getWGate().setY(-1);
+            }
             drawGame();
         }
 

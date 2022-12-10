@@ -12,7 +12,7 @@ import java.util.Scanner;
  * @author Tom Stevens
  * @version 1.0
  */
-public class CurrentState {
+public class FileHandler {
     private ArrayList<String> usernames = new ArrayList<String>();
     private ArrayList<Integer> levels = new ArrayList<Integer>();
     private ArrayList<Integer> userLevels = new ArrayList<Integer>();
@@ -27,11 +27,14 @@ public class CurrentState {
      * @param username
      * @param score
      */
-    public void levelSave (String username,int level, int score, int playerX, int playerY, int timerLeft) {
+    public void levelSave (String username,int level, int score,
+                           int playerX, int playerY, int timerLeft,
+                           int rgate, int wgate) {
         try{
             FileWriter fI = new FileWriter("savestate.txt",true);
             fI.write(System.lineSeparator() + username +" "+ level
-                    + " " + score + " " + playerX + " " + playerY + " " + timerLeft);
+                    + " " + score + " " + playerX + " " + playerY + " "
+                    + timerLeft + " " + rgate + " " + wgate);
             fI.close();
         }
         catch (IOException e) {
@@ -52,6 +55,8 @@ public class CurrentState {
         int score = 0;
         int playerX = 0;
         int playerY = 0;
+        int rgate = 0;
+        int wgate = 0;
 
         File f = new File("savestate.txt");
         try  {
@@ -63,6 +68,8 @@ public class CurrentState {
                     playerX = in.nextInt();
                     playerY = in.nextInt();
                     timer = in.nextInt();
+                    rgate = in.nextInt();
+                    wgate = in.nextInt();
                 }
             }
             startState.add(level);
@@ -70,6 +77,8 @@ public class CurrentState {
             startState.add(playerX);
             startState.add(playerY);
             startState.add(timer);
+            startState.add(rgate);
+            startState.add(wgate);
 
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
@@ -86,21 +95,27 @@ public class CurrentState {
     public boolean newPlayer(String username){
         int level = 0;
         int indexPosition = 0;
+        ArrayList<String> usernameCheck = new ArrayList<String>();
         File f = new File("savestate.txt");
         try  {
             Scanner in = new Scanner(f);
             while(in.hasNext()) {
-                this.usernames.add(in.next());
-                this.levels.add(in.nextInt());
-                this.scores.add(in.nextInt());
+                usernameCheck.add(in.next());
+                in.next();
+                in.next();
+                in.next();
+                in.next();
+                in.next();
+                in.next();
+                in.next();
             }
 
 
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
-       for (int i = 0; i < usernames.size(); i++) {
-           if (username.equals(this.usernames.get(i))){
+       for (int i = 0; i < usernameCheck.size(); i++) {
+           if (username.equals(usernameCheck.get(i))){
                return true;
            }
        }
@@ -121,12 +136,17 @@ public class CurrentState {
             while(in.hasNext()) {
                 this.usernames.add(in.next());
                 this.levels.add(in.nextInt());
-                this.scores.add(in.nextInt());
+                in.next();
+                in.next();
+                in.next();
+                in.next();
+                in.next();
+                in.next();
+
             }
-            for (int i = 0; i < usernames.size(); i++){
+            for (int i = 0; i < this.usernames.size(); i++){
                 if (username.equals(this.usernames.get(i))){
                     this.userLevels.add(this.levels.get(i));
-                    this.userScores.add(this.scores.get(i));
                 }
             }
             for (int i = 0; i < this.userLevels.size(); i++){
