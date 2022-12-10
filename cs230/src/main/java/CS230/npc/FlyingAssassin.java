@@ -17,9 +17,9 @@ public class FlyingAssassin extends NPC {
     /**
      * Constructor that creates a FlyingAssassin
      * @param img - graphic that represents a FlyingAssassin
-     * @param x - x coordinate of this NPC
-     * @param y - y coordinate of this NPC
-     * @param direction - direction of where this NPC is going. Can be north, south, west or east
+     * @param x - X coordinate of this NPC
+     * @param y - Y coordinate of this NPC
+     * @param direction - direction of where this NPC is going. Can be north, south, west or east(n, s, w, e)
      */
     public FlyingAssassin(Image img, int x, int y, char direction) {
         super(img, x, y);

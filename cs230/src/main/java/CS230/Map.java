@@ -493,11 +493,10 @@ public class Map {
         return MAP_MAX_Y;
     }
 
-    //public int lootleft = loots.size();
 
     /**
      * method that gets the player's starting x coordinate
-     * @return player's starting x coordinate
+     * @return player's x coordinate
      */
 
     public int getPlayerX() {
@@ -505,7 +504,7 @@ public class Map {
     }
     /**
      * method that gets the player's starting y coordinate
-     * @return player's starting y coordinate
+     * @return player's y coordinate
      */
     public int getPlayerY() {
         return playerY;
@@ -518,28 +517,44 @@ public class Map {
         this.bombs = bombs;
     }
     /**
-     * method that sets the bombs array
+     * method that return the starting time array
      * @return  starttime
      */
     public int getStartTimer(){
         return starttime;
     }
-
+    /**
+     * method that return the thieves.
+     * @return  thieves
+     */
     public ArrayList<Thief> getThieves() {
         return thieves;
     }
-
+    /**
+     * method that sets the thieves
+     * @param  thieves
+     */
     public void setThieves(ArrayList<Thief> thieves) {
         this.thieves = thieves;
     }
-
+    /**
+     * method that get the flyingAssassins
+     * @return  flyingAssassins
+     */
     public ArrayList<FlyingAssassin> getFlyingAssassins() {
         return flyingAssassins;
     }
-
+    /**
+     * method that sets the flyingAssassins
+     * @param  flyingAssassins
+     */
     public void setFlyingAssassins(ArrayList<FlyingAssassin> flyingAssassins) {
         this.flyingAssassins = flyingAssassins;
     }
+    /**
+     * method that check if all the lever was sat off already
+     * @return  boolean , true if all lever is toggled or exploded.else, false
+     */
     public boolean checklever(){
         if(wlever.getX() == -1 && wlever.getY() == -1) {
             return (rlever.getX() == -1 && rlever.getY() == -1);
@@ -554,7 +569,10 @@ public class Map {
         }
         return false;
     }
-
+    /**
+     * method that check if flyingAssassin is at the sane location with the thief
+     * if yes the program will send the thief out of the map(remove)
+     */
     public void isFlCollidedWithNPC() {
         for(int i = 0; i < flyingAssassins.size(); i++) {
             for(int j = 0; j < thieves.size(); j++) {

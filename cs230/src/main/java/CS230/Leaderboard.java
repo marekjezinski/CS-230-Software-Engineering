@@ -1,5 +1,7 @@
 package CS230;
 
+import CS230.saveload.SaveLoad;
+
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.File;
@@ -19,8 +21,8 @@ public class Leaderboard extends SaveLoad {
 
     /**
      * Method for adding scores to the text document
-     * @param username
-     * @param score
+     * @param username the username of the player
+     * @param score the score player had been gotten
      */
     public void addScore (String username, int score) {
         try{

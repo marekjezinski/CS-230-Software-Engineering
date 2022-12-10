@@ -22,4 +22,4 @@ ruby 1 6
 door 3 7 
 flyingassassin 4 7 n
 clock 6 7
-bomb 7 6
+bomb 7 7

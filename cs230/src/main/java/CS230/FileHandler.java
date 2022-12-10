@@ -24,8 +24,17 @@ public class FileHandler {
     /**
      * method that saves current level the user is on and all the
      * relevant details with it
-     * @param username
-     * @param score
+     * @param username the username of the player
+     * @param level the current level of the player
+     * @param score the current score of the player
+     * @param playerX the X coordinate player is on
+     * @param playerY the Y coordinate player is on
+     * @param timerLeft the timer left for the player
+     * @param rgate the rusty gate on the level
+     * @param wgate the wooden gate on the game
+     * @param rlever the rustylever on the level
+     * @param wlever  the wooden lever on the level
+     * @param bombInMap the bombs in the map
      */
     public void levelSave (String username,int level, int score,
                            int playerX, int playerY, int timerLeft,
@@ -48,7 +57,7 @@ public class FileHandler {
 
     /**
      * Method that loads most recent level user was on
-     * @param username
+     * @param username the username of the player
      * @return startState
      */
     public ArrayList<Integer> levelLoad (String username) {
@@ -114,8 +123,8 @@ public class FileHandler {
     /**
      *
      * method that creates a new Player
-     * @param username
-     * @return boolean
+     * @param username the username of the user
+     * @return boolean true if it is a new ussername inputted, false ottherwise
      */
     public boolean newPlayer(String username){
         int level = 0;
@@ -153,8 +162,8 @@ public class FileHandler {
     /**
      * method that checks what levels
      * are unlocked to the user
-     * @param username
-     * @return level
+     * @param username the username of the player
+     * @return level the level user had unocked
      */
     public int checkLevel (String username) {
         int level = 0;

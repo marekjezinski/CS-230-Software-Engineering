@@ -1,11 +1,13 @@
 package CS230;
 import CS230.items.*;
 import CS230.npc.*;
+import CS230.saveload.FileHandler;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.geometry.Insets;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -18,6 +20,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Text;
@@ -29,9 +32,12 @@ import javafx.util.Duration;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Random;
+import java.util.*;
 import java.net.URISyntaxException;
+
 import java.util.ArrayList;
+import java.util.concurrent.atomic.AtomicReference;
+
 
 import static java.lang.Math.ceil;
 
@@ -40,6 +46,7 @@ import static java.lang.Math.ceil;
  *
  * @author Liam O'Reilly
  * @author Tom Stevens
+ * @author Kam Leung
  */
 //TODO: please put names here
 public class Main extends Application {
@@ -66,6 +73,7 @@ public class Main extends Application {
     // X and Y coordinate of player on the grid.
     private int playerX = 0;
     private int playerY = 0;
+    private Player player1;
 
     // Timeline which will cause tick method to be called periodically.
     private Timeline tickTimeline;
@@ -73,10 +81,17 @@ public class Main extends Application {
     private Timeline scoreColourChanger;
     private Timeline bombTimeline;
     private Leaderboard l = new Leaderboard();
-    private FileHandler c = new FileHandler();
+    private FileHandler profiles = new FileHandler();
 
     private int timerLeft;
 
+    //SmartThief
+    private int pathGoalX,pathGoalY;
+    public static Queue<int[]> path = new LinkedList<>();
+    private static final int[][] DIRS = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}}; //used to iterate through all the directions of grid
+
+    private Image SMImage =  new Image(getClass().getResource("smartThief.png").toURI().toString());
+    private SmartThief s = new SmartThief(0,0,SMImage); //create smart thief at 0,0
 
 
     private int score = 0;
@@ -106,6 +121,9 @@ public class Main extends Application {
 
     private boolean restartCheck = false;
 
+    public Main() throws URISyntaxException {
+    }
+
     /**
      * Set up the new application.
      * @param primaryStage The stage that is to be used for the application.
@@ -116,27 +134,33 @@ public class Main extends Application {
         levels.add(level3);
         levels.add(level4);
         this.currentLevel = levels.get(currentLevelID);
-        playerX = this.currentLevel.getPlayerX() * 2;
-        playerY = this.currentLevel.getPlayerY() * 2;
         this.timerLeft = this.currentLevel.getTimerLeft();
         // Load images. Note we use png images with a transparent background.
         playerImage = new Image(getClass().getResource("player.png").toURI().toString());
 
-        SmartThief s = new SmartThief(0,0); //create smart thief at 0,0
-        SmartThiefPath p = new SmartThiefPath(currentLevel); //pass the current level into the path goal finder
+
+        //create player
+        player1 = new Player(this.currentLevel.getPlayerX() * 2,this.currentLevel.getPlayerY() * 2,playerImage);
+
+            // uncomment to try smart thief
+//        findClosestLoot(s);//pass the current level into the path goal finder
 
         //so that it gets the closest item to smartthief
 
         //passes levl array smartthief x and y and nearest item x and y to search for closest path
         //if closest path exists iterate through all the tile coords stored in the path found
-        if (SmartThiefSearch.bfs(currentLevel.getTilesArray(),
-                s.getX(),s.getY(),p.getPathGoalX(),p.getPathGoalY())){
-            System.out.println(p.getPathGoalX()+" Y: "+ p.getPathGoalY()); //currently treats a player like loot idk why
-            for (int[] cell:SmartThiefSearch.path) {
-                System.out.println("X: "+cell[0]+" Y: "+cell[0]);
+        /*if (bfs(currentLevel.getTilesArray(),
+                s.getX(),s.getY(),getPathGoalX(),getPathGoalY())){
+            System.out.println("path X; "+getPathGoalX()+" Y: "+ getPathGoalY()); //currently treats a player like loot idk why
+            for (int[] cell: path) {
+                System.out.println("X: "+cell[0]+" Y: "+cell[1]);
 
             }
-        }
+        } else {
+            System.out.println("No path found");
+        }*/
+
+
 
 
         // Build the GUI
@@ -180,6 +204,8 @@ public class Main extends Application {
                 }
             }
             currentLevel.isFlCollidedWithNPC();
+
+
             drawGame();
         }));
         timerTimeline.setCycleCount(Animation.INDEFINITE);
@@ -238,29 +264,29 @@ public class Main extends Application {
         switch (event.getCode()) {
             case RIGHT:
                 // Right key was pressed. So move the player right by one cell.
-                if (playerX < 28 && this.hasGameStarted == true) {
-                    playerX = currentLevel.moveRight(playerX, playerY);
+                if (player1.getX() < 28 && this.hasGameStarted) {
+                    player1.setX(currentLevel.moveRight(player1.getX(), player1.getY()));
                 }
                 break;
 
             case LEFT:
                 // Left key was pressed. So move the player left by one cell.
-                if (playerX > 0 && this.hasGameStarted == true) {
-                    playerX = currentLevel.moveLeft(playerX, playerY);
+                if (player1.getX() > 0 && this.hasGameStarted ) {
+                    player1.setX(currentLevel.moveLeft(player1.getX(), player1.getY()));
                 }
                 break;
 
             case UP:
                 // Up key was pressed. So move the player up by one cell.
-                if (playerY > 0 && this.hasGameStarted == true) {
-                    playerY = currentLevel.moveUp(playerX, playerY);
+                if (player1.getY() > 0 && this.hasGameStarted) {
+                    player1.setY(currentLevel.moveUp(player1.getX(), player1.getY()));
                 }
                 break;
 
             case DOWN:
                 // Down key was pressed. So move the player down by one cell.
-                if (playerY < 18 && this.hasGameStarted == true) {
-                    playerY = currentLevel.moveDown(playerX, playerY);
+                if (player1.getY() < 18 && this.hasGameStarted) {
+                    player1.setY(currentLevel.moveDown(player1.getX(), player1.getY()));
                 }
                 break;
 
@@ -272,6 +298,7 @@ public class Main extends Application {
             gameOver();
         }
         checkItems();
+        profiles.updateSave(this.username, this.currentLevelID, this.score);
         // Redraw game as the player may have moved.
         drawGame();
 
@@ -286,25 +313,29 @@ public class Main extends Application {
      * the bomb is going to be activated. It also autosaves the current progress
      */
     private void checkItems() {
-        timerLeft += currentLevel.checkClocks(playerX / 2, playerY / 2);
+        playerX = player1.getX() / 2;
+        playerY = player1.getY() / 2;
+        timerLeft += currentLevel.checkClocks(playerX , playerY);
         //TODO: implement door and level progression
 
-        if(currentLevel.checkDoor(playerX / 2, playerY / 2)>0){
+        if(currentLevel.checkDoor(playerX, playerY)>0){
             if( currentLevel.getLoots().size() == 0 && currentLevel.checklever()) {
                 currentLevelID++;
 
                 currentLevel = levels.get(currentLevelID);
-                playerX = currentLevel.getPlayerX();
-                playerY = currentLevel.getPlayerY();
+                player1.setX(currentLevel.getPlayerX());
+                player1.setY(currentLevel.getPlayerY());
+                timerLeft = currentLevel.getStartTimer();
+
                 this.score = (int) (this.score + ceil(this.timerLeft / 3));
             }
         }
-        score += currentLevel.checkLoots(playerX / 2, playerY / 2);
+        score += currentLevel.checkLoots(playerX, playerY );
         scoreText.setText("Score: " + this.score);
         scoreText.setFont(Font.font("arial",20));
-        currentLevel.checkRLever(playerX / 2, playerY / 2);
-        currentLevel.checkWLever(playerX / 2, playerY / 2);
-        if (currentLevel.isBombTriggered(playerX / 2, playerY / 2)) {
+        currentLevel.checkRLever(playerX , playerY );
+        currentLevel.checkWLever(playerX , playerY );
+        if (currentLevel.isBombTriggered(playerX , playerY)) {
             bombTimeline.play();
         }
         String bombinMap = "";
@@ -312,11 +343,6 @@ public class Main extends Application {
             bombinMap = bombinMap +
                     this.currentLevel.getBombs().get(i).getX() + " ";
         }
-        c.levelSave(this.username, this.currentLevelID, this.score,
-                this.playerX,this.playerY, this.timerLeft, this.currentLevel.getRGate().getX(),
-                this.currentLevel.getWGate().getX(),
-                this.currentLevel.getRLever().getX(),
-                this.currentLevel.getWLever().getX(), bombinMap);
     }
 
     /**
@@ -381,7 +407,12 @@ public class Main extends Application {
         thieves.forEach(e ->  gc.drawImage(e.getImg(),
                 e.getX() * GRID_CELL_WIDTH * 2, e.getY() * GRID_CELL_HEIGHT * 2));
 
-        gc.drawImage(playerImage, playerX * GRID_CELL_WIDTH, playerY * GRID_CELL_HEIGHT);
+        gc.drawImage(player1.getCharImage(), player1.getX() * GRID_CELL_WIDTH, player1.getY() * GRID_CELL_HEIGHT);
+
+        /*int[] smThiefCoords = path.poll();
+        if (smThiefCoords != null) {
+            gc.drawImage(s.getImg(), smThiefCoords[0]*2  * GRID_CELL_WIDTH, smThiefCoords[1]*2 * GRID_CELL_HEIGHT);
+        }*/
 
         gc.setFill(Color.GRAY);
         //Draw lines in canvas
@@ -454,14 +485,13 @@ public class Main extends Application {
         this.scoreText.setFill(Color.rgb(r,g,b));
     }
 
-
-
     /**
      * Create the GUI.
      * @return The panel that contains the created GUI.
      */
     private Pane buildGUI() throws IOException {
         // Create top-level panel that will hold all GUI nodes.
+
         BorderPane root = new BorderPane();
 
         // Create the canvas that we will draw on.
@@ -475,118 +505,67 @@ public class Main extends Application {
         toolbar.setPadding(new Insets(10, 10, 10, 10));
         root.setTop(toolbar);
 
+        VBox stats = new VBox();
+        stats.setSpacing(5);
+        stats.setPadding(new Insets(10, 10, 10, 10));
+        root.setLeft(stats);
+
         // Create the toolbar content
-        Label labelUsername = new Label("Username");
         TextField usernameIn = new TextField();
-        toolbar.getChildren().addAll(labelUsername,usernameIn);
-        this.errorText.setText("");
-        this.errorText.setFont(Font.font("arial",20));
-        this.errorText.setFill(Paint.valueOf("Red"));
-        toolbar.getChildren().addAll(this.errorText);
-        Button startButton = new Button("Start!");
-        toolbar.getChildren().addAll(startButton);
+        Button createUser = new Button("Create user");
+        Button loadUser = new Button("Play!");
+        Button removeUser = new Button("Remove user");
+        toolbar.getChildren().addAll(usernameIn, loadUser, createUser, removeUser);
         MessageOfTheDay m = new MessageOfTheDay();
         this.messageOfDayText.setText(m.getMessage());
         this.messageOfDayText.setFont(Font.font("arial",10));
         toolbar.getChildren().addAll(this.messageOfDayText);
-        startButton.setOnAction(e -> {
-            if(usernameIn.getText().equals("")){
-                this.messageOfDayText.setText("");
-                this.errorText.setText("Player name is required!");
+        for (String profilesUsername : profiles.getUsernames()) {
+            stats.getChildren().add(new Label(profilesUsername));
+        }
+        //create user
+        createUser.setOnAction(e -> {
+            if(!usernameIn.getText().equals("")) {
+                profiles.addProfile(usernameIn.getText().replaceAll("\\s",""));
+                stats.getChildren().removeAll(stats.getChildren());
+                for (String profilesUsername : profiles.getUsernames()) {
+                    stats.getChildren().add(new Label(profilesUsername));
+                }
             }
-            else{
-                this.messageOfDayText.setText("");
-                errorText.setText("");
+        });
+        //load user
+        loadUser.setOnAction(e -> {
+            if(profiles.isValidName(usernameIn.getText())) {
                 this.username = usernameIn.getText();
-                toolbar.getChildren().removeAll(labelUsername,usernameIn,startButton);
-                boolean playedBefore = c.newPlayer(username);
-                if (playedBefore == true) {
-                    Label labelLevel = new Label("Level select:");
-                    Button l1 = new Button("1");
-                    Button l2 = new Button("2");
-                    Button l3 = new Button("3");
-                    Button l4 = new Button("4");
-                    Button recent = new Button("Recent");
-                    toolbar.getChildren().addAll(l1,l2,l3,l4,recent);
-
-                    l1.setOnAction(f -> {
-                        toolbar.getChildren().removeAll(l1,l2,l3,l4,recent);
-                        begin(0,0);
-
-                    });
-
-                    l2.setOnAction(g -> {
-                        if(c.checkLevel(username) > 0){
-                            toolbar.getChildren().removeAll(l1,l2,l3,l4,recent);
-                            this.errorText.setText("");
-                            begin(0,1);
-
-                        }
-                        else {
-                            this.errorText.setText("You haven't unlocked this yet");
-                            drawGame();
-
-                        }
-
-                    });
-
-                    l3.setOnAction(h -> {
-                        if((c.checkLevel(username)) > 1){
-                            toolbar.getChildren().removeAll(l1,l2,l3,l4,recent);
-                            this.errorText.setText("");
-                            begin(0,2);
-                        }
-                        else {
-                            this.errorText.setText("You haven't unlocked this yet");
-                        }
-
-                    });
-                    l4.setOnAction(g -> {
-                        if(c.checkLevel(username) > 2){
-                            toolbar.getChildren().removeAll(l1,l2,l3,l4,recent);
-                            this.errorText.setText("");
-                            begin(0,3);
-                        }
-                        else {
-                            this.errorText.setText(" You haven't unlocked this yet");
-                            drawGame();
-                        }
-
-                    });
-
-                    recent.setOnAction(i -> {
-                        toolbar.getChildren().removeAll(l1,l2,l3,l4,recent);
-                        this.errorText.setText("");
-                        this.reload = c.levelLoad(username);
-                        this.restartCheck = true;
-                        begin(reload.get(1),reload.get(0));
-
-
-                    });
-                }
-                else {
-                    this.errorText.setText("");
-                    begin(0,0);
-                }
-
-
+                toolbar.getChildren().clear();
+                stats.getChildren().clear();
+                this.timerText.setText("");
+                this.timerText.setFont(Font.font("arial",20));
+                this.scoreText.setText("");
+                this.scoreText.setFont(Font.font("arial",20));
+                toolbar.getChildren().add(this.scoreText);
+                toolbar.getChildren().add(timerText);
+                begin(profiles.getScore(username), profiles.getMaxLvl(username));
             }
         });
 
-        this.timerText.setText("");
-        this.timerText.setFont(Font.font("arial",20));
-        toolbar.getChildren().add(timerText);
+        removeUser.setOnAction(e -> {
+            profiles.removeProfile(usernameIn.getText());
+            stats.getChildren().removeAll(stats.getChildren());
+            for (String profilesUsername : profiles.getUsernames()) {
+                stats.getChildren().add(new Label(profilesUsername));
+            }
+        });
 
-        this.scoreText.setText("");
-        this.scoreText.setFont(Font.font("arial",20));
-        toolbar.getChildren().add(this.scoreText);
 
 
 
         // Finally, return the border pane we built up.
         return root;
     }
-
+    /**
+     * method that starts the game when loading specific level
+     */
     public void begin(int scoreIn, int levelIn){
         this.hasGameStarted = true;
         timerTimeline.play();
@@ -599,14 +578,13 @@ public class Main extends Application {
                 + (this.currentLevelID + 1)
                 + "| Loot remaining: " + (this.currentLevel.getLoots().size()));
         scoreText.setText("Score: " + this.score);
+
         currentLevel = levels.get(currentLevelID);
-        if (this.restartCheck == false) {
-            playerX = currentLevel.getPlayerX();
-            playerY = currentLevel.getPlayerY();
-            timerLeft = currentLevel.getStartTimer();
-            drawGame();
-        }
-        else {
+        player1.setX(currentLevel.getPlayerX());
+        player1.setY(currentLevel.getPlayerY());
+        timerLeft = currentLevel.getStartTimer();
+
+        if (this.restartCheck == true) {
             playerX = this.reload.get(2);
             playerY = this.reload.get(3);
             timerLeft = this.reload.get(4);
@@ -639,12 +617,103 @@ public class Main extends Application {
                     bombMover++;
                 }
             }
-            drawGame();
+        }
+        drawGame();
+    }
+    /**
+     * main
+     */
+    public static void main(String[] args) throws IOException {
+        launch(args);
+    }
+
+    public void findClosestLoot(SmartThief s){
+        int xDist,yDist;
+        int minDist = 999;
+        Loot closest = null;
+        for (Loot l: currentLevel.getLoots()) {
+            //System.out.println("L val: "+l.getLootValue()); //actually iterates thru items now
+            xDist = Math.abs(s.getX() - l.getX());
+            yDist = Math.abs(s.getY() - l.getY());
+            int dist = xDist + yDist;
+            if (dist < minDist){
+                closest = l;
+                minDist = dist;
+            }
+
+        }
+
+        if (closest != null){ //set the goal and also print its coords - for testing
+            setPathGoal(closest.getX(), closest.getY());
+            //System.out.println("X: "+closest.getX()+" Y:"+closest.getY());
         }
 
     }
 
-    public static void main(String[] args) throws IOException {
-        launch(args);
+    public void setPathGoal(int x, int y){
+        this.pathGoalX = x;
+        this.pathGoalY = y;
     }
+
+    public static boolean bfs(Tile[][] tiles, int startRow, int startCol, int goalRow, int goalCol) {
+        int rows = 15;
+        int cols = 10;
+
+        boolean[][] visited = new boolean[rows][cols];
+
+        // create a queue for BFS
+        Queue<int[]> queue = new LinkedList<>();
+
+
+        // mark the start cell as visited and enqueue it
+        visited[startRow][startCol] = true;
+        queue.add(new int[]{startRow, startCol});
+
+        while (!queue.isEmpty()) {
+            // dequeue the current cell
+            int[] curr = queue.poll();
+            int currRow = curr[0];
+            int currCol = curr[1];
+
+            // add the current cell to the path
+            path.add(curr);
+
+            // check if we have reached the goal cell
+            if (currRow == goalRow && currCol == goalCol) {
+                return true;
+            }
+
+            // iterate through the four possible directions
+            for (int[] dir : DIRS) {
+                int nextRow = currRow + dir[0];
+                int nextCol = currCol + dir[1];
+
+                // check if the next cell is valid, not visited, and has at least one common color with the current cell
+                if (nextRow >= 0 && nextRow < rows && nextCol >= 0 && nextCol < cols && !visited[nextRow][nextCol] &&
+                        tiles[currRow][currCol].isLegalJump(tiles[nextRow][nextCol]) &&
+                        tiles[nextRow][nextCol].isLegalJump(tiles[currRow][currCol]) ) {
+                    // mark the cell as visited and enqueue it
+                    visited[nextRow][nextCol] = true;
+                    queue.add(new int[]{nextRow, nextCol, currRow, currCol});
+
+
+                }
+            }
+        }
+
+        // if reached here, no path to the goal
+        return false;
+    }
+
+
+    public int getPathGoalX() {
+        return pathGoalX;
+    }
+    public int getPathGoalY() {
+        return pathGoalY;
+    }
+
+
+
+
 }
