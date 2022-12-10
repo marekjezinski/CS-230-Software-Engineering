@@ -10,7 +10,7 @@ import java.util.Scanner;
 /**
  * Class for finding the message of the day
  * @author Tom Stevens
- * @author
+ * @author Kam Leung
  */
 public class MessageOfTheDay {
     private String puzzle;

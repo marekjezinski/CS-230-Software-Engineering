@@ -4,7 +4,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 
 /**
- * does this need comments ??
+ * To display the message of the day
  */
 public class HelloController {
     @FXML

@@ -26,3 +26,10 @@ cs230/src/main/java/.DS_Store
 cs230/src/.DS_Store
 cs230/src/main/.DS_Store
 cs230/src/main/java/CS230/.DS_Store
+<<<<<<< Updated upstream
+=======
+cs230/.idea/libraries/Maven__org_openjfx_javafx_base_mac_aarch64_17_0_0_1.xml
+>>>>>>> Stashed changes
+*.xml
+*.xml
+*.iml

@@ -32,5 +32,5 @@ dollar 4 7
 ruby 10 2
 bomb 10 5
 flyingAssassin 1 8 e
-thief 8 3 b e
+thief 8 8 b e
 bomb 11 3

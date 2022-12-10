@@ -10,8 +10,8 @@ import java.util.ArrayList;
 //unsure about what this class does
 
 /**
- * Class that creates...
- * @author
+ * Class that creates a path for the smart thief to follow
+ * @author Caleb Ocansey
  * @version 1.0
  */
 public class SmartThiefPath {
@@ -41,9 +41,10 @@ public class SmartThiefPath {
         int xDist,yDist;
         int minDist = 999;
         Loot closest = null;
-        for (Loot l: currentLoot) {
-            xDist = s.getX() - l.getX();
-            yDist = s.getY() - l.getY();
+        for (Loot l: this.currentLoot) {
+            System.out.println("L val: "+l.getLootValue());
+            xDist = Math.abs(s.getX() - l.getX());
+            yDist = Math.abs(s.getY() - l.getY());
             int dist = xDist + yDist;
             if (dist < minDist){
                 closest = l;
