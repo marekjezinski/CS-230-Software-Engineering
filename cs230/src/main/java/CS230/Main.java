@@ -40,6 +40,7 @@ import static java.lang.Math.ceil;
  *
  * @author Liam O'Reilly
  * @author Tom Stevens
+ * @author Kam Leung
  */
 //TODO: please put names here
 public class Main extends Application {
@@ -600,7 +601,9 @@ public class Main extends Application {
         // Finally, return the border pane we built up.
         return root;
     }
-
+    /**
+     * method that starts the game when loading specific level
+     */
     public void begin(int scoreIn, int levelIn){
         this.hasGameStarted = true;
         timerTimeline.play();
@@ -655,7 +658,9 @@ public class Main extends Application {
         }
         drawGame();
     }
-
+    /**
+     * main
+     */
     public static void main(String[] args) throws IOException {
         launch(args);
     }
