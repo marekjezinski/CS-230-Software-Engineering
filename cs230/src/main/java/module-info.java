@@ -7,4 +7,5 @@ module com.example.cs230 {
     opens CS230.items to javafx.fxml;
     exports CS230.npc;
     opens CS230.npc to javafx.fxml;
+    exports CS230.saveload;
 }

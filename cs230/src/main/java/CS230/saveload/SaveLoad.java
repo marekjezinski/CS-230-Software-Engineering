@@ -1,4 +1,4 @@
-package CS230;
+package CS230.saveload;
 
 public class SaveLoad {
     protected int score;

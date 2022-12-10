@@ -1,11 +1,13 @@
 package CS230;
 import CS230.items.*;
 import CS230.npc.*;
+import CS230.saveload.FileHandler;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.geometry.Insets;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -18,6 +20,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Text;
@@ -32,6 +35,7 @@ import java.io.IOException;
 import java.util.Random;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
+import java.util.concurrent.atomic.AtomicReference;
 
 import static java.lang.Math.ceil;
 
@@ -73,7 +77,7 @@ public class Main extends Application {
     private Timeline scoreColourChanger;
     private Timeline bombTimeline;
     private Leaderboard l = new Leaderboard();
-    private FileHandler c = new FileHandler();
+    private FileHandler profiles = new FileHandler();
 
     private int timerLeft;
 
@@ -272,6 +276,7 @@ public class Main extends Application {
             gameOver();
         }
         checkItems();
+        profiles.updateSave(this.username, this.currentLevelID, this.score);
         // Redraw game as the player may have moved.
         drawGame();
 
@@ -312,11 +317,6 @@ public class Main extends Application {
             bombinMap = bombinMap +
                     this.currentLevel.getBombs().get(i).getX() + " ";
         }
-        c.levelSave(this.username, this.currentLevelID, this.score,
-                this.playerX,this.playerY, this.timerLeft, this.currentLevel.getRGate().getX(),
-                this.currentLevel.getWGate().getX(),
-                this.currentLevel.getRLever().getX(),
-                this.currentLevel.getWLever().getX(), bombinMap);
     }
 
     /**
@@ -456,12 +456,15 @@ public class Main extends Application {
 
 
 
+
+
     /**
      * Create the GUI.
      * @return The panel that contains the created GUI.
      */
     private Pane buildGUI() throws IOException {
         // Create top-level panel that will hold all GUI nodes.
+
         BorderPane root = new BorderPane();
 
         // Create the canvas that we will draw on.
@@ -475,111 +478,58 @@ public class Main extends Application {
         toolbar.setPadding(new Insets(10, 10, 10, 10));
         root.setTop(toolbar);
 
+        VBox stats = new VBox();
+        stats.setSpacing(5);
+        stats.setPadding(new Insets(10, 10, 10, 10));
+        root.setLeft(stats);
+
         // Create the toolbar content
-        Label labelUsername = new Label("Username");
         TextField usernameIn = new TextField();
-        toolbar.getChildren().addAll(labelUsername,usernameIn);
-        this.errorText.setText("");
-        this.errorText.setFont(Font.font("arial",20));
-        this.errorText.setFill(Paint.valueOf("Red"));
-        toolbar.getChildren().addAll(this.errorText);
-        Button startButton = new Button("Start!");
-        toolbar.getChildren().addAll(startButton);
+        Button createUser = new Button("Create user");
+        Button loadUser = new Button("Play!");
+        Button removeUser = new Button("Remove user");
+        toolbar.getChildren().addAll(usernameIn, loadUser, createUser, removeUser);
         MessageOfTheDay m = new MessageOfTheDay();
         this.messageOfDayText.setText(m.getMessage());
         this.messageOfDayText.setFont(Font.font("arial",10));
         toolbar.getChildren().addAll(this.messageOfDayText);
-        startButton.setOnAction(e -> {
-            if(usernameIn.getText().equals("")){
-                this.messageOfDayText.setText("");
-                this.errorText.setText("Player name is required!");
+        for (String profilesUsername : profiles.getUsernames()) {
+            stats.getChildren().add(new Label(profilesUsername));
+        }
+        //create user
+        createUser.setOnAction(e -> {
+            if(!usernameIn.getText().equals("")) {
+                profiles.addProfile(usernameIn.getText().replaceAll("\\s",""));
+                stats.getChildren().removeAll(stats.getChildren());
+                for (String profilesUsername : profiles.getUsernames()) {
+                    stats.getChildren().add(new Label(profilesUsername));
+                }
             }
-            else{
-                this.messageOfDayText.setText("");
-                errorText.setText("");
+        });
+        //load user
+        loadUser.setOnAction(e -> {
+            if(profiles.isValidName(usernameIn.getText())) {
                 this.username = usernameIn.getText();
-                toolbar.getChildren().removeAll(labelUsername,usernameIn,startButton);
-                boolean playedBefore = c.newPlayer(username);
-                if (playedBefore == true) {
-                    Label labelLevel = new Label("Level select:");
-                    Button l1 = new Button("1");
-                    Button l2 = new Button("2");
-                    Button l3 = new Button("3");
-                    Button l4 = new Button("4");
-                    Button recent = new Button("Recent");
-                    toolbar.getChildren().addAll(l1,l2,l3,l4,recent);
-
-                    l1.setOnAction(f -> {
-                        toolbar.getChildren().removeAll(l1,l2,l3,l4,recent);
-                        begin(0,0);
-
-                    });
-
-                    l2.setOnAction(g -> {
-                        if(c.checkLevel(username) > 0){
-                            toolbar.getChildren().removeAll(l1,l2,l3,l4,recent);
-                            this.errorText.setText("");
-                            begin(0,1);
-
-                        }
-                        else {
-                            this.errorText.setText("You haven't unlocked this yet");
-                            drawGame();
-
-                        }
-
-                    });
-
-                    l3.setOnAction(h -> {
-                        if((c.checkLevel(username)) > 1){
-                            toolbar.getChildren().removeAll(l1,l2,l3,l4,recent);
-                            this.errorText.setText("");
-                            begin(0,2);
-                        }
-                        else {
-                            this.errorText.setText("You haven't unlocked this yet");
-                        }
-
-                    });
-                    l4.setOnAction(g -> {
-                        if(c.checkLevel(username) > 2){
-                            toolbar.getChildren().removeAll(l1,l2,l3,l4,recent);
-                            this.errorText.setText("");
-                            begin(0,3);
-                        }
-                        else {
-                            this.errorText.setText(" You haven't unlocked this yet");
-                            drawGame();
-                        }
-
-                    });
-
-                    recent.setOnAction(i -> {
-                        toolbar.getChildren().removeAll(l1,l2,l3,l4,recent);
-                        this.errorText.setText("");
-                        this.reload = c.levelLoad(username);
-                        this.restartCheck = true;
-                        begin(reload.get(1),reload.get(0));
-
-
-                    });
-                }
-                else {
-                    this.errorText.setText("");
-                    begin(0,0);
-                }
-
-
+                toolbar.getChildren().clear();
+                stats.getChildren().clear();
+                this.timerText.setText("");
+                this.timerText.setFont(Font.font("arial",20));
+                this.scoreText.setText("");
+                this.scoreText.setFont(Font.font("arial",20));
+                toolbar.getChildren().add(this.scoreText);
+                toolbar.getChildren().add(timerText);
+                begin(profiles.getScore(username), profiles.getMaxLvl(username));
             }
         });
 
-        this.timerText.setText("");
-        this.timerText.setFont(Font.font("arial",20));
-        toolbar.getChildren().add(timerText);
+        removeUser.setOnAction(e -> {
+            profiles.removeProfile(usernameIn.getText());
+            stats.getChildren().removeAll(stats.getChildren());
+            for (String profilesUsername : profiles.getUsernames()) {
+                stats.getChildren().add(new Label(profilesUsername));
+            }
+        });
 
-        this.scoreText.setText("");
-        this.scoreText.setFont(Font.font("arial",20));
-        toolbar.getChildren().add(this.scoreText);
 
 
 
