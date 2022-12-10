@@ -49,7 +49,7 @@ public class Leaderboard extends SaveLoad {
             for(int i = 0; i < this.names.size(); i++){
                 int score = 0;
                 for(int j = 1; j < this.names.size(); j++){
-                    if (this.names.get(i) == this.names.get(j)){
+                    if (this.names.get(i).equals(this.names.get(j))){
                         if (this.scores.get(i) >= score){
                             this.scores.remove(j);
                             this.names.remove(j);
