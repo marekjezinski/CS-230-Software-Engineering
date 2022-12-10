@@ -24,7 +24,7 @@ diamond 7 4
 rgate 8 4
 rlever 12 6
 bomb 7 5
-thief 0 6 g n
+thief 0 5 g e
 cent 2 6
 smartthief 14 6
 cent 6 7
