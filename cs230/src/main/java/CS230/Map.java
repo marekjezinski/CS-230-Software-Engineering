@@ -437,13 +437,7 @@ public class Map {
     public Door getDoor() {
         return door;
     }
-    /**
-     * method that gets rusty gate
-     * @return rgate
-     */
-    public Gate getRGate() {
-        return rgate;
-    }
+
 
     /**
      * method that gets bombs
@@ -451,6 +445,14 @@ public class Map {
      */
     public ArrayList<Bomb> getBombs() {
         return bombs;
+    }
+
+    /**
+     * method that gets rusty gate
+     * @return rgate
+     */
+    public Gate getRGate() {
+        return rgate;
     }
 
     /**

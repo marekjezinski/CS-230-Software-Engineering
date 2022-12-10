@@ -29,12 +29,13 @@ public class FileHandler {
      */
     public void levelSave (String username,int level, int score,
                            int playerX, int playerY, int timerLeft,
-                           int rgate, int wgate) {
+                           int rgate, int wgate, int rlever, int wlever) {
         try{
             FileWriter fI = new FileWriter("savestate.txt",true);
             fI.write(System.lineSeparator() + username +" "+ level
                     + " " + score + " " + playerX + " " + playerY + " "
-                    + timerLeft + " " + rgate + " " + wgate);
+                    + timerLeft + " " + rgate + " " + wgate
+                    + " " + rlever + " " + wlever);
             fI.close();
         }
         catch (IOException e) {
@@ -57,6 +58,8 @@ public class FileHandler {
         int playerY = 0;
         int rgate = 0;
         int wgate = 0;
+        int rlever = 0;
+        int wlever = 0;
 
         File f = new File("savestate.txt");
         try  {
@@ -70,6 +73,8 @@ public class FileHandler {
                     timer = in.nextInt();
                     rgate = in.nextInt();
                     wgate = in.nextInt();
+                    rlever = in.nextInt();
+                    wlever = in.nextInt();
                 }
             }
             startState.add(level);
@@ -79,6 +84,8 @@ public class FileHandler {
             startState.add(timer);
             startState.add(rgate);
             startState.add(wgate);
+            startState.add(rlever);
+            startState.add(wlever);
 
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
@@ -101,6 +108,8 @@ public class FileHandler {
             Scanner in = new Scanner(f);
             while(in.hasNext()) {
                 usernameCheck.add(in.next());
+                in.next();
+                in.next();
                 in.next();
                 in.next();
                 in.next();
@@ -136,6 +145,8 @@ public class FileHandler {
             while(in.hasNext()) {
                 this.usernames.add(in.next());
                 this.levels.add(in.nextInt());
+                in.next();
+                in.next();
                 in.next();
                 in.next();
                 in.next();

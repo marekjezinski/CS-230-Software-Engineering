@@ -309,7 +309,11 @@ public class Main extends Application {
         }
         c.levelSave(this.username, this.currentLevelID, this.score,
                 this.playerX,this.playerY, this.timerLeft, this.currentLevel.getRGate().getX(),
-                this.currentLevel.getWGate().getX());
+                this.currentLevel.getWGate().getX(),
+                this.currentLevel.getRLever().getX(),
+                this.currentLevel.getWLever().getX());
+        System.out.println(this.currentLevel.getRLever().getX());
+        System.out.println(this.currentLevel.getWLever().getX());
     }
 
     /**
@@ -610,6 +614,14 @@ public class Main extends Application {
             if (this.reload.get(6) == -1) {
                 this.currentLevel.getWGate().setX(-1);
                 this.currentLevel.getWGate().setY(-1);
+            }
+            if (this.reload.get(7) == -1){
+                this.currentLevel.getRLever().setX(-1);
+                this.currentLevel.getRLever().setY(-1);
+            }
+            if (this.reload.get(8) == -1){
+                this.currentLevel.getWLever().setX(-1);
+                this.currentLevel.getWLever().setY(-1);
             }
             drawGame();
         }
