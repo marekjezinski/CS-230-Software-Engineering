@@ -496,7 +496,7 @@ public class Map {
 
     /**
      * method that gets the player's starting x coordinate
-     * @return player's starting x coordinate
+     * @return player's x coordinate
      */
 
     public int getPlayerX() {
@@ -504,7 +504,7 @@ public class Map {
     }
     /**
      * method that gets the player's starting y coordinate
-     * @return player's starting y coordinate
+     * @return player's y coordinate
      */
     public int getPlayerY() {
         return playerY;

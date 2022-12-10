@@ -539,7 +539,6 @@ public class Main extends Application {
                         }
                         else {
                             this.errorText.setText("You haven't unlocked this yet");
-                            drawGame();
 
                         }
 
@@ -564,7 +563,7 @@ public class Main extends Application {
                         }
                         else {
                             this.errorText.setText(" You haven't unlocked this yet");
-                            drawGame();
+
                         }
 
                     });
@@ -614,14 +613,13 @@ public class Main extends Application {
                 + (this.currentLevelID + 1)
                 + "| Loot remaining: " + (this.currentLevel.getLoots().size()));
         scoreText.setText("Score: " + this.score);
+
         currentLevel = levels.get(currentLevelID);
-        if (this.restartCheck == false) {
-            playerX = currentLevel.getPlayerX();
-            playerY = currentLevel.getPlayerY();
-            timerLeft = currentLevel.getStartTimer();
-            drawGame();
-        }
-        else {
+        player1.setX(currentLevel.getPlayerX());
+        player1.setY(currentLevel.getPlayerY());
+        timerLeft = currentLevel.getStartTimer();
+
+        if (this.restartCheck == true) {
             playerX = this.reload.get(2);
             playerY = this.reload.get(3);
             timerLeft = this.reload.get(4);
@@ -654,9 +652,8 @@ public class Main extends Application {
                     bombMover++;
                 }
             }
-            drawGame();
         }
-
+        drawGame();
     }
 
     public static void main(String[] args) throws IOException {
