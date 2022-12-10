@@ -4,7 +4,7 @@ import javafx.scene.image.Image;
 
 /**
  * Class that creates a Door object, inherits from the superclass Item
- * @author
+ * @author Marek Jezinski
  * @version 1.0
  */
 public class Door extends Item {

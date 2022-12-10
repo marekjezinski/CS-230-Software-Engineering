@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 /**
  * Class that creates a Thief object, inherits from the superclass Character
- * @author
+ * @author Wiktoria Bruzgo
  * @version 1.0
  */
 public class Thief extends NPC {

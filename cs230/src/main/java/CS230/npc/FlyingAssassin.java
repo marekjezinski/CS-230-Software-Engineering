@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 /**
  * Class that creates a FlyingAssassin, inherits from the superclass NPC
- * @author
+ * @author Marek Jezinski
  * @version 1.0
  */
 //heavy wip
