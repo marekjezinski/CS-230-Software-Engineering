@@ -3,9 +3,11 @@ package CS230.npc;
 import CS230.Map;
 import javafx.scene.image.Image;
 
+import java.util.ArrayList;
+
 /**
  * Class that creates a FlyingAssassin, inherits from the superclass NPC
- * @author
+ * @author Marek Jezinski
  * @version 1.0
  */
 //heavy wip
@@ -28,7 +30,9 @@ public class FlyingAssassin extends NPC {
      * method that checks the FlyingAssassin's movement. Checks whether it goes north,
      * south, west or east and then it sets its x and y coordinates
      */
-    public void movement(int MAP_MAX_X, int MAP_MAX_Y) {
+    public void movement(Map m) {
+        int MAP_MAX_X = m.getMAP_MAX_X();
+        int MAP_MAX_Y = m.getMAP_MAX_Y();
         if(direction == 'n') {
             if(y == 0) {
                 direction = 's';

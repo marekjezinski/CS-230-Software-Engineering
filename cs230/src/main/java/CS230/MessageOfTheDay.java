@@ -7,6 +7,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
 
+/**
+ * Class for finding the message of the day
+ * @author Tom Stevens
+ * @author
+ */
 public class MessageOfTheDay {
     private String puzzle;
     private String message;
@@ -16,12 +21,13 @@ public class MessageOfTheDay {
 
 
     public MessageOfTheDay() {
+
     }
 
     public String getMessage() throws IOException {
         boolean found;
         int b = 0;
-        this.alphabet.addAll(Arrays.asList("A","B","C","D","E","F","G","H","I","J","L","K","M","N","O","P","Q","R",
+        this.alphabet.addAll(Arrays.asList("A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R",
                 "S","T","U","V","W","X","Y","Z"));
         String together = "";
         URL url = new URL("http://cswebcat.swansea.ac.uk/puzzle");
@@ -30,7 +36,7 @@ public class MessageOfTheDay {
             in.hasNextLine(); this.puzzle = in.nextLine()) {
         }
         this.breakdown = this.puzzle.split("");
-        for (int i = 0; i < this.breakdown.length-1; i++){
+        for (int i = 0; i < this.breakdown.length; i++){
             this.breakdown2.add(this.breakdown[i]);
         }
 
@@ -42,7 +48,6 @@ public class MessageOfTheDay {
                         int a = 0;
                         boolean first = true;
                         b = j;
-                        System.out.print(this.alphabet.get(b));
                         while (a <= i || first == true) {
                             first = false;
                             if ((i + 1) % 2 == 0) {
@@ -63,7 +68,6 @@ public class MessageOfTheDay {
                                 }
                             }
                         }
-                        System.out.println(","+this.alphabet.get(b));
                         this.breakdown2.set(i,this.alphabet.get(b));
                         found = true;
                     }

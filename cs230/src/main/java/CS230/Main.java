@@ -36,18 +36,15 @@ import java.util.ArrayList;
 import static java.lang.Math.ceil;
 
 /**
- * Sample application that demonstrates the use of JavaFX Canvas for a Game.
- * This class is intentionally not structured very well. This is just a starting point to show
- * how to draw an image on a canvas, respond to arrow key presses, use a tick method that is
- * called periodically, and use drag and drop.
- *
- * Do not build the whole application in one file. This file should probably remain very small.
+ *Main method for the program based on the sample program provided
  *
  * @author Liam O'Reilly
+ * @author Tom Stevens
  */
+//TODO: please put names here
 public class Main extends Application {
     // The dimensions of the window
-    private static final int WINDOW_WIDTH = 1000;
+    private static final int WINDOW_WIDTH = 1200;
     private static final int WINDOW_HEIGHT = 700;
 
     // The dimensions of the canvas
@@ -76,7 +73,7 @@ public class Main extends Application {
     private Timeline scoreColourChanger;
     private Timeline bombTimeline;
     private Leaderboard l = new Leaderboard();
-    private CurrentState c = new CurrentState();
+    private FileHandler c = new FileHandler();
 
     private int timerLeft;
 
@@ -91,6 +88,7 @@ public class Main extends Application {
     private Text timerText = new Text();
     private Text scoreText = new Text();
     private Text errorText = new Text();
+    private Text messageOfDayText = new Text();
 
     private MessageOfTheDay m;
     private MediaPlayer player = new MediaPlayer(new Media(new File("gamemusic.mp3").toURI().toString()));
@@ -112,7 +110,7 @@ public class Main extends Application {
      * Set up the new application.
      * @param primaryStage The stage that is to be used for the application.
      */
-    public void start(Stage primaryStage) throws URISyntaxException {
+    public void start(Stage primaryStage) throws URISyntaxException, IOException {
         levels.add(level1);
         levels.add(level2);
         levels.add(level3);
@@ -164,19 +162,24 @@ public class Main extends Application {
             timer();
             ArrayList<FlyingAssassin> fl = currentLevel.getFlyingAssassins();
             for(int i = 0; i < fl.size(); i++) {
-                fl.get(i).movement(currentLevel.getMAP_MAX_X(), currentLevel.getMAP_MAX_Y());
+                fl.get(i).movement(currentLevel);
             }
             currentLevel.setFlyingAssassins(fl);
-            //TODO: ADD KILLING NPCS
             if(currentLevel.isFlAsCollidedWPlayer()) {
                 gameOver();
             }
             ArrayList<Thief> th = currentLevel.getThieves();
             for(int i = 0; i < th.size(); i++) {
-                th.get(i).movement(currentLevel.getTilesArray(), currentLevel.getMAP_MAX_X(),
-                        currentLevel.getMAP_MAX_Y());
+                th.get(i).movement(currentLevel);
             }
             currentLevel.setThieves(th);
+            for(int i = 0; i < currentLevel.getThieves().size(); i++) {
+                Thief currentThief = currentLevel.getThieves().get(i);
+                if (currentLevel.isBombTriggered(currentThief.getX(), currentThief.getY())) {
+                    bombTimeline.play();
+                }
+            }
+            currentLevel.isFlCollidedWithNPC();
             drawGame();
         }));
         timerTimeline.setCycleCount(Animation.INDEFINITE);
@@ -280,7 +283,7 @@ public class Main extends Application {
 
     /**
      * Method for checking if any items are going to be picked up and if
-     * the bomb is going to be activated
+     * the bomb is going to be activated. It also autosaves the current progress
      */
     private void checkItems() {
         timerLeft += currentLevel.checkClocks(playerX / 2, playerY / 2);
@@ -304,8 +307,16 @@ public class Main extends Application {
         if (currentLevel.isBombTriggered(playerX / 2, playerY / 2)) {
             bombTimeline.play();
         }
+        String bombinMap = "";
+        for (int i = 0; i < this.currentLevel.getBombs().size(); i++) {
+            bombinMap = bombinMap +
+                    this.currentLevel.getBombs().get(i).getX() + " ";
+        }
         c.levelSave(this.username, this.currentLevelID, this.score,
-                this.playerX,this.playerY, this.timerLeft);
+                this.playerX,this.playerY, this.timerLeft, this.currentLevel.getRGate().getX(),
+                this.currentLevel.getWGate().getX(),
+                this.currentLevel.getRLever().getX(),
+                this.currentLevel.getWLever().getX(), bombinMap);
     }
 
     /**
@@ -449,7 +460,7 @@ public class Main extends Application {
      * Create the GUI.
      * @return The panel that contains the created GUI.
      */
-    private Pane buildGUI() {
+    private Pane buildGUI() throws IOException {
         // Create top-level panel that will hold all GUI nodes.
         BorderPane root = new BorderPane();
 
@@ -468,17 +479,23 @@ public class Main extends Application {
         Label labelUsername = new Label("Username");
         TextField usernameIn = new TextField();
         toolbar.getChildren().addAll(labelUsername,usernameIn);
-        errorText.setText("");
-        errorText.setFont(Font.font("arial",20));
-        errorText.setFill(Paint.valueOf("Red"));
-        toolbar.getChildren().addAll(errorText);
+        this.errorText.setText("");
+        this.errorText.setFont(Font.font("arial",20));
+        this.errorText.setFill(Paint.valueOf("Red"));
+        toolbar.getChildren().addAll(this.errorText);
         Button startButton = new Button("Start!");
         toolbar.getChildren().addAll(startButton);
+        MessageOfTheDay m = new MessageOfTheDay();
+        this.messageOfDayText.setText(m.getMessage());
+        this.messageOfDayText.setFont(Font.font("arial",10));
+        toolbar.getChildren().addAll(this.messageOfDayText);
         startButton.setOnAction(e -> {
             if(usernameIn.getText().equals("")){
-                errorText.setText("Player name is required!");
+                this.messageOfDayText.setText("");
+                this.errorText.setText("Player name is required!");
             }
             else{
+                this.messageOfDayText.setText("");
                 errorText.setText("");
                 this.username = usernameIn.getText();
                 toolbar.getChildren().removeAll(labelUsername,usernameIn,startButton);
@@ -501,12 +518,12 @@ public class Main extends Application {
                     l2.setOnAction(g -> {
                         if(c.checkLevel(username) > 0){
                             toolbar.getChildren().removeAll(l1,l2,l3,l4,recent);
-                            errorText.setText("");
+                            this.errorText.setText("");
                             begin(0,1);
 
                         }
                         else {
-                            errorText.setText("You haven't unlocked this yet");
+                            this.errorText.setText("You haven't unlocked this yet");
                             drawGame();
 
                         }
@@ -516,29 +533,30 @@ public class Main extends Application {
                     l3.setOnAction(h -> {
                         if((c.checkLevel(username)) > 1){
                             toolbar.getChildren().removeAll(l1,l2,l3,l4,recent);
-                            errorText.setText("");
+                            this.errorText.setText("");
                             begin(0,2);
                         }
                         else {
-                            errorText.setText("You haven't unlocked this yet");
+                            this.errorText.setText("You haven't unlocked this yet");
                         }
 
                     });
                     l4.setOnAction(g -> {
                         if(c.checkLevel(username) > 2){
                             toolbar.getChildren().removeAll(l1,l2,l3,l4,recent);
-                            errorText.setText("");
+                            this.errorText.setText("");
                             begin(0,3);
                         }
                         else {
-                            errorText.setText(" You haven't unlocked this yet");
+                            this.errorText.setText(" You haven't unlocked this yet");
                             drawGame();
                         }
 
                     });
 
                     recent.setOnAction(i -> {
-                        toolbar.getChildren().removeAll(l1,l2,l3,recent);
+                        toolbar.getChildren().removeAll(l1,l2,l3,l4,recent);
+                        this.errorText.setText("");
                         this.reload = c.levelLoad(username);
                         this.restartCheck = true;
                         begin(reload.get(1),reload.get(0));
@@ -547,7 +565,7 @@ public class Main extends Application {
                     });
                 }
                 else {
-                    errorText.setText("");
+                    this.errorText.setText("");
                     begin(0,0);
                 }
 
@@ -556,12 +574,12 @@ public class Main extends Application {
         });
 
         this.timerText.setText("");
-        timerText.setFont(Font.font("arial",20));
+        this.timerText.setFont(Font.font("arial",20));
         toolbar.getChildren().add(timerText);
 
-        scoreText.setText("Score: " + this.score);
-        scoreText.setFont(Font.font("arial",20));
-        toolbar.getChildren().add(scoreText);
+        this.scoreText.setText("");
+        this.scoreText.setFont(Font.font("arial",20));
+        toolbar.getChildren().add(this.scoreText);
 
 
 
@@ -592,14 +610,41 @@ public class Main extends Application {
             playerX = this.reload.get(2);
             playerY = this.reload.get(3);
             timerLeft = this.reload.get(4);
+            if (this.reload.get(5) == -1) {
+                this.currentLevel.getRGate().setX(-1);
+                this.currentLevel.getRGate().setY(-1);
+            }
+            if (this.reload.get(6) == -1) {
+                this.currentLevel.getWGate().setX(-1);
+                this.currentLevel.getWGate().setY(-1);
+            }
+            if (this.reload.get(7) == -1){
+                this.currentLevel.getRLever().setX(-1);
+                this.currentLevel.getRLever().setY(-1);
+            }
+            if (this.reload.get(8) == -1){
+                this.currentLevel.getWLever().setX(-1);
+                this.currentLevel.getWLever().setY(-1);
+            }
+
+            int bombMover = 0;
+            for (int i = 0; i < reload.size(); i++){
+                System.out.println(reload.get(i));
+            }
+            for (int x = 9; x < this.reload.size(); x++){
+                if(this.reload.get(x) == -1){
+                    this.currentLevel.getBombs().get(bombMover).setX(-1);
+                    this.currentLevel.getBombs().get(bombMover).setY(-1);
+                    System.out.println("yes");
+                    bombMover++;
+                }
+            }
             drawGame();
         }
 
     }
 
     public static void main(String[] args) throws IOException {
-        //MessageOfTheDay m = new MessageOfTheDay();
-        //System.out.println(m.getMessage());
         launch(args);
     }
 }

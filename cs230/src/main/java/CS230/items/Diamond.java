@@ -4,7 +4,7 @@ import javafx.scene.image.Image;
 
 /**
  * Class that creates a Diamond object, inheritance from the superclass Loot
- * @author
+ * @author Marek Jezinski
  * @version 1.0
  */
 public class Diamond extends Loot {

@@ -4,7 +4,7 @@ import javafx.scene.image.Image;
 /**
  * Class that constructs a general item object, used as a general
  * template for more specifying item objects.
- * @author
+ * @author Marek Jezinski
  * @version 0
  */
 public abstract class Item {

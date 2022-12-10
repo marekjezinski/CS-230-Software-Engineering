@@ -14,6 +14,7 @@ import java.util.ArrayList;
  * @author Tom Stevens
  * @author Wiktoria Bruzgo
  * @author Kam Leung
+ * @author Marek Jezinski
  * @version 1.0
  */
 public class MapReader {
@@ -147,7 +148,7 @@ public class MapReader {
                 } else if (type.equals("thief")) {
                     thieves.add(new Thief(in.nextInt(), in.nextInt(),
                             new Image(getClass().getResource("thief.png").toURI().toString()),
-                            in.next().toUpperCase().charAt(0)));
+                            in.next().toUpperCase().charAt(0), in.next().toLowerCase().charAt(0)));
                     /*Thief thief = new Thief(in.nextInt(), in.nextInt(),
                             new Image(getClass().getResource("thief.png").toURI().toString()));*/
                 } else if (type.equals("smartthief")) {

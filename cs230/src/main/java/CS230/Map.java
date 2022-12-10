@@ -404,10 +404,21 @@ public class Map {
         }
     }*/
     //unnecessary comments ???
+
+    public void setRgate(Gate rgate) {
+        this.rgate = rgate;
+    }
+
+    public void setWgate(Gate wgate) {
+        this.wgate = wgate;
+    }
+
+
     /**
      * method that gets clocks
      * @return clocks
      */
+
 
     public ArrayList<Clock> getClocks() {
         return clocks;
@@ -426,13 +437,7 @@ public class Map {
     public Door getDoor() {
         return door;
     }
-    /**
-     * method that gets rusty gate
-     * @return rgate
-     */
-    public Gate getRGate() {
-        return rgate;
-    }
+
 
     /**
      * method that gets bombs
@@ -440,6 +445,14 @@ public class Map {
      */
     public ArrayList<Bomb> getBombs() {
         return bombs;
+    }
+
+    /**
+     * method that gets rusty gate
+     * @return rgate
+     */
+    public Gate getRGate() {
+        return rgate;
     }
 
     /**
@@ -540,5 +553,17 @@ public class Map {
             }
         }
         return false;
+    }
+
+    public void isFlCollidedWithNPC() {
+        for(int i = 0; i < flyingAssassins.size(); i++) {
+            for(int j = 0; j < thieves.size(); j++) {
+                if(flyingAssassins.get(i).getX() == thieves.get(j).getX() &&
+                        flyingAssassins.get(i).getY() == thieves.get(j).getY()) {
+                    thieves.get(j).setActive(false);
+                    thieves.get(j).setX(-1);
+                }
+            }
+        }
     }
 }
