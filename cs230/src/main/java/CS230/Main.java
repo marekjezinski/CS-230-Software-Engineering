@@ -32,10 +32,12 @@ import javafx.util.Duration;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Random;
+import java.util.*;
 import java.net.URISyntaxException;
+
 import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicReference;
+
 
 import static java.lang.Math.ceil;
 
@@ -83,6 +85,13 @@ public class Main extends Application {
 
     private int timerLeft;
 
+    //SmartThief
+    private int pathGoalX,pathGoalY;
+    public static Queue<int[]> path = new LinkedList<>();
+    private static final int[][] DIRS = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}}; //used to iterate through all the directions of grid
+
+    private Image SMImage =  new Image(getClass().getResource("smartThief.png").toURI().toString());
+    private SmartThief s = new SmartThief(0,0,SMImage); //create smart thief at 0,0
 
 
     private int score = 0;
@@ -112,6 +121,9 @@ public class Main extends Application {
 
     private boolean restartCheck = false;
 
+    public Main() throws URISyntaxException {
+    }
+
     /**
      * Set up the new application.
      * @param primaryStage The stage that is to be used for the application.
@@ -126,21 +138,21 @@ public class Main extends Application {
         // Load images. Note we use png images with a transparent background.
         playerImage = new Image(getClass().getResource("player.png").toURI().toString());
 
+
         //create player
         player1 = new Player(this.currentLevel.getPlayerX() * 2,this.currentLevel.getPlayerY() * 2,playerImage);
 
 
-        SmartThief s = new SmartThief(0,0); //create smart thief at 0,0
-        SmartThiefPath p = new SmartThiefPath(currentLevel); //pass the current level into the path goal finder
+        findClosestLoot(s);//pass the current level into the path goal finder
 
         //so that it gets the closest item to smartthief
 
         //passes levl array smartthief x and y and nearest item x and y to search for closest path
         //if closest path exists iterate through all the tile coords stored in the path found
-        if (SmartThiefSearch.bfs(currentLevel.getTilesArray(),
-                s.getX(),s.getY(),p.getPathGoalX(),p.getPathGoalY())){
-            System.out.println(p.getPathGoalX()+" Y: "+ p.getPathGoalY()); //currently treats a player like loot idk why
-            for (int[] cell:SmartThiefSearch.path) {
+        if (bfs(currentLevel.getTilesArray(),
+                s.getX(),s.getY(),getPathGoalX(),getPathGoalY())){
+            System.out.println("path X; "+getPathGoalX()+" Y: "+ getPathGoalY()); //currently treats a player like loot idk why
+            for (int[] cell: path) {
                 System.out.println("X: "+cell[0]+" Y: "+cell[1]);
 
             }
@@ -397,6 +409,11 @@ public class Main extends Application {
 
         gc.drawImage(player1.getCharImage(), player1.getX() * GRID_CELL_WIDTH, player1.getY() * GRID_CELL_HEIGHT);
 
+        int[] smThiefCoords = path.poll();
+        if (smThiefCoords != null) {
+            gc.drawImage(s.getImg(), smThiefCoords[0]*2  * GRID_CELL_WIDTH, smThiefCoords[1]*2 * GRID_CELL_HEIGHT);
+        }
+
         gc.setFill(Color.GRAY);
         //Draw lines in canvas
         for(int x = -1; x < CANVAS_WIDTH; x += 50) {
@@ -467,10 +484,6 @@ public class Main extends Application {
         int b = random.nextInt(255);
         this.scoreText.setFill(Color.rgb(r,g,b));
     }
-
-
-
-
 
     /**
      * Create the GUI.
@@ -613,4 +626,94 @@ public class Main extends Application {
     public static void main(String[] args) throws IOException {
         launch(args);
     }
+
+    public void findClosestLoot(SmartThief s){
+        int xDist,yDist;
+        int minDist = 999;
+        Loot closest = null;
+        for (Loot l: currentLevel.getLoots()) {
+            //System.out.println("L val: "+l.getLootValue()); //actually iterates thru items now
+            xDist = Math.abs(s.getX() - l.getX());
+            yDist = Math.abs(s.getY() - l.getY());
+            int dist = xDist + yDist;
+            if (dist < minDist){
+                closest = l;
+                minDist = dist;
+            }
+
+        }
+
+        if (closest != null){ //set the goal and also print its coords - for testing
+            setPathGoal(closest.getX(), closest.getY());
+            //System.out.println("X: "+closest.getX()+" Y:"+closest.getY());
+        }
+
+    }
+
+    public void setPathGoal(int x, int y){
+        this.pathGoalX = x;
+        this.pathGoalY = y;
+    }
+
+    public static boolean bfs(Tile[][] tiles, int startRow, int startCol, int goalRow, int goalCol) {
+        int rows = 15;
+        int cols = 10;
+
+        boolean[][] visited = new boolean[rows][cols];
+
+        // create a queue for BFS
+        Queue<int[]> queue = new LinkedList<>();
+
+
+        // mark the start cell as visited and enqueue it
+        visited[startRow][startCol] = true;
+        queue.add(new int[]{startRow, startCol});
+
+        while (!queue.isEmpty()) {
+            // dequeue the current cell
+            int[] curr = queue.poll();
+            int currRow = curr[0];
+            int currCol = curr[1];
+
+            // add the current cell to the path
+            path.add(curr);
+
+            // check if we have reached the goal cell
+            if (currRow == goalRow && currCol == goalCol) {
+                return true;
+            }
+
+            // iterate through the four possible directions
+            for (int[] dir : DIRS) {
+                int nextRow = currRow + dir[0];
+                int nextCol = currCol + dir[1];
+
+                // check if the next cell is valid, not visited, and has at least one common color with the current cell
+                if (nextRow >= 0 && nextRow < rows && nextCol >= 0 && nextCol < cols && !visited[nextRow][nextCol] &&
+                        tiles[currRow][currCol].isLegalJump(tiles[nextRow][nextCol]) &&
+                        tiles[nextRow][nextCol].isLegalJump(tiles[currRow][currCol]) ) {
+                    // mark the cell as visited and enqueue it
+                    visited[nextRow][nextCol] = true;
+                    queue.add(new int[]{nextRow, nextCol, currRow, currCol});
+
+
+                }
+            }
+        }
+
+        // if reached here, no path to the goal
+        return false;
+    }
+
+
+    public int getPathGoalX() {
+        return pathGoalX;
+    }
+    public int getPathGoalY() {
+        return pathGoalY;
+    }
+
+
+
+
 }

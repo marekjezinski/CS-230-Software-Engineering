@@ -28,7 +28,7 @@ public class SmartThiefSearch {
 
         // mark the start cell as visited and enqueue it
         visited[startRow][startCol] = true;
-        queue.add(new int[]{startRow, startCol, -1, -1});
+        queue.add(new int[]{startRow, startCol});
 
         while (!queue.isEmpty()) {
             // dequeue the current cell

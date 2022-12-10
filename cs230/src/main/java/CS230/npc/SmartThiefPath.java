@@ -17,19 +17,17 @@ import java.util.ArrayList;
 public class SmartThiefPath {
 
     private ArrayList<Loot> currentLoot;
-    private Map currentLevel;
     private Tile[][] currentTileArray;
     private int pathGoalX,pathGoalY;
     //queue
 
     /**
      * constructor
-     * @param mapForLoots
+     * @param currentLoot gets current loot
      */
-    public SmartThiefPath(Map mapForLoots){
-        currentLoot = mapForLoots.getLoots();
-        currentLevel = mapForLoots;
-        currentTileArray = mapForLoots.getTilesArray();
+    public SmartThiefPath(Map currentLvl){
+        this.currentLoot = currentLvl.getLoots();
+        currentTileArray = currentLvl.getTilesArray();
     }
 
     /**
