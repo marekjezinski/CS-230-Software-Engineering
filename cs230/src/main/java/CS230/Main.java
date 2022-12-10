@@ -307,13 +307,16 @@ public class Main extends Application {
         if (currentLevel.isBombTriggered(playerX / 2, playerY / 2)) {
             bombTimeline.play();
         }
+        String bombinMap = "";
+        for (int i = 0; i < this.currentLevel.getBombs().size(); i++) {
+            bombinMap = bombinMap +
+                    this.currentLevel.getBombs().get(i).getX() + " ";
+        }
         c.levelSave(this.username, this.currentLevelID, this.score,
                 this.playerX,this.playerY, this.timerLeft, this.currentLevel.getRGate().getX(),
                 this.currentLevel.getWGate().getX(),
                 this.currentLevel.getRLever().getX(),
-                this.currentLevel.getWLever().getX());
-        System.out.println(this.currentLevel.getRLever().getX());
-        System.out.println(this.currentLevel.getWLever().getX());
+                this.currentLevel.getWLever().getX(), bombinMap);
     }
 
     /**
@@ -622,6 +625,19 @@ public class Main extends Application {
             if (this.reload.get(8) == -1){
                 this.currentLevel.getWLever().setX(-1);
                 this.currentLevel.getWLever().setY(-1);
+            }
+
+            int bombMover = 0;
+            for (int i = 0; i < reload.size(); i++){
+                System.out.println(reload.get(i));
+            }
+            for (int x = 9; x < this.reload.size(); x++){
+                if(this.reload.get(x) == -1){
+                    this.currentLevel.getBombs().get(bombMover).setX(-1);
+                    this.currentLevel.getBombs().get(bombMover).setY(-1);
+                    System.out.println("yes");
+                    bombMover++;
+                }
             }
             drawGame();
         }

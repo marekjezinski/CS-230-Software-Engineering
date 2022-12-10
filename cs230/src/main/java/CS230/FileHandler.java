@@ -29,13 +29,14 @@ public class FileHandler {
      */
     public void levelSave (String username,int level, int score,
                            int playerX, int playerY, int timerLeft,
-                           int rgate, int wgate, int rlever, int wlever) {
+                           int rgate, int wgate, int rlever, int wlever,
+                           String bombInMap) {
         try{
             FileWriter fI = new FileWriter("savestate.txt",true);
             fI.write(System.lineSeparator() + username +" "+ level
                     + " " + score + " " + playerX + " " + playerY + " "
                     + timerLeft + " " + rgate + " " + wgate
-                    + " " + rlever + " " + wlever);
+                    + " " + rlever + " " + wlever); //  + " " + bombInMap + "end");
             fI.close();
         }
         catch (IOException e) {
@@ -60,12 +61,14 @@ public class FileHandler {
         int wgate = 0;
         int rlever = 0;
         int wlever = 0;
+        //ArrayList<Integer> bombCoords = new ArrayList<Integer>();
 
         File f = new File("savestate.txt");
         try  {
             Scanner in = new Scanner(f);
             while(in.hasNext()) {
                 if (in.next().equals(username)){
+                    //bombCoords.clear();
                     level = in.nextInt();
                     score = in.nextInt();
                     playerX = in.nextInt();
@@ -75,6 +78,17 @@ public class FileHandler {
                     wgate = in.nextInt();
                     rlever = in.nextInt();
                     wlever = in.nextInt();
+                    /*boolean bombTest = false;
+                    while (bombTest == false){
+                        if (in.next() == "end"){
+                            bombTest = true;
+                        }
+                        else {
+                            int bombCoordIn = in.nextInt();
+                            System.out.println(bombCoordIn);
+                            bombCoords.add(bombCoordIn);
+                        }
+                    }*/
                 }
             }
             startState.add(level);
@@ -86,6 +100,10 @@ public class FileHandler {
             startState.add(wgate);
             startState.add(rlever);
             startState.add(wlever);
+            /*for (int i = 0; i < bombCoords.size(); i++){
+                startState.add(bombCoords.get(i));
+            }*/
+
 
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
@@ -117,6 +135,7 @@ public class FileHandler {
                 in.next();
                 in.next();
                 in.next();
+                
             }
 
 
@@ -153,6 +172,7 @@ public class FileHandler {
                 in.next();
                 in.next();
                 in.next();
+
 
             }
             for (int i = 0; i < this.usernames.size(); i++){
