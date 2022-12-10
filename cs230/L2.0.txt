@@ -23,7 +23,7 @@ cent 8 6
 cent 9 3
 cent 6 8
 flyingassassin 0 3 e
-thief 9 9 b
+thief 9 9 r w
 rlever 0 5
 rgate 5 5
 wlever 9 0

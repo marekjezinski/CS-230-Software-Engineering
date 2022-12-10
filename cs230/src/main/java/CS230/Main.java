@@ -164,19 +164,24 @@ public class Main extends Application {
             timer();
             ArrayList<FlyingAssassin> fl = currentLevel.getFlyingAssassins();
             for(int i = 0; i < fl.size(); i++) {
-                fl.get(i).movement(currentLevel.getMAP_MAX_X(), currentLevel.getMAP_MAX_Y());
+                fl.get(i).movement(currentLevel);
             }
             currentLevel.setFlyingAssassins(fl);
-            //TODO: ADD KILLING NPCS
             if(currentLevel.isFlAsCollidedWPlayer()) {
                 gameOver();
             }
             ArrayList<Thief> th = currentLevel.getThieves();
             for(int i = 0; i < th.size(); i++) {
-                th.get(i).movement(currentLevel.getTilesArray(), currentLevel.getMAP_MAX_X(),
-                        currentLevel.getMAP_MAX_Y());
+                th.get(i).movement(currentLevel);
             }
             currentLevel.setThieves(th);
+            for(int i = 0; i < currentLevel.getThieves().size(); i++) {
+                Thief currentThief = currentLevel.getThieves().get(i);
+                if (currentLevel.isBombTriggered(currentThief.getX(), currentThief.getY())) {
+                    bombTimeline.play();
+                }
+            }
+            currentLevel.isFlCollidedWithNPC();
             drawGame();
         }));
         timerTimeline.setCycleCount(Animation.INDEFINITE);

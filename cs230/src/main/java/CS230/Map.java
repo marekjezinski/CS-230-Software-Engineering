@@ -541,4 +541,16 @@ public class Map {
         }
         return false;
     }
+
+    public void isFlCollidedWithNPC() {
+        for(int i = 0; i < flyingAssassins.size(); i++) {
+            for(int j = 0; j < thieves.size(); j++) {
+                if(flyingAssassins.get(i).getX() == thieves.get(j).getX() &&
+                        flyingAssassins.get(i).getY() == thieves.get(j).getY()) {
+                    thieves.get(j).setActive(false);
+                    thieves.get(j).setX(-1);
+                }
+            }
+        }
+    }
 }
