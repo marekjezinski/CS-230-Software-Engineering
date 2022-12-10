@@ -66,6 +66,7 @@ public class Main extends Application {
     // X and Y coordinate of player on the grid.
     private int playerX = 0;
     private int playerY = 0;
+    private Player player1;
 
     // Timeline which will cause tick method to be called periodically.
     private Timeline tickTimeline;
@@ -121,22 +122,23 @@ public class Main extends Application {
         this.timerLeft = this.currentLevel.getTimerLeft();
         // Load images. Note we use png images with a transparent background.
         playerImage = new Image(getClass().getResource("player.png").toURI().toString());
+        player1 = new Player(playerX,playerY,playerImage);
 
-        SmartThief s = new SmartThief(0,0); //create smart thief at 0,0
-        SmartThiefPath p = new SmartThiefPath(currentLevel); //pass the current level into the path goal finder
+        //SmartThief s = new SmartThief(0,0); //create smart thief at 0,0
+        //SmartThiefPath p = new SmartThiefPath(currentLevel); //pass the current level into the path goal finder
 
         //so that it gets the closest item to smartthief
 
         //passes levl array smartthief x and y and nearest item x and y to search for closest path
         //if closest path exists iterate through all the tile coords stored in the path found
-        if (SmartThiefSearch.bfs(currentLevel.getTilesArray(),
+        /*if (SmartThiefSearch.bfs(currentLevel.getTilesArray(),
                 s.getX(),s.getY(),p.getPathGoalX(),p.getPathGoalY())){
             System.out.println(p.getPathGoalX()+" Y: "+ p.getPathGoalY()); //currently treats a player like loot idk why
             for (int[] cell:SmartThiefSearch.path) {
                 System.out.println("X: "+cell[0]+" Y: "+cell[0]);
 
             }
-        }
+        }*/
 
 
         // Build the GUI
@@ -238,29 +240,29 @@ public class Main extends Application {
         switch (event.getCode()) {
             case RIGHT:
                 // Right key was pressed. So move the player right by one cell.
-                if (playerX < 28 && this.hasGameStarted == true) {
-                    playerX = currentLevel.moveRight(playerX, playerY);
+                if (player1.getX() < 28 && this.hasGameStarted == true) {
+                    player1.setX(currentLevel.moveRight(playerX, playerY));
                 }
                 break;
 
             case LEFT:
                 // Left key was pressed. So move the player left by one cell.
-                if (playerX > 0 && this.hasGameStarted == true) {
-                    playerX = currentLevel.moveLeft(playerX, playerY);
+                if (player1.getX() > 0 && this.hasGameStarted == true) {
+                    player1.setX(currentLevel.moveLeft(playerX, playerY));
                 }
                 break;
 
             case UP:
                 // Up key was pressed. So move the player up by one cell.
-                if (playerY > 0 && this.hasGameStarted == true) {
-                    playerY = currentLevel.moveUp(playerX, playerY);
+                if (player1.getY() > 0 && this.hasGameStarted == true) {
+                    player1.setY(currentLevel.moveUp(playerX, playerY));
                 }
                 break;
 
             case DOWN:
                 // Down key was pressed. So move the player down by one cell.
-                if (playerY < 18 && this.hasGameStarted == true) {
-                    playerY = currentLevel.moveDown(playerX, playerY);
+                if (player1.getY() < 18 && this.hasGameStarted == true) {
+                    player1.setY(currentLevel.moveDown(playerX, playerY));
                 }
                 break;
 
@@ -286,25 +288,27 @@ public class Main extends Application {
      * the bomb is going to be activated. It also autosaves the current progress
      */
     private void checkItems() {
-        timerLeft += currentLevel.checkClocks(playerX / 2, playerY / 2);
+        playerX = player1.getX() / 2;
+        playerY = player1.getY() / 2;
+        timerLeft += currentLevel.checkClocks(playerX , playerY);
         //TODO: implement door and level progression
 
-        if(currentLevel.checkDoor(playerX / 2, playerY / 2)>0){
+        if(currentLevel.checkDoor(playerX, playerY)>0){
             if( currentLevel.getLoots().size() == 0 && currentLevel.checklever()) {
                 currentLevelID++;
 
                 currentLevel = levels.get(currentLevelID);
-                playerX = currentLevel.getPlayerX();
-                playerY = currentLevel.getPlayerY();
+                player1.setX(currentLevel.getPlayerX());
+                player1.setY(currentLevel.getPlayerY());
                 this.score = (int) (this.score + ceil(this.timerLeft / 3));
             }
         }
-        score += currentLevel.checkLoots(playerX / 2, playerY / 2);
+        score += currentLevel.checkLoots(playerX, playerY );
         scoreText.setText("Score: " + this.score);
         scoreText.setFont(Font.font("arial",20));
-        currentLevel.checkRLever(playerX / 2, playerY / 2);
-        currentLevel.checkWLever(playerX / 2, playerY / 2);
-        if (currentLevel.isBombTriggered(playerX / 2, playerY / 2)) {
+        currentLevel.checkRLever(playerX , playerY );
+        currentLevel.checkWLever(playerX , playerY );
+        if (currentLevel.isBombTriggered(playerX , playerY)) {
             bombTimeline.play();
         }
         String bombinMap = "";
@@ -312,6 +316,8 @@ public class Main extends Application {
             bombinMap = bombinMap +
                     this.currentLevel.getBombs().get(i).getX() + " ";
         }
+        playerX = player1.getX();
+        playerY = player1.getY();
         c.levelSave(this.username, this.currentLevelID, this.score,
                 this.playerX,this.playerY, this.timerLeft, this.currentLevel.getRGate().getX(),
                 this.currentLevel.getWGate().getX(),
@@ -381,7 +387,7 @@ public class Main extends Application {
         thieves.forEach(e ->  gc.drawImage(e.getImg(),
                 e.getX() * GRID_CELL_WIDTH * 2, e.getY() * GRID_CELL_HEIGHT * 2));
 
-        gc.drawImage(playerImage, playerX * GRID_CELL_WIDTH, playerY * GRID_CELL_HEIGHT);
+        gc.drawImage(player1.getCharImage(), player1.getX() * GRID_CELL_WIDTH, player1.getY() * GRID_CELL_HEIGHT);
 
         gc.setFill(Color.GRAY);
         //Draw lines in canvas

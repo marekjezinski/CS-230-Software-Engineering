@@ -82,7 +82,7 @@ public class Player {
         this.y = newY;
     }
 
-    /**
+    /*
      * method that kills a Player
      */
     /*public void killPlayer(){
