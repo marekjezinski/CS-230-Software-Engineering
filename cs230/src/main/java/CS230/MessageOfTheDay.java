@@ -21,7 +21,7 @@ public class MessageOfTheDay {
     public String getMessage() throws IOException {
         boolean found;
         int b = 0;
-        this.alphabet.addAll(Arrays.asList("A","B","C","D","E","F","G","H","I","J","L","K","M","N","O","P","Q","R",
+        this.alphabet.addAll(Arrays.asList("A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R",
                 "S","T","U","V","W","X","Y","Z"));
         String together = "";
         URL url = new URL("http://cswebcat.swansea.ac.uk/puzzle");
