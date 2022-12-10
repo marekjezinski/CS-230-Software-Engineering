@@ -13,7 +13,7 @@ BBBB BBBB BBBB MMMM MMMM MMMM RRRR RRRR RRRR RRRR
 player 0 0
 timer 50
 door 4 9
-bomb 4 8
+bomb 3 8
 clock 2 7
 dollar 6 1
 dollar 3 4
