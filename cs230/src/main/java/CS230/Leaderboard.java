@@ -19,8 +19,8 @@ public class Leaderboard extends SaveLoad {
 
     /**
      * Method for adding scores to the text document
-     * @param username
-     * @param score
+     * @param username the username of the player
+     * @param score the score player had been gotten
      */
     public void addScore (String username, int score) {
         try{
