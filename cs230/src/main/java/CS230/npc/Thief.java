@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 /**
  * Class that creates a Thief object, inherits from the superclass Character
- * @author
+ * @author Wiktoria Bruzgo
  * @version 1.0
  */
 public class Thief extends NPC {
@@ -49,7 +49,6 @@ public class Thief extends NPC {
                     moveDown();
                 }
                 else if(canMoveLeft(m)) {
-                    System.out.println(canMoveLeft(m));
                     moveLeft();
                 }
             }
@@ -145,7 +144,7 @@ public class Thief extends NPC {
         return false;
     }
     private boolean canMoveLeft(Map m) {
-        if(x - 1 > 0) {
+        if(x - 1 >= 0) {
             if(m.getTilesArray()[x-1][y].getTileColours().indexOf(colour) != -1) {
                 if(!isItem(m, x-1, y)) {
                     return true;
@@ -155,7 +154,7 @@ public class Thief extends NPC {
         return false;
     }
     private boolean canMoveUp(Map m) {
-        if(y - 1 > 0) {
+        if(y - 1 >= 0) {
             if(m.getTilesArray()[x][y-1].getTileColours().indexOf(colour) != -1) {
                 if(!isItem(m, x, y-1)) {
                     return true;

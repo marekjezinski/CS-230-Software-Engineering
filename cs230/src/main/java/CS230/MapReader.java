@@ -14,6 +14,7 @@ import java.util.ArrayList;
  * @author Tom Stevens
  * @author Wiktoria Bruzgo
  * @author Kam Leung
+ * @author Marek Jezinski
  * @version 1.0
  */
 public class MapReader {

@@ -4,7 +4,7 @@ import javafx.scene.image.Image;
 
 /**
  * class that creates a Cent object, which inherits from the Loot class
- * @author
+ * @author Marek Jezinski
  * @version 1.0
  */
 

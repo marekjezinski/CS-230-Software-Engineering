@@ -5,7 +5,7 @@ import javafx.scene.image.Image;
 /**
  * Abstract class that constructs a general Loot object, used as a general template
  * for more specific loot objects
- * @author
+ * @author Marek Jezinski
  * @version 1.0
  */
 public abstract class Loot extends Item {
