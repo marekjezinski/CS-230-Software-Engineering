@@ -24,10 +24,18 @@ public class MessageOfTheDay {
 
     }
 
+    /**
+     * First part of obtaining message via the api where it breaks it down
+     * into an array
+     * @return
+     * @throws IOException
+     */
+
     public String getMessage() throws IOException {
         boolean found;
         int b = 0;
-        this.alphabet.addAll(Arrays.asList("A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R",
+        this.alphabet.addAll(Arrays.asList("A","B","C","D","E","F","G"
+                ,"H","I","J","K","L","M","N","O","P","Q","R",
                 "S","T","U","V","W","X","Y","Z"));
         String together = "";
         URL url = new URL("http://cswebcat.swansea.ac.uk/puzzle");
@@ -86,6 +94,13 @@ public class MessageOfTheDay {
         this.message = this.urlMessage(together);
         return this.message;
     }
+
+    /**
+     * Makes the api call for the quote
+     * @param together
+     * @return returnMessage
+     * @throws IOException
+     */
     public String urlMessage(String together) throws IOException {
         String returnMessage = "";
         together = together + "CS-230";
