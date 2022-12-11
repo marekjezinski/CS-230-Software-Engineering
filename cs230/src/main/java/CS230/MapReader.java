@@ -58,7 +58,8 @@ public class MapReader {
         try {
             in = new Scanner(f);
         } catch (FileNotFoundException e) {
-            System.err.println(String.format("Map file '%s' not found!", this.fileName));
+            System.err.println
+                    (String.format("Map file '%s' not found!", this.fileName));
             System.exit(0);
         }
 
@@ -72,7 +73,8 @@ public class MapReader {
                     if (word.length() == 4) {
                         tiles[x][y] = new Tile(word);
                     } else {
-                        System.err.println("Level file tile shorter/longer than 4 characters detected");
+                        System.err.println("Level file tile " +
+                                "shorter/longer than 4 characters detected");
                         throw new Exception();
                     }
                 }
@@ -86,81 +88,108 @@ public class MapReader {
                     this.timer = in.nextInt();
                     starttimer = this.timer;
                 } else if (type.equals("rgate")) {
-                    Gate rgatein = new Gate(new Image(getClass().getResource("rustygate.png").toURI().toString()),
+                    Gate rgatein = new Gate(new Image(getClass()
+                            .getResource("rustygate.png")
+                            .toURI().toString()),
                             in.nextInt(), in.nextInt());
                     rgate = rgatein;
                 } else if (type.equals("rlever")) {
-                    Lever rleverin = new Lever(new Image(getClass().getResource("rustylever.png").toURI().toString()),
+                    Lever rleverin = new Lever(new Image(
+                            getClass().
+                                    getResource("rustylever.png")
+                                    .toURI().toString()),
                             in.nextInt(), in.nextInt());
                     rlever = rleverin;
                 } else if (type.equals("wgate")) {
-                    Gate wgatein = new Gate(new Image(getClass().getResource("woodengate.png")
+                    Gate wgatein = new Gate(new
+                            Image(getClass()
+                            .getResource("woodengate.png")
                             .toURI().toString()),
                             in.nextInt(), in.nextInt());
                     wgate = wgatein;
                 } else if (type.equals("wlever")) {
-                    Lever wleverin = new Lever(new Image(getClass().getResource("woodenlever.png")
+                    Lever wleverin = new Lever(new
+                            Image(getClass()
+                            .getResource("woodenlever.png")
                             .toURI().toString()),
                             in.nextInt(), in.nextInt());
                     wlever = wleverin;
                 }
                 //
                 else if (type.equals("clock")) {
-                    Clock c = new Clock(new Image(getClass().getResource("clock.png").toURI().toString()),
+                    Clock c = new Clock(new Image(getClass()
+                            .getResource("clock.png").toURI().toString()),
                             in.nextInt(), in.nextInt(), CLOCK_TIME_ADDED);
                     items.add(c);
                     clocks.add(c);
                 } else if (type.equals("bomb")) {
-                    Bomb b = new Bomb(new Image(getClass().getResource("bomb.png").toURI().toString()),
+                    Bomb b = new Bomb(new Image(getClass()
+                            .getResource("bomb.png").toURI().toString()),
                             in.nextInt(), in.nextInt());
                     items.add(b);
                     this.bombs.add(b);
                 }
                 //TODO: Change filename for all loot!
                 else if (type.equals("cent")) {
-                    Cent c = new Cent(new Image(getClass().getResource("cent.png").toURI().toString()),
+                    Cent c = new Cent(new Image(getClass()
+                            .getResource("cent.png").toURI().toString()),
                             in.nextInt(), in.nextInt(), CENT_VALUE);
                     items.add(c);
                     loot.add(c);
                     lootcount++;
                 } else if (type.equals("dollar")) {
-                    Dollar d = new Dollar(new Image(getClass().getResource("dollar.png").toURI().toString()),
+                    Dollar d = new Dollar(new
+                            Image(getClass()
+                            .getResource("dollar.png").toURI().toString()),
                             in.nextInt(), in.nextInt(), DOLLAR_VALUE);
                     items.add(d);
                     loot.add(d);
                     lootcount++;
                 } else if (type.equals("ruby")) {
-                    Ruby r = new Ruby(new Image(getClass().getResource("ruby.png").toURI().toString()),
+                    Ruby r = new Ruby(new Image(getClass().
+                            getResource("ruby.png").toURI().toString()),
                             in.nextInt(), in.nextInt(), RUBY_VALUE);
                     items.add(r);
                     loot.add(r);
                     lootcount++;
                 } else if (type.equals("diamond")) {
-                    Diamond d = new Diamond(new Image(getClass().getResource("diamond.png").toURI().toString()),
+                    Diamond d = new Diamond(new Image(getClass().
+                            getResource("diamond.png").toURI().toString()),
                             in.nextInt(), in.nextInt(), DIAMOND_VALUE);
                     items.add(d);
                     loot.add(d);
                     lootcount++;
                 } else if (type.equals("door")) {
-                    Door d = new Door(new Image(getClass().getResource("door.png").toURI().toString()),
+                    Door d = new Door(new Image(getClass().
+                            getResource("door.png").toURI().toString()),
                             in.nextInt(), in.nextInt());
                     items.add(d);
                     door = d;
                 } else if (type.equals("thief")) {
                     thieves.add(new Thief(in.nextInt(), in.nextInt(),
-                            new Image(getClass().getResource("thief.png").toURI().toString()),
-                            in.next().toUpperCase().charAt(0), in.next().toLowerCase().charAt(0)));
+                            new Image(getClass()
+                                    .getResource("thief.png")
+                                    .toURI().toString()),
+                            in.next().toUpperCase().charAt(0),
+                            in.next().toLowerCase().charAt(0)));
                     /*Thief thief = new Thief(in.nextInt(), in.nextInt(),
                             new Image(getClass().getResource("thief.png").toURI().toString()));*/
                 } else if (type.equals("smartthief")) {
                     smarts.add(new SmartThief(in.nextInt(), in.nextInt(),
                             new Image(getClass().getResource("smartThief.png").toURI().toString())));
                 } else if (type.equals("flyingassassin")) {
-                    flyingAssassins.add(new FlyingAssassin(new Image(getClass().getResource("flyingassassin.png")
-                            .toURI().toString()), in.nextInt(), in.nextInt(), in.next().toLowerCase().charAt(0)));
+                    flyingAssassins.add(new
+                            FlyingAssassin(new
+                            Image(getClass()
+                            .getResource("flyingassassin.png")
+                            .toURI().toString()),
+                            in.nextInt(), in.nextInt(),
+                            in.next().toLowerCase()
+                                    .charAt(0)));
 
                 } else {
-                    System.err.println("Please check level file, entity identifier mismatch: " + type);
+                    System.err.println("Please check level file, " +
+                            "entity identifier mismatch: " + type);
                     throw new Exception();
                 }
             }
@@ -318,10 +347,10 @@ public class MapReader {
         return flyingAssassins;
     }
 
-    /*
-    * get method that returns the value of thief
-    * @return thief
-    * */
+    /**
+     * Get method that returns the thieves arraylist
+     * @return thieves
+     */
 
     public ArrayList<Thief> getThieves() {
         return thieves;
