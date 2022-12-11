@@ -1,0 +1,42 @@
+9 9 
+GGGG RRRR GGGG RRRR GGGG RRRR GGGG RRRR GGGG
+RRRR RRRR RRRR RRRR RRRR RRRR RRRR RRRR RRRR
+GGGG RRRR GGGG RRRR GGGG RRRR GGGG RRRR GGGG
+RRRR RRRR RRRR RRRR RRRR RRRR RRRR RRRR RRRR
+GGGG RRRR GGGG RRRR GGGG RRRR GGGG RRRR GGGG
+RRRR RRRR RRRR RRRR RRRR RRRR RRRR RRRR RRRR
+GGGG RRRR GGGG RRRR GGGG RRRR GGGG RRRR GGGG
+RRRR RRRR RRRR RRRR RRRR RRRR RRRR RRRR RRRR
+GGGG RRRR GGGG RRRR GGGG RRRR GGGG RRRR GGGG
+player 0 0
+timer 40
+flyingassassin 1 0 s
+flyingassassin 5 0 s
+dollar 8 0
+flyingassassin 0 1 e
+clock 2 0
+cent 2 2 
+bomb 4 2 
+cent 6 2 
+clock 8 2
+flyingassassin 8 3 w
+bomb 2 4
+door 4 4
+bomb 6 4
+flyingassassin 0 5 e 
+dollar 0 6 
+cent 2 6
+bomb 4 6 
+cent 6 6
+flyingassassin 8 5 w
+ruby 0 8 
+ruby 2 8
+flyingassassin 3 8 n 
+diamond 4 8 
+ruby 6 8 
+flyingassassin 7 8 n
+ruby 8 8
+wgate 2 0
+wlever 0 4
+rgate 8 4
+rlever 6 0
