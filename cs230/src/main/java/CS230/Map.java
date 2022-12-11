@@ -152,7 +152,7 @@ public class Map {
      * @param cordY
      * @return true if the movement can happen, false otherwise
      */
-    private boolean isLegalMovement(int cordX, int cordY) {
+    public boolean isLegalMovement(int cordX, int cordY) {
         if (rgate.getX() == cordX && rgate.getY() == cordY) {
             return false;
         }

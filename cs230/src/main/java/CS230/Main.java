@@ -86,6 +86,8 @@ public class Main extends Application {
     private int timerLeft;
     private Loot currentGoal;
 
+
+
     //SmartThief
     private int pathGoalX,pathGoalY;
     public static Queue<int[]> path = new LinkedList<>();
@@ -97,7 +99,7 @@ public class Main extends Application {
     //create smart thief at 0,0
     private SmartThief sThief = new SmartThief(1,1,SMImage);
 
-
+    private int[] smThiefCoords = {0,0};
     private int score = 0;
     private String username;
     private PlayerProfile p1Profile;
@@ -179,7 +181,8 @@ public class Main extends Application {
 
 
 
-        timerTimeline = new Timeline(new KeyFrame(Duration.millis(1000), event -> {
+        timerTimeline = new Timeline(new
+                KeyFrame(Duration.millis(1000), event -> {
             timer();
             ArrayList<FlyingAssassin> fl = currentLevel.getFlyingAssassins();
             for(int i = 0; i < fl.size(); i++) {
@@ -207,6 +210,12 @@ public class Main extends Application {
             if(currentLevel.getLoots().size() > 0) {
                 //search for nearest item
                 currentGoal = sPath.findClosestLoot(currentLevel, sThief);
+            }
+
+            this.smThiefCoords = path.poll();
+            if (this.smThiefCoords != null) {
+                sThief.setX(this.smThiefCoords[0]);
+                sThief.setY(this.smThiefCoords[1]);
             }
 
             //x + y co-ords of the nearest item
@@ -466,23 +475,15 @@ public class Main extends Application {
         thieves.forEach(e ->  gc.drawImage(e.getImg(),
                 e.getX() * GRID_CELL_WIDTH * 2, e.getY() *
                         GRID_CELL_HEIGHT * 2));
+        gc.drawImage(sThief.getImg(), sThief.getX() * 2
+                * GRID_CELL_WIDTH, sThief.getY() * 2 *
+                GRID_CELL_HEIGHT);
 
         gc.drawImage(player1.getCharImage(), player1.getX()
                 * GRID_CELL_WIDTH, player1.getY() *
                 GRID_CELL_HEIGHT);
 
-        int[] smThiefCoords = path.poll();
-        if (smThiefCoords != null) {
-            sThief.setX(smThiefCoords[0]);
-            sThief.setY(smThiefCoords[1]);
-            gc.drawImage(sThief.getImg(), smThiefCoords[0]*2
-                    * GRID_CELL_WIDTH, smThiefCoords[1]*2 *
-                    GRID_CELL_HEIGHT);
-        } else {
-            gc.drawImage(sThief.getImg(), sThief.getX()*2
-                    * GRID_CELL_WIDTH, sThief.getY() * 2 *
-                    GRID_CELL_HEIGHT);
-        }
+
 
         gc.setFill(Color.GRAY);
         //Draw lines in canvas
