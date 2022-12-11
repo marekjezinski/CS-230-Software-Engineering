@@ -23,7 +23,7 @@ public class SmartThiefPath {
 
     /**
      *
-     * @param currentLvl
+     * @param currentLevel
      */
     public SmartThiefPath(Map currentLevel){
         this.currentLoot = currentLevel.getLoots();

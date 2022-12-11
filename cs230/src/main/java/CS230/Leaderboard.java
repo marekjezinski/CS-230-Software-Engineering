@@ -45,8 +45,6 @@ public class Leaderboard extends SaveLoad {
                 if (name.equals(username) && score <= storedScore){
                     duplicate = true;
                     i = names.indexOf(name);
-                    names.remove(i);
-                    scores.remove(i);
                 }
             }
         }catch (IOException e) {
