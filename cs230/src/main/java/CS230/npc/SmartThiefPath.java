@@ -23,7 +23,7 @@ public class SmartThiefPath {
 
     /**
      *the path of smartthief
-     * @param currentLevel
+     * @param currentLevel the map of current level
      */
     public SmartThiefPath(Map currentLevel){
         this.currentLoot = currentLevel.getLoots();
@@ -33,7 +33,7 @@ public class SmartThiefPath {
     /**
      *
      * @param currentLevel the current level of the game
-     * @param s a SmartThief
+     * @param s the SmartThief
      * @return closest loot or nothing if no Loot is found
      */
     public Loot findClosestLoot(Map currentLevel, SmartThief s){
@@ -60,7 +60,7 @@ public class SmartThiefPath {
 
     /**
      * method that gets the x coordinate of the pathGoal
-     * @return pathGoalX
+     * @return pathGoalX the x coordinate of goal
      */
     public int getPathGoalX() {
         return pathGoalX;
@@ -68,7 +68,7 @@ public class SmartThiefPath {
 
     /**
      * method that gets the y coordinate of the pathGoal
-     * @return pathGoalY
+     * @return pathGoalY the y coordinate of goal
      */
     public int getPathGoalY() {
         return pathGoalY;

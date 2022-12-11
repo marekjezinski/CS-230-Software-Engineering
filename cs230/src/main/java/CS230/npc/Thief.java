@@ -35,7 +35,7 @@ public class Thief extends NPC {
 
     /**
      * Movement for the thief
-     * @param m
+     * @param m the map of the current level
      */
     public void movement(Map m) {
         if(isActive) {
@@ -104,7 +104,7 @@ public class Thief extends NPC {
 
     /**
      * Method to see if any items can be removed
-     * @param m
+     * @param m map of the level
      */
 
     private void trigger(Map m) {
@@ -116,10 +116,10 @@ public class Thief extends NPC {
 
     /**
      * Method to see if there is a gate or bomb
-     * @param m
-     * @param x
-     * @param y
-     * @return
+     * @param m - Map elvel
+     * @param x - x coordinate
+     * @param y - y coordinate
+     * @return true if it an item, false otherwise
      */
     private boolean isItem(Map m, int x, int y) {
         Gate r = m.getRGate();
@@ -141,8 +141,8 @@ public class Thief extends NPC {
 
     /**
      * Method for legal movement right
-     * @param m
-     * @return
+     * @param m - Map level
+     * @return true if the thief can move right, false otherwise
      */
 
     private boolean canMoveRight(Map m) {
@@ -157,8 +157,8 @@ public class Thief extends NPC {
     }
     /**
      * Method for legal movement down
-     * @param m
-     * @return
+     * @param m - Map level
+     * @return - true if the thief can move down, false otherwise
      */
     private boolean canMoveDown(Map m) {
         if(y + 1 < m.getMAP_MAX_Y()) {
@@ -172,8 +172,8 @@ public class Thief extends NPC {
     }
     /**
      * Method for legal movement left
-     * @param m
-     * @return
+     * @param m - Map level
+     * @return true if thief can move left, false otherwise
      */
     private boolean canMoveLeft(Map m) {
         if(x - 1 >= 0) {
@@ -187,8 +187,8 @@ public class Thief extends NPC {
     }
     /**
      * Method for legal movement up
-     * @param m
-     * @return
+     * @param m - Map level
+     * @return true if thief can move up, false otherwise
      */
     private boolean canMoveUp(Map m) {
         if(y - 1 >= 0) {
@@ -232,7 +232,7 @@ public class Thief extends NPC {
 
     /**
      * Method for changing the active variable
-     * @param active
+     * @param active to check if it is active.
      */
     public void setActive(boolean active) {
         isActive = active;

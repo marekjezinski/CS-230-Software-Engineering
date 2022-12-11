@@ -29,6 +29,7 @@ public class FlyingAssassin extends NPC {
     /**
      * method that checks the FlyingAssassin's movement. Checks whether it goes north,
      * south, west or east and then it sets its x and y coordinates
+     * @param m the current map
      */
     public void movement(Map m) {
         int MAP_MAX_X = m.getMAP_MAX_X();

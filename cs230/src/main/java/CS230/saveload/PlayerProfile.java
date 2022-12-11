@@ -21,6 +21,10 @@ public class PlayerProfile {
         }
     }
 
+    /**
+     * method that sets the Player's max level
+     * @param maxLevel the highest level player had passed
+     */
     public void setMaxLevel(int maxLevel) {
         this.maxLevel = maxLevel;
     }
@@ -40,10 +44,18 @@ public class PlayerProfile {
         maxScores.set(levelID, score);
     }
 
+    /**
+     * method that gets the max level
+     * @return maxLevel the max level avaliable
+     */
     public int getMaxLevel(){
         return this.maxLevel;
     }
 
+    /**
+     * method that gets the Player's username
+     * @return username the player's username
+     */
     public String getUsername() {
             return username;
         }

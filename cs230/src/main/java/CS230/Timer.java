@@ -12,7 +12,7 @@ public class Timer {
 
     /**
      * Constructor that sets up the filename for the timer
-     * @param fileName
+     * @param fileName the name of file
      */
     public Timer(String fileName) {
         this.fileName = fileName;
@@ -20,7 +20,7 @@ public class Timer {
 
     /**
      * timerSetter method reads the text document to get location of the timer
-     * @return this.TimerDuration
+     * @return this.TimerDuration the duration of timer
      */
     public int timerSetter(){
 
