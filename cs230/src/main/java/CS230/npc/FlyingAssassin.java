@@ -71,6 +71,13 @@ public class FlyingAssassin extends NPC {
         }
     }
 
+    /**
+     * Method to see if the flying assassin has collided with
+     * the player or not
+     * @param playerX
+     * @param playerY
+     * @return
+     */
     public boolean isCollidedWithPlayer(int playerX, int playerY) {
         if(x == playerX && y == playerY) {
             return true;

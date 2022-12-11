@@ -14,10 +14,20 @@ import java.util.Queue;
 public class SmartThiefSearch {
 
     private static final int MAX_STEPS = 100;
+
     private static Queue<int[]> path = new LinkedList<>();
     //used to iterate through all the directions of grid
     private static final int[][] DIRS = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
 
+    /**
+     * Method that initiates a BFS and returns boolean if it's the goal or not
+     * @param tiles
+     * @param startRow
+     * @param startCol
+     * @param goalRow
+     * @param goalCol
+     * @return
+     */
     public static boolean bfs(Tile[][] tiles, int startRow,
                               int startCol, int goalRow, int goalCol) {
         //TODO: error here

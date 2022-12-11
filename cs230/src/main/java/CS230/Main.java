@@ -375,10 +375,7 @@ public class Main extends Application {
         }
     }
 
-    /**
-     * Method for activating bomb explosions
-     * @throws URISyntaxException
-     */
+
 
     /**
      * Draw the game on the canvas.
@@ -497,6 +494,9 @@ public class Main extends Application {
         drawGame();
     }
 
+    /**
+     * Method that updates the timer
+     */
     public void timer(){
         if (this.timerLeft <= 6){
             timerText.setFill(Paint.valueOf("Red"));
@@ -517,6 +517,10 @@ public class Main extends Application {
             gameOver();
         }
     }
+
+    /**
+     * Method to stop the game when player loses
+     */
     public void gameOver(){
         System.out.println("GAME OVER!!!");
         System.out.println("You scored " + this.score + " points");
@@ -528,6 +532,9 @@ public class Main extends Application {
         System.exit(0);
     }
 
+    /**
+     * Method to change the colour of the score
+     */
     public void scoreColour(){
         Random random = new Random();
         int r = random.nextInt(255);
@@ -625,8 +632,11 @@ public class Main extends Application {
         // Finally, return the border pane we built up.
         return root;
     }
+
     /**
-     * method that starts the game when loading specific level
+     * Method for starting the game with appropriate variables from save
+     * @param scoreIn
+     * @param levelIn
      */
     public void begin(int scoreIn, int levelIn){
         this.hasGameStarted = true;
