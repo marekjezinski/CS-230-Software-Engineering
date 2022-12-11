@@ -1,5 +1,6 @@
 package CS230;
 
+import CS230.saveload.PlayerProfile;
 import CS230.saveload.SaveLoad;
 
 import java.io.FileNotFoundException;
@@ -25,14 +26,43 @@ public class Leaderboard extends SaveLoad {
      * @param score the score player had been gotten
      */
     public void addScore (String username, int score) {
-        try{
-            FileWriter fI = new FileWriter("scores.txt", true);
-            fI.write(System.lineSeparator() + username +" "+ score);
-            fI.close();
+        File f = new File("scores.txt");
+        boolean top10score = false;
+        boolean duplicate = false;
+        int i= 0;
+        while (!top10score && i < scores.size() ){
+            int storedScore = scores.get(i);
+            if( score > storedScore){
+                top10score = true;
+            }
+            i++;
         }
-        catch (IOException e) {
-            e.printStackTrace();
-            System.exit(1);
+        try  {
+            Scanner in = new Scanner(f);
+            while(in.hasNext() && !duplicate) {
+                String name = in.next();
+                int storedScore = in.nextInt();
+                if (name.equals(username) && score <= storedScore){
+                    duplicate = true;
+                    i = names.indexOf(name);
+                    names.remove(i);
+                    scores.remove(i);
+                }
+            }
+        }catch (IOException e) {
+                e.printStackTrace();
+                System.exit(1);
+        }
+
+        if(!duplicate) {
+            try {
+                FileWriter fI = new FileWriter("scores.txt", true);
+                fI.write(System.lineSeparator() + username + " " + score);
+                fI.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+                System.exit(1);
+            }
         }
 
     }
