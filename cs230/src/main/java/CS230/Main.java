@@ -89,10 +89,13 @@ public class Main extends Application {
     //SmartThief
     private int pathGoalX,pathGoalY;
     public static Queue<int[]> path = new LinkedList<>();
-    private static final int[][] DIRS = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}}; //used to iterate through all the directions of grid
+    //used to iterate through all the directions of grid
+    private static final int[][] DIRS = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}}; 
 
-    private Image SMImage =  new Image(getClass().getResource("smartThief.png").toURI().toString());
-    private SmartThief sThief = new SmartThief(1,1,SMImage); //create smart thief at 0,0
+    private Image SMImage =  new Image(getClass().
+            getResource("smartThief.png").toURI().toString());
+    //create smart thief at 0,0
+    private SmartThief sThief = new SmartThief(1,1,SMImage);
 
 
     private int score = 0;
@@ -108,7 +111,9 @@ public class Main extends Application {
     private Text messageOfDayText = new Text();
 
     private MessageOfTheDay m;
-    private MediaPlayer player = new MediaPlayer(new Media(new File("gamemusic.mp3").toURI().toString()));
+    private MediaPlayer player = new MediaPlayer(new
+            Media(new File("gamemusic.mp3").
+            toURI().toString()));
 
     private int currentLevelID = 0;
     private ArrayList<Map> levels = new ArrayList<>();
@@ -138,11 +143,14 @@ public class Main extends Application {
         this.currentLevel = levels.get(currentLevelID);
         this.timerLeft = this.currentLevel.getTimerLeft();
         // Load images. Note we use png images with a transparent background.
-        playerImage = new Image(getClass().getResource("player.png").toURI().toString());
+        playerImage = new Image(getClass().
+                getResource("player.png").toURI().toString());
 
 
         //create player
-        player1 = new Player(this.currentLevel.getPlayerX() * 2,this.currentLevel.getPlayerY() * 2,playerImage);
+        player1 = new Player(this.
+                currentLevel.getPlayerX() * 2,
+                this.currentLevel.getPlayerY() * 2,playerImage);
 
         // Build the GUI
         Pane root = buildGUI();
@@ -155,8 +163,10 @@ public class Main extends Application {
         scene.addEventFilter(KeyEvent.KEY_PRESSED, event -> processKeyEvent(event));
 
         // Register a tick method to be called periodically.
-        // Make a new timeline with one keyframe that triggers the tick method every half a second.
-        //tickTimeline = new Timeline(new KeyFrame(Duration.millis(1000), event -> tick()));
+        // Make a new timeline with one keyframe
+        // that triggers the tick method every half a second.
+        //tickTimeline = new Timeline
+        // (new KeyFrame(Duration.millis(1000), event -> tick()));
         // Loop the timeline forever
         //tickTimeline.setCycleCount(Animation.INDEFINITE);
         // We start the timeline upon a button press.
@@ -180,16 +190,17 @@ public class Main extends Application {
             currentLevel.setThieves(th);
             for(int i = 0; i < currentLevel.getThieves().size(); i++) {
                 Thief currentThief = currentLevel.getThieves().get(i);
-                if (currentLevel.isBombTriggered(currentThief.getX(), currentThief.getY())) {
+                if (currentLevel.isBombTriggered(
+                        currentThief.getX(), currentThief.getY())) {
                     bombTimeline.play();
                 }
             }
             currentLevel.isFlCollidedWithNPC();
-
-
-           SmartThiefPath sPath = new SmartThiefPath(currentLevel); //create path
+            //create path
+            SmartThiefPath sPath = new SmartThiefPath(currentLevel);
             if(currentLevel.getLoots().size() > 0) {
-                currentGoal = sPath.findClosestLoot(currentLevel, sThief); //search for nearest item
+                //search for nearest item
+                currentGoal = sPath.findClosestLoot(currentLevel, sThief);
             }
 
             //x + y co-ords of the nearest item
@@ -221,7 +232,8 @@ public class Main extends Application {
         }));
         timerTimeline.setCycleCount(Animation.INDEFINITE);
 
-        bombTimeline = new Timeline(new KeyFrame(Duration.millis(1000), event -> {
+        bombTimeline = new Timeline(new
+                KeyFrame(Duration.millis(1000), event -> {
             ArrayList<Bomb> bombs = currentLevel.getBombs();
             for(int i = 0; i < bombs.size(); i++) {
                 int secToExplode = bombs.get(i).getSecondsToExplode();
@@ -277,14 +289,17 @@ public class Main extends Application {
     }
 
     /**
-     * Process a key event due to a key being pressed, e.g., to move the player.
+     * Process a key event due to a key being pressed, e.g.,
+     * to move the player.
      * @param event The key event that was pressed.
      */
     public void processKeyEvent(KeyEvent event) {
-        // We change the behaviour depending on the actual key that was pressed.
+        // We change the behaviour depending on the actual key that
+        // was pressed.
         switch (event.getCode()) {
             case RIGHT:
-                // Right key was pressed. So move the player right by one cell.
+                // Right key was pressed. So move the player
+                // right by one cell.
                 if (player1.getX() < 28 && this.hasGameStarted) {
                     player1.setX(currentLevel.
                             moveRight(player1.getX(), player1.getY()));
@@ -338,7 +353,8 @@ public class Main extends Application {
 
     /**
      * Method for checking if any items are going to be picked up and if
-     * the bomb is going to be activated. It also autosaves the current progress
+     * the bomb is going to be activated.
+     * It also autosaves the current progress
      */
     private void checkItems() {
         playerX = player1.getX() / 2;
@@ -347,7 +363,8 @@ public class Main extends Application {
         //TODO: implement door and level progression
 
         if(currentLevel.checkDoor(playerX, playerY)>0){
-            if( currentLevel.getLoots().size() == 0 && currentLevel.checklever()) {
+            if( currentLevel.getLoots().size() == 0 &&
+                    currentLevel.checklever()) {
                 currentLevelID++;
 
                 currentLevel = levels.get(currentLevelID);
