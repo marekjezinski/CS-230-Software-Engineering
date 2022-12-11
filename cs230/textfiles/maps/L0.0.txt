@@ -1,3 +1,4 @@
+0
 15 10
 RRRR RRRR RRRR RRRR GOGO OOOO MMMM MMMM BBBB BBBB BBBB BBBB GGGG GGGG GGGG
 RRRR RRRR RRRR RRRR GGGG OOOO MMMM MMMM BBBB BBBB BBBB BBBB GGGG GGGG GGGG
@@ -31,6 +32,6 @@ diamond 10 3
 dollar 4 7
 ruby 10 2
 bomb 10 5
-flyingAssassin 1 8 e
+flyingassassin 1 8 e
 thief 8 8 b e
 bomb 11 3

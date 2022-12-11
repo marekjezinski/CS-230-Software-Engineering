@@ -23,6 +23,7 @@ public class MapReader {
     private int maxTileX;
     private int maxTileY;
     private int timer;
+    private int score = 0;
     private ArrayList<Item> items = new ArrayList<>();
     private ArrayList<Loot> loot = new ArrayList<>();
     private ArrayList<Clock> clocks = new ArrayList<>();
@@ -43,6 +44,7 @@ public class MapReader {
     private final int DOLLAR_VALUE = 20;
     private final int RUBY_VALUE = 30;
     private final int DIAMOND_VALUE = 40;
+    private int levelID;
 
     private int starttimer;
     private int lootcount = 0;
@@ -64,6 +66,7 @@ public class MapReader {
         }
 
         try {
+            levelID = in.nextInt();
             maxTileX = in.nextInt();
             maxTileY = in.nextInt();
             tiles = new Tile[maxTileX][maxTileY];
@@ -87,6 +90,8 @@ public class MapReader {
                 } else if (type.equals("timer")) {
                     this.timer = in.nextInt();
                     starttimer = this.timer;
+                } else if (type.equals("score")) {
+                    this.score = in.nextInt();
                 } else if (type.equals("rgate")) {
                     Gate rgatein = new Gate(new Image(getClass().
                             getResource("rustygate.png")
@@ -356,6 +361,14 @@ public class MapReader {
 
     public ArrayList<Thief> getThieves() {
         return thieves;
+    }
+
+    public int getLevelID() {
+        return levelID;
+    }
+
+    public int getScore() {
+        return score;
     }
 }
 

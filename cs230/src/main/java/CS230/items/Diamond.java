@@ -16,6 +16,6 @@ public class Diamond extends Loot {
      * @param lootValue - holds the value of a Diamond object
      */
     public Diamond(Image img, int x, int y, int lootValue) {
-        super(img, x, y, lootValue);
+        super(img, x, y, lootValue, "diamond");
     }
 }

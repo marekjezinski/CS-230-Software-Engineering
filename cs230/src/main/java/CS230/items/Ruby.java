@@ -16,6 +16,6 @@ public class Ruby extends Loot {
      * @param lootValue - holds the value of a Ruby object
      */
     public Ruby(Image img, int x, int y, int lootValue) {
-        super(img, x, y, lootValue);
+        super(img, x, y, lootValue, "ruby");
     }
 }

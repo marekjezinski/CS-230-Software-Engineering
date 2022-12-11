@@ -238,5 +238,11 @@ public class Thief extends NPC {
         isActive = active;
     }
 
-    //Thief to be implemented
+    public char getColour() {
+        return colour;
+    }
+
+    public char getDirection() {
+        return direction;
+    }
 }

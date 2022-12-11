@@ -10,6 +10,7 @@ import javafx.scene.image.Image;
  */
 public abstract class Loot extends Item {
     private final int lootValue;
+    private final String lootName;
 
     /**
      * constructs a general loot object
@@ -18,9 +19,10 @@ public abstract class Loot extends Item {
      * @param y the Y coordinate of the loot object
      * @param lootValue the Value of the loot item.
      */
-    public Loot(Image img, int x, int y, int lootValue) {
+    public Loot(Image img, int x, int y, int lootValue, String lootName) {
         super(img, x, y);
         this.lootValue = lootValue;
+        this.lootName = lootName;
     }
 
     /**
@@ -29,5 +31,9 @@ public abstract class Loot extends Item {
      */
     public int getLootValue() {
         return lootValue;
+    }
+
+    public String getLootName() {
+        return lootName;
     }
 }

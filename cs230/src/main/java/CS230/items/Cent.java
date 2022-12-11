@@ -17,6 +17,6 @@ public class Cent extends Loot {
      * @param lootValue - holds the value of a Cent object
      */
     public Cent(Image img, int x, int y, int lootValue) {
-        super(img, x, y, lootValue);
+        super(img, x, y, lootValue, "cent");
     }
 }

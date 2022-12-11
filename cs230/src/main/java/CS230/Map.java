@@ -19,6 +19,7 @@ public class Map {
     private int playerX;
     private int playerY;
     private int timerLeft;
+    private int levelID;
     private final int MAP_MAX_X;
     private final int MAP_MAX_Y;
     private Tile[][] tilesArray; //contains every tile (that is tile with 4 cells)
@@ -33,8 +34,9 @@ public class Map {
     private Lever wlever;
 
     private int lootcount;
-     private int starttime;
+    private int starttime;
     public int lootleft = lootcount;
+    private int score = 0;
 
     private ArrayList<Bomb> bombs = new ArrayList<>();
     /**
@@ -60,6 +62,8 @@ public class Map {
         this.starttime = mapRead.getStarttimer();
         this.flyingAssassins = mapRead.getFlyingAssassins();
         this.thieves = mapRead.getThieves();
+        this.levelID = mapRead.getLevelID();
+        this.score = mapRead.getScore();
     }
     /**
      * method that moves the player to the right
@@ -581,5 +585,21 @@ public class Map {
                 }
             }
         }
+    }
+
+    public int getLevelID() {
+        return levelID;
+    }
+
+    public int getScore() {
+        return score;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
+    }
+
+    public void setTimerLeft(int timerLeft) {
+        this.timerLeft = timerLeft;
     }
 }

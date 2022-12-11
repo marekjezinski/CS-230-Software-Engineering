@@ -153,6 +153,7 @@ public class ProfileFileManager {
      * @param username the username of the player
      */
     public void removeProfile(String username) {
+        System.out.println(username);
         int index = -1;
         for(int i = 0; i < playerProfiles.size(); i++) {
             if(playerProfiles.get(i).getUsername().equals(username)) {
@@ -199,10 +200,10 @@ public class ProfileFileManager {
         if(numOfScores > 10) {
             numOfScores = 10;
         }
-        leaderboard = "Leaderboard for level " + (levelID + 1) + "\n";
+        leaderboard = "Leaderboard for level " + (levelID + 1) + System.lineSeparator();
         for(int i = 0; i < numOfScores; i++) {
             leaderboard += String.valueOf((i + 1) + ": " + profilesSortedByScore.get(i).getUsername() + " "
-                    + profilesSortedByScore.get(i).getScore(levelID) + "\n");
+                    + profilesSortedByScore.get(i).getScore(levelID) + System.lineSeparator());
         }
         return leaderboard;
     }

@@ -2,6 +2,7 @@ package CS230;
 import CS230.items.*;
 import CS230.npc.*;
 import CS230.saveload.ProfileFileManager;
+import CS230.saveload.SaveGame;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -31,6 +32,7 @@ import javafx.util.Duration;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.invoke.StringConcatFactory;
 import java.util.*;
 import java.net.URISyntaxException;
 
@@ -70,8 +72,6 @@ public class Main extends Application {
     private Timeline timerTimeline;
     private Timeline scoreColourChanger;
     private Timeline bombTimeline;
-    private Leaderboard l = new Leaderboard();
-    private int timerLeft;
     private Loot currentGoal;
     //SmartThief
     public static Queue<int[]> path = new LinkedList<>();
@@ -80,7 +80,6 @@ public class Main extends Application {
             getResource("smartThief.png").toURI().toString());
     private SmartThief sThief = new SmartThief(1,1,SMImage);
     private int[] smThiefCords = {0,0};
-    private int score = 0;
     private String username;
     ArrayList<Integer> reload;
     private boolean hasGameStarted = false;
@@ -88,6 +87,7 @@ public class Main extends Application {
     private Text scoreText = new Text();
     private final Text messageOfDayText = new Text();
     private Label leaderboardText = new Label();
+    SaveGame save = new SaveGame();
     private MediaPlayer player = new MediaPlayer(new Media(new File("gamemusic.mp3").toURI().toString()));
     private int currentLevelID = 0;
     private ArrayList<Map> levels = new ArrayList<>();
@@ -99,7 +99,6 @@ public class Main extends Application {
     Map level5 = new Map("textfiles/maps/L4.0.txt");
     Map level6 = new Map("textfiles/maps/L5.0.txt");
     private ProfileFileManager profiles;
-    private boolean restartCheck = false;
 
     public Main() throws URISyntaxException {
     }
@@ -118,7 +117,7 @@ public class Main extends Application {
         profiles = new ProfileFileManager(levels.size());
 
         this.currentLevel = levels.get(currentLevelID);
-        this.timerLeft = this.currentLevel.getTimerLeft();
+
         // Load images. Note we use png images with a transparent background.
         playerImage = new Image(getClass().
                 getResource("player.png").toURI().toString());
@@ -199,12 +198,8 @@ public class Main extends Application {
 
                 }
             } catch (Exception e) {
-                
+
             }
-
-
-
-
             drawGame();
         }));
         timerTimeline.setCycleCount(Animation.INDEFINITE);
@@ -314,8 +309,9 @@ public class Main extends Application {
             gameOver();
         }
         checkItems();
+        this.leaderboardText.setText(profiles.getLeaderboardForLevelID(currentLevelID));
         profiles.updateMaxLvl(username, currentLevelID);
-        profiles.updateMaxScore(username, this.score, currentLevelID);
+        profiles.updateMaxScore(username, currentLevel.getScore(), currentLevelID);
         // Redraw game as the player may have moved.
         drawGame();
 
@@ -335,29 +331,27 @@ public class Main extends Application {
     private void checkItems() {
         playerX = player1.getX() / 2;
         playerY = player1.getY() / 2;
-        timerLeft += currentLevel.checkClocks(playerX , playerY);
+        currentLevel.setTimerLeft(currentLevel.getTimerLeft() + currentLevel.checkClocks(playerX , playerY));
         if(currentLevel.checkDoor(playerX, playerY)>0){
             if( currentLevel.getLoots().size() == 0 &&
                     currentLevel.checklever()) {
-                this.score = (int) (this.score + ceil(this.timerLeft / 3));
-                profiles.updateMaxScore(username, score, currentLevelID);
+                currentLevel.setScore((int) (currentLevel.getScore() + ceil(currentLevel.getTimerLeft() / 3)));
+                profiles.updateMaxScore(username, currentLevel.getScore(), currentLevelID);
                 currentLevelID++;
                 if(currentLevelID > levels.size() - 1) {
                     gameOver();
                 } else {
-                    this.score = 0;
                     currentLevel = levels.get(currentLevelID);
                     player1.setX(currentLevel.getPlayerX() * 2);
                     player1.setY(currentLevel.getPlayerY() * 2);
-                    timerLeft = currentLevel.getStartTimer();
 
-                    System.out.println(this.score);
+                    System.out.println(currentLevel.getScore());
                 }
             }
         }
         currentLevel.checkLoots(sThief.getX(), sThief.getY());
-        score += currentLevel.checkLoots(playerX, playerY );
-        scoreText.setText("Score: " + this.score);
+        currentLevel.setScore(currentLevel.getScore() + currentLevel.checkLoots(playerX, playerY ));
+        scoreText.setText("Score: " + currentLevel.getScore());
         scoreText.setFont(Font.font("arial",20));
         currentLevel.checkRLever(playerX , playerY );
         currentLevel.checkWLever(playerX , playerY );
@@ -463,15 +457,15 @@ public class Main extends Application {
      * Method that updates the timer
      */
     public void timer(){
-        if (this.timerLeft <= 6){
+        if (currentLevel.getTimerLeft() <= 6){
             timerText.setFill(Paint.valueOf("Red"));
         }
-        if (this.timerLeft > 6){
+        if (currentLevel.getTimerLeft() > 6){
             timerText.setFill(Paint.valueOf("Black"));
         }
-        if (this.timerLeft > 0) {
-            this.timerLeft = this.timerLeft - 1;
-            this.timerText.setText("Time remaining: " + this.timerLeft + "| Level "
+        if (currentLevel.getTimerLeft() > 0) {
+            currentLevel.setTimerLeft(currentLevel.getTimerLeft() - 1);
+            this.timerText.setText("Time remaining: " + currentLevel.getTimerLeft() + "| Level "
                     + (this.currentLevelID + 1)
                     + "| Loot remaining: " + (this.currentLevel.
                     getLoots().size()));
@@ -488,11 +482,6 @@ public class Main extends Application {
      */
     public void gameOver(){
         System.out.println("GAME OVER!!!");
-        System.out.println("You scored " + this.score + " points");
-        l.addScore(username,score);
-        System.out.println("---------------------------------");
-        System.out.println("Leaderboard:");
-        l.getTopScores();
         this.player.play();
         System.exit(0);
     }
@@ -577,27 +566,60 @@ public class Main extends Application {
                         this.scoreText.setFont(Font.font("arial",20));
                         toolbar.getChildren().add(this.scoreText);
                         toolbar.getChildren().add(timerText);
+                        Button sv = new Button("Save game");
+                        sv.setOnAction(g -> {
+                            save.update(currentLevel, currentLevel.getTimerLeft(), username);
+                            gameOver();
+                        });
+                        toolbar.getChildren().add(sv);
                         VBox leaderboard = new VBox();
                         leaderboard.setSpacing(5);
                         leaderboard.setPadding(new Insets(10, 10, 10, 10));
                         leaderboard.getChildren().add(leaderboardText);
                         root.setLeft(leaderboard);
-                        begin(0,lvl);
+                        begin(lvl,false);
                     });
                     toolbar.getChildren().add(b);
                 }
-                //stats.getChildren().clear();
+                if(save.doesUserSaveExists(String.valueOf(usernameIn.getText()))) {
+                    Button b = new Button("Saved game");
+                    b.setOnAction(f -> {
+                        String fileName = String.format("textfiles/saves/%s.txt", username);
+                        currentLevel = new Map(String.format(fileName));
+                        profileGUI.getChildren().clear();
+                        toolbar.getChildren().clear();
+                        this.timerText.setText("");
+                        this.timerText.setFont(Font.font("arial",20));
+                        this.scoreText.setText("");
+                        this.scoreText.setFont(Font.font("arial",20));
+                        toolbar.getChildren().add(this.scoreText);
+                        toolbar.getChildren().add(timerText);
+                        Button sv = new Button("Save game");
+                        sv.setOnAction(g -> {
+                            save.update(currentLevel, currentLevel.getTimerLeft(), username);
+                            gameOver();
+                        });
+                        toolbar.getChildren().add(sv);
+                        VBox leaderboard = new VBox();
+                        leaderboard.setSpacing(5);
+                        leaderboard.setPadding(new Insets(10, 10, 10, 10));
+                        leaderboard.getChildren().add(leaderboardText);
+                        root.setLeft(leaderboard);
+                        begin(currentLevel.getLevelID(), true);
+                    });
+                    toolbar.getChildren().add(b);
+                }
             }
             usernameIn.clear();
         });
 
-        removeUser.setOnAction(e -> {
-            usernameIn.clear();
-            profiles.removeProfile(usernameIn.getText());
+        removeUser.setOnAction(g -> {
+            profiles.removeProfile(String.valueOf(usernameIn.getText()));
             profileGUI.getChildren().removeAll(profileGUI.getChildren());
             for (String profilesUsername : profiles.getUsernames()) {
                 profileGUI.getChildren().add(new Label(profilesUsername));
             }
+            usernameIn.clear();
         });
 
 
@@ -609,64 +631,28 @@ public class Main extends Application {
 
     /**
      * Method for starting the game with appropriate variables from save
-     * @param scoreIn
      * @param levelIn
      */
-    public void begin(int scoreIn, int levelIn){
+    public void begin(int levelIn, boolean isGameLoaded){
         this.hasGameStarted = true;
-        timerTimeline.play();
         scoreColourChanger.play();
         this.player.play();
-        this.score = scoreIn;
-
 
         this.currentLevelID = levelIn;
-        this.timerText.setText("Time remaining: " + this.timerLeft + "| Level "
+        if(isGameLoaded == false) {
+            currentLevel = levels.get(currentLevelID);
+        }
+        timerTimeline.play();
+
+        this.timerText.setText("Time remaining: " + currentLevel.getTimerLeft() + "| Level "
                 + (this.currentLevelID + 1)
                 + "| Loot remaining: " + (this.currentLevel.getLoots().size()));
-        scoreText.setText("Score: " + this.score);
+        scoreText.setText("Score: " + currentLevel.getScore());
         this.leaderboardText.setText(profiles.getLeaderboardForLevelID(currentLevelID));
 
-
-        currentLevel = levels.get(currentLevelID);
         player1.setX(currentLevel.getPlayerX() * 2);
         player1.setY(currentLevel.getPlayerY() * 2);
-        timerLeft = currentLevel.getStartTimer();
-
-        if (this.restartCheck == true) {
-            playerX = this.reload.get(2);
-            playerY = this.reload.get(3);
-            timerLeft = this.reload.get(4);
-            if (this.reload.get(5) == -1) {
-                this.currentLevel.getRGate().setX(-1);
-                this.currentLevel.getRGate().setY(-1);
-            }
-            if (this.reload.get(6) == -1) {
-                this.currentLevel.getWGate().setX(-1);
-                this.currentLevel.getWGate().setY(-1);
-            }
-            if (this.reload.get(7) == -1){
-                this.currentLevel.getRLever().setX(-1);
-                this.currentLevel.getRLever().setY(-1);
-            }
-            if (this.reload.get(8) == -1){
-                this.currentLevel.getWLever().setX(-1);
-                this.currentLevel.getWLever().setY(-1);
-            }
-
-            int bombMover = 0;
-            for (Integer integer : reload) {
-                System.out.println(integer);
-            }
-            for (int x = 9; x < this.reload.size(); x++){
-                if(this.reload.get(x) == -1){
-                    this.currentLevel.getBombs().get(bombMover).setX(-1);
-                    this.currentLevel.getBombs().get(bombMover).setY(-1);
-                    System.out.println("yes");
-                    bombMover++;
-                }
-            }
-        }
+        currentLevel.setTimerLeft(currentLevel.getStartTimer());
         drawGame();
     }
     /**

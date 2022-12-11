@@ -85,4 +85,8 @@ public class FlyingAssassin extends NPC {
         }
         return false;
     }
+
+    public char getDirection() {
+        return direction;
+    }
 }
