@@ -38,21 +38,25 @@ public class SmartThief extends NPC {
                 if (this.getX() > 0) {
                     this.setX(currentLevel.moveUp(this.getX(), this.getY()));
                 }
+                currentLevel.checkLoots(this.x,this.y);
                 break;
             case 1:
                 if (this.getX() < 18) {
                     this.setX(currentLevel.moveDown(this.getX(), this.getY()));
                 }
+                currentLevel.checkLoots(this.x,this.y);
                 break;
             case 2:
                 if (this.getX() < 28) {
                     this.setX(currentLevel.moveRight(this.getX(), this.getY()));
                 }
+                currentLevel.checkLoots(this.x,this.y);
                 break;
             case 3:
                 if (this.getX() > 0) {
                     this.setX(currentLevel.moveLeft(this.getX(), this.getY()));
                 }
+                currentLevel.checkLoots(this.x,this.y);
                 break;
             default:
                 break;

@@ -185,14 +185,13 @@ public class Main extends Application {
                 }
             }
             currentLevel.isFlCollidedWithNPC();
-            //search for a new closest item if its not there
-            // uncomment to try smart thief
-
-           /* SmartThiefPath sPath = new SmartThiefPath(currentLevel); //create path
-            currentGoal = sPath.findClosestLoot(currentLevel,sThief); //pass the current level into the path goal finder
 
 
+           /*SmartThiefPath sPath = new SmartThiefPath(currentLevel); //create path
+            currentGoal = sPath.findClosestLoot(currentLevel,sThief); //search for nearest item
 
+
+            //x + y co-ords of the nearest item
             int goalX = sPath.getPathGoalX();
             int goalY = sPath.getPathGoalY();
             // if a path is found which isn't 0,0 then move randomly through the level
@@ -334,6 +333,7 @@ public class Main extends Application {
                 System.out.println(this.score);
             }
         }
+        currentLevel.checkLoots(sThief.getX(), sThief.getY());
         score += currentLevel.checkLoots(playerX, playerY );
         scoreText.setText("Score: " + this.score);
         scoreText.setFont(Font.font("arial",20));
@@ -415,6 +415,8 @@ public class Main extends Application {
 
         /*int[] smThiefCoords = path.poll();
         if (smThiefCoords != null) {
+            sThief.setX(smThiefCoords[0]);
+            sThief.setY(smThiefCoords[1]);
             gc.drawImage(sThief.getImg(), smThiefCoords[0]*2  * GRID_CELL_WIDTH, smThiefCoords[1]*2 * GRID_CELL_HEIGHT);
         } else {
             gc.drawImage(sThief.getImg(), sThief.getX()*2 * GRID_CELL_WIDTH, sThief.getY() * 2 * GRID_CELL_HEIGHT);
