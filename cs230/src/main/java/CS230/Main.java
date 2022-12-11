@@ -188,7 +188,7 @@ public class Main extends Application {
             //search for a new closest item if its not there
             // uncomment to try smart thief
 
-            SmartThiefPath sPath = new SmartThiefPath(currentLevel); //create path
+           /* SmartThiefPath sPath = new SmartThiefPath(currentLevel); //create path
             currentGoal = sPath.findClosestLoot(currentLevel,sThief); //pass the current level into the path goal finder
 
 
@@ -204,7 +204,7 @@ public class Main extends Application {
                 System.out.println("No path found");//for debugging
                 sThief.randomMovement(currentLevel);
 
-            }
+            }*/
 
 
 
@@ -413,12 +413,12 @@ public class Main extends Application {
 
         gc.drawImage(player1.getCharImage(), player1.getX() * GRID_CELL_WIDTH, player1.getY() * GRID_CELL_HEIGHT);
 
-        int[] smThiefCoords = path.poll();
+        /*int[] smThiefCoords = path.poll();
         if (smThiefCoords != null) {
             gc.drawImage(sThief.getImg(), smThiefCoords[0]*2  * GRID_CELL_WIDTH, smThiefCoords[1]*2 * GRID_CELL_HEIGHT);
         } else {
             gc.drawImage(sThief.getImg(), sThief.getX()*2 * GRID_CELL_WIDTH, sThief.getY() * 2 * GRID_CELL_HEIGHT);
-        }
+        }*/
 
         gc.setFill(Color.GRAY);
         //Draw lines in canvas
