@@ -14,6 +14,9 @@ import java.util.Scanner;
  * Class for adding scores to the leaderboard as well
  * as obtaining the top 10 scores
  * @author Tom Stevens
+ * @author Caleb Ocansey
+ * @author Alex
+ * @author Marek Jezinski
  * @version 1.0
  */
 public class Leaderboard extends SaveLoad {

@@ -4,7 +4,7 @@ import javafx.scene.image.Image;
 
 /**
  * Class that creates a Player object,
- * @author
+ * @author Caleb Ocansey
  * @version 1.0
  */
 

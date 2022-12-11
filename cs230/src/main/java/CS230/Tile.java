@@ -1,5 +1,10 @@
 package CS230;
 
+/**
+ * Tile class for the game
+ * @author Marek Jezinski
+ * @version 1.0
+ */
 public class Tile {
     private Cell[] cells = new Cell[4];
 

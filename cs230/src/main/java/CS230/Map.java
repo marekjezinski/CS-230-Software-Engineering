@@ -7,7 +7,10 @@ import java.util.ArrayList;
 
 /**
  * Class that holds the Map where the player will play the game
- * @author
+ * @author Marek Jezinski
+ * @author Tom Stevens
+ * @author Wiktoria
+ * @author Kam Leung
  * @version 1.0
  */
 
