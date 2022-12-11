@@ -144,7 +144,7 @@ public class ProfileFileManager {
         ArrayList<String> usernames = new ArrayList<>();
         usernames.add("Profiles:");
         for (PlayerProfile playerProfile : playerProfiles) {
-            usernames.add(playerProfile.getUsername() + ": max level " + playerProfile.getMaxLevel());
+            usernames.add(playerProfile.getUsername() + ": max level " + (playerProfile.getMaxLevel() + 1));
         }
         return(usernames);
     }
