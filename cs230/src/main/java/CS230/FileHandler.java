@@ -32,7 +32,7 @@ public class FileHandler {
      * @param timerLeft the timer left for the player
      * @param rgate the rusty gate on the level
      * @param wgate the wooden gate on the game
-     * @param rlever the rustylever on the level
+     * @param rlever the rusty lever on the level
      * @param wlever  the wooden lever on the level
      * @param bombInMap the bombs in the map
      */
@@ -111,7 +111,8 @@ public class FileHandler {
             startState.add(wlever);
             /*for (int i = 0; i < bombCoords.size(); i++){
                 startState.add(bombCoords.get(i));
-            }*/
+            }
+            */
 
 
         } catch (FileNotFoundException e) {
@@ -163,7 +164,7 @@ public class FileHandler {
      * method that checks what levels
      * are unlocked to the user
      * @param username the username of the player
-     * @return level the level user had unocked
+     * @return level the level user had unlocked
      */
     public int checkLevel (String username) {
         int level = 0;

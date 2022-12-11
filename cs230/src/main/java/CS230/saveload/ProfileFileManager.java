@@ -15,9 +15,13 @@ import java.util.Scanner;
  * @author Tom Stevens
  * @version 1.0
  */
+
 public class ProfileFileManager {
     private ArrayList<PlayerProfile> playerProfiles = new ArrayList<>();
 
+    /**
+     * method for managing the profiles saved on a txt file
+     */
     public ProfileFileManager() {
         try{
             Scanner sc = new Scanner(new File("profiles.txt"));
@@ -47,6 +51,9 @@ public class ProfileFileManager {
             System.exit(1);
         }
     }
+    /**
+     * method for updating the profile file
+     */
 
     private void updateFile() {
         File f = new File("profiles.txt");
@@ -69,7 +76,11 @@ public class ProfileFileManager {
 
 
     }
-
+    /**
+     * method for updating the max level player had reached
+     * @param username the username of the player
+     * @param maxLvl the max level of the player
+     */
     public void updateMaxLvl(String username, int maxLvl) {
         for(int i = 0; i < playerProfiles.size(); i++) {
             if(playerProfiles.get(i).getUsername().equals(username)) {
@@ -80,7 +91,11 @@ public class ProfileFileManager {
         }
         updateFile();
     }
-
+    /**
+     * method for updating the max score player had gained
+     * @param username the username of the player
+     * @param maxScore the maximum score of the username.
+     */
     public void updateMaxScore(String username, int maxScore) {
         for(int i = 0; i < playerProfiles.size(); i++) {
             if(playerProfiles.get(i).getUsername().equals(username)) {
@@ -91,7 +106,10 @@ public class ProfileFileManager {
         }
         updateFile();
     }
-
+    /**
+     * method for checking the username is vaild
+     * @param username the username inputted
+     */
     public boolean isValidName(String username) {
         for (PlayerProfile playerProfile : playerProfiles) {
             if(playerProfile.getUsername().equals(username)) {
@@ -102,7 +120,10 @@ public class ProfileFileManager {
     }
 
     //public
-
+    /**
+     * method for adding a new profile to the txt
+     * @param username the username of the player
+     */
     public void addProfile(String username) {
         boolean exists = false;
         for (PlayerProfile playerProfile : playerProfiles) {
@@ -115,7 +136,9 @@ public class ProfileFileManager {
         }
         updateFile();
     }
-
+    /**
+     * method for getting usernames
+     */
     public ArrayList<String> getUsernames() {
         ArrayList<String> usernames = new ArrayList<>();
         usernames.add("Profiles:");
@@ -124,7 +147,10 @@ public class ProfileFileManager {
         }
         return(usernames);
     }
-
+    /**
+     * method for removing the profile
+     * @param username the username of the player
+     */
     public void removeProfile(String username) {
         int index = -1;
         for(int i = 0; i < playerProfiles.size(); i++) {
@@ -137,7 +163,10 @@ public class ProfileFileManager {
         }
         updateFile();
     }
-
+    /**
+     * method for getting the score of player
+     * @param username the username of the player
+     */
     public int getScore(String username) {
         for (PlayerProfile playerProfile : playerProfiles) {
             if(playerProfile.getUsername().equals(username)) {
@@ -146,7 +175,10 @@ public class ProfileFileManager {
         }
         return(-1);
     }
-
+    /**
+     * method for getting the Max level of the player
+     * @param username the username of the player
+     */
     public int getMaxLvl(String username) {
         for (PlayerProfile playerProfile : playerProfiles) {
             if(playerProfile.getUsername().equals(username)) {
