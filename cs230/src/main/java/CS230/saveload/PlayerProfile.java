@@ -60,5 +60,4 @@ public class PlayerProfile {
             return username;
         }
 
-
 }

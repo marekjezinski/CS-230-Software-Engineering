@@ -192,21 +192,32 @@ public class ProfileFileManager {
         for (PlayerProfile playerProfile : playerProfiles) {
             profilesSortedByScore.add(playerProfile);
         }
-        /*Collections.sort(profilesSortedByScore, new Comparator<PlayerProfile>() {
-            @Override
-            public int compare(PlayerProfile obj1, PlayerProfile obj2) {
-                return obj1.getScore(levelID).compareTo(obj2.getScore(levelID));
-            }
-        });*/
+
+        profilesSortedByScore = sortProfilesByScore(profilesSortedByScore, levelID);
+
         int numOfScores = profilesSortedByScore.size();
         if(numOfScores > 10) {
             numOfScores = 10;
         }
-        leaderboard = "Leaderboard for level " + levelID + "\n";
+        leaderboard = "Leaderboard for level " + (levelID + 1) + "\n";
         for(int i = 0; i < numOfScores; i++) {
-            leaderboard += String.valueOf(profilesSortedByScore.get(i).getScore(levelID) + "\n");
+            leaderboard += String.valueOf((i + 1) + ": " + profilesSortedByScore.get(i).getUsername() + " "
+                    + profilesSortedByScore.get(i).getScore(levelID) + "\n");
         }
         return leaderboard;
+    }
+
+    private ArrayList<PlayerProfile> sortProfilesByScore(ArrayList<PlayerProfile> p, int levelID) {
+        for(int i = 0; i < p.size(); i++) {
+            for(int j = 0; j < p.size() - 1; j++) {
+                if(p.get(j).getScore(levelID) < p.get(j + 1).getScore(levelID)) {
+                    PlayerProfile temp = p.get(j);
+                    p.set(j, p.get(j+1));
+                    p.set(j+1, temp);
+                }
+            }
+        }
+        return p;
     }
 }
 

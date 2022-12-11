@@ -239,9 +239,7 @@ public class Main extends Application {
                 // currently treats a player like loot idk why
             } else {
                 if (currentLevel.getLoots().size() > 0) {
-                    System.out.println("No path found");//for debugging
                     sThief.randomMovement(currentLevel);
-
                 }
 
             }
@@ -620,6 +618,7 @@ public class Main extends Application {
                 for (String profilesUsername : profiles.getUsernames()) {
                     profileGUI.getChildren().add(new Label(profilesUsername));
                 }
+                usernameIn.clear();
             }
         });
         //load user
@@ -651,9 +650,11 @@ public class Main extends Application {
                 }
                 //stats.getChildren().clear();
             }
+            usernameIn.clear();
         });
 
         removeUser.setOnAction(e -> {
+            usernameIn.clear();
             profiles.removeProfile(usernameIn.getText());
             profileGUI.getChildren().removeAll(profileGUI.getChildren());
             for (String profilesUsername : profiles.getUsernames()) {
