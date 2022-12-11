@@ -23,10 +23,10 @@ public class SmartThiefSearch {
     /**
      * Method that initiates a BFS and returns boolean if it's the goal or not
      * @param tiles
-     * @param startRow
-     * @param startCol
-     * @param goalRow
-     * @param goalCol
+     * @param startRow  the row of the SmartThief
+     * @param startCol  the column of the SmartThief
+     * @param goalRow the row of the nearest item
+     * @param goalCol the column of the nearest item
      * @return boolean true if there is a path to the goal
      */
     public static boolean bfs(Map x, Tile[][] tiles, int startRow,

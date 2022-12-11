@@ -15,7 +15,7 @@ public class Player {
     private Image charImage;
 
     /**
-     * constructor that creats a Player object
+     * constructor that creates a Player object
      * @param x - Player's x coordinate
      * @param y - Player's y coordinate
      * @param pic - Graphic that represents a Player
