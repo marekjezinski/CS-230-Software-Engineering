@@ -187,9 +187,10 @@ public class Main extends Application {
             currentLevel.isFlCollidedWithNPC();
 
 
-           /*SmartThiefPath sPath = new SmartThiefPath(currentLevel); //create path
-            currentGoal = sPath.findClosestLoot(currentLevel,sThief); //search for nearest item
-
+           SmartThiefPath sPath = new SmartThiefPath(currentLevel); //create path
+            if(currentLevel.getLoots().size() > 0) {
+                currentGoal = sPath.findClosestLoot(currentLevel, sThief); //search for nearest item
+            }
 
             //x + y co-ords of the nearest item
             int goalX = sPath.getPathGoalX();
@@ -200,10 +201,13 @@ public class Main extends Application {
                 path = SmartThiefSearch.getQueue();
                 //System.out.println("path X; "+sPath.getPathGoalX()+" Y: "+ sPath.getPathGoalY()); //currently treats a player like loot idk why
             } else {
-                System.out.println("No path found");//for debugging
-                sThief.randomMovement(currentLevel);
+                if (currentLevel.getLoots().size() > 0) {
+                    System.out.println("No path found");//for debugging
+                    sThief.randomMovement(currentLevel);
 
-            }*/
+                }
+
+            }
 
 
 
@@ -413,14 +417,14 @@ public class Main extends Application {
 
         gc.drawImage(player1.getCharImage(), player1.getX() * GRID_CELL_WIDTH, player1.getY() * GRID_CELL_HEIGHT);
 
-        /*int[] smThiefCoords = path.poll();
+        int[] smThiefCoords = path.poll();
         if (smThiefCoords != null) {
             sThief.setX(smThiefCoords[0]);
             sThief.setY(smThiefCoords[1]);
             gc.drawImage(sThief.getImg(), smThiefCoords[0]*2  * GRID_CELL_WIDTH, smThiefCoords[1]*2 * GRID_CELL_HEIGHT);
         } else {
             gc.drawImage(sThief.getImg(), sThief.getX()*2 * GRID_CELL_WIDTH, sThief.getY() * 2 * GRID_CELL_HEIGHT);
-        }*/
+        }
 
         gc.setFill(Color.GRAY);
         //Draw lines in canvas
