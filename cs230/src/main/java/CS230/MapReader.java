@@ -36,6 +36,7 @@ public class MapReader {
     private ArrayList<Bomb> bombs = new ArrayList<>();
     private ArrayList<FlyingAssassin> flyingAssassins = new ArrayList<>();
     private ArrayList<Thief> thieves = new ArrayList<>();
+    private ArrayList<SmartThief> smarts = new ArrayList<>();
     private String fileName;
     private final int CLOCK_TIME_ADDED = 20;
     private final int CENT_VALUE = 10;
@@ -152,9 +153,8 @@ public class MapReader {
                     /*Thief thief = new Thief(in.nextInt(), in.nextInt(),
                             new Image(getClass().getResource("thief.png").toURI().toString()));*/
                 } else if (type.equals("smartthief")) {
-                    SmartThief smart = new SmartThief(
-                            in.nextInt(), in.nextInt(),
-                            new Image(getClass().getResource("smartthief.png").toURI().toString()));
+                    smarts.add(new SmartThief(in.nextInt(), in.nextInt(),
+                            new Image(getClass().getResource("smartThief.png").toURI().toString())));
                 } else if (type.equals("flyingassassin")) {
                     flyingAssassins.add(new FlyingAssassin(new Image(getClass().getResource("flyingassassin.png")
                             .toURI().toString()), in.nextInt(), in.nextInt(), in.next().toLowerCase().charAt(0)));
