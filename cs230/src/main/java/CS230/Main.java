@@ -214,8 +214,10 @@ public class Main extends Application {
 
             this.smThiefCoords = path.poll();
             if (this.smThiefCoords != null) {
-                sThief.setX(this.smThiefCoords[0]);
-                sThief.setY(this.smThiefCoords[1]);
+                if(currentLevel.isLegalMovement(this.smThiefCoords[0],this.smThiefCoords[1])) {
+                    sThief.setX(this.smThiefCoords[0]);
+                    sThief.setY(this.smThiefCoords[1]);
+                }
             }
 
             //x + y co-ords of the nearest item
