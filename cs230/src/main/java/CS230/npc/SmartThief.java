@@ -1,15 +1,19 @@
 package CS230.npc;
 
+import CS230.Map;
+import CS230.Tile;
+import CS230.items.Loot;
 import javafx.scene.image.Image;
 
+import java.util.Random;
+
 /**
- * Class that creates a SmartThief NPC, inherits from the Character superclass
- * @author
+ * Class that creates a SmartThief NPC, inherits from the NPC abstract superclass
+ * @author Caleb Ocansey
  * @version 1.0
  */
 public class SmartThief extends NPC {
 
-    //private currentPath --  a current path for the npc to move on
     /**
      * constructor for the NPC: SmartThief
      * @param x - x coordinate
@@ -20,13 +24,40 @@ public class SmartThief extends NPC {
         super(smThiefPic,x,y);
     }
 
-    public SmartThief (int x, int y) {
-        super(x,y);
+    /**
+     *  randomly moves if no valid path is found
+     * @param currentLevel
+     */
+    public void randomMovement(Map currentLevel){
+        Tile[][] currentMap = currentLevel.getTilesArray();
+        Random rand = new Random();
+        int directionChoice = rand.nextInt(3);
+
+        switch (directionChoice){
+            case 0:
+                if (this.getX() > 0) {
+                    this.setX(currentLevel.moveUp(this.getX(), this.getY()));
+                }
+                break;
+            case 1:
+                if (this.getX() < 18) {
+                    this.setX(currentLevel.moveDown(this.getX(), this.getY()));
+                }
+                break;
+            case 2:
+                if (this.getX() < 28) {
+                    this.setX(currentLevel.moveRight(this.getX(), this.getY()));
+                }
+                break;
+            case 3:
+                if (this.getX() > 0) {
+                    this.setX(currentLevel.moveLeft(this.getX(), this.getY()));
+                }
+                break;
+            default:
+                break;
+        }
+
     }
 
-    //to be implemented after smartthief map BFS
-    /**
-     *
-     */
-    //public void moveSmartThief(){}
 }

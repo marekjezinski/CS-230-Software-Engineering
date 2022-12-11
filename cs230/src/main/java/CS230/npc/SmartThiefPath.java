@@ -10,7 +10,7 @@ import java.util.ArrayList;
 //unsure about what this class does
 
 /**
- * Class that creates a path for the smart thief to follow
+ * Class that finds the current goal (item) for the smart thief to follow
  * @author Caleb Ocansey
  * @version 1.0
  */
@@ -19,30 +19,30 @@ public class SmartThiefPath {
     private ArrayList<Loot> currentLoot;
     private Tile[][] currentTileArray;
     private int pathGoalX,pathGoalY;
-    //queue
+    private Loot closest;
 
     /**
-     * constructor
-     * @param currentLoot gets current loot
+     *
+     * @param currentLvl
      */
-    public SmartThiefPath(Map currentLvl){
-        this.currentLoot = currentLvl.getLoots();
-        currentTileArray = currentLvl.getTilesArray();
+    public SmartThiefPath(Map currentLevel){
+        this.currentLoot = currentLevel.getLoots();
+        currentTileArray = currentLevel.getTilesArray();
     }
 
     /**
-     * method that finds the closest loot by calculating x and y distance from
-     * the Smart Thief NPC and sets it as the goal
-     * @param s - a smartAssassin
+     *
+     * @param currentLevel the current level of the game
+     * @param s a SmartThief
+     * @return closest loot or nothing if no Loot is found
      */
-    public void findClosestLoot(SmartThief s){
+    public Loot findClosestLoot(Map currentLevel, SmartThief s){
         int xDist,yDist;
         int minDist = 999;
         Loot closest = null;
-        for (Loot l: this.currentLoot) {
-            System.out.println("L val: "+l.getLootValue());
-            xDist = Math.abs(s.getX() - l.getX());
-            yDist = Math.abs(s.getY() - l.getY());
+        for (Loot l: currentLevel.getLoots()) {
+            xDist = Math.abs(s.getX() - l.getX()); // calculates distance from x
+            yDist = Math.abs(s.getY() - l.getY()); // calculates distance from y
             int dist = xDist + yDist;
             if (dist < minDist){
                 closest = l;
@@ -51,11 +51,11 @@ public class SmartThiefPath {
 
         }
 
-        if (closest != null){ //set the goal and also print its coords - for testing
+        if (closest != null){ //set the goal and also return the closest item
             setPathGoal(closest.getX(), closest.getY());
-            System.out.println("X: "+closest.getX()+" Y:"+closest.getY());
+            return closest;
         }
-
+        return null;
     }
 
     /**
@@ -75,9 +75,9 @@ public class SmartThiefPath {
     }
 
     /**
-     * method that sets the PathGoal
-     * @param x
-     * @param y
+     * method that sets the path goal which will be used by SmartThiefSearch to get the shortest path
+     * @param x the x of the path goal
+     * @param y the y of the path goal
      */
     public void setPathGoal(int x, int y){
         this.pathGoalX = x;
@@ -86,10 +86,10 @@ public class SmartThiefPath {
 
     /**
      * method that checks if there's a valid move between 2 tiles before adding to queue
-     * @param x1
-     * @param y1
-     * @param x2
-     * @param y2
+     * @param x1 the x coordinate of the current tile
+     * @param y1 the y coordinate of the current tile
+     * @param x2 the x coordinate of the desired next tile
+     * @param y2 the y coordinate of the desired next tile
      * @return boolean, whether the move can be made or not
      */
     public boolean isValid(int x1,int y1,int x2, int y2){
@@ -101,16 +101,4 @@ public class SmartThiefPath {
 
     }
 
-
-
-
-    //public void BFSsearch -- search whole map + add path to queue while item exists in arraylist
-
-    /*public static void main(String[] args){ for testing
-        Map level1 = new Map("cs230/15x10.txt");
-        SmartThief s = new SmartThief(0,0);
-        SmartThiefPath smartThiefPath = new SmartThiefPath(level1);
-        smartThiefPath.findClosestLoot(s);
-    }*/
-    //public void valid(){}
 }

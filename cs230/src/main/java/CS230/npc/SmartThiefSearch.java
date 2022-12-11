@@ -13,12 +13,15 @@ import java.util.Queue;
  */
 public class SmartThiefSearch {
 
-    public static List<int[]> path = new LinkedList<>();
+    private static final int MAX_STEPS = 100;
+    private static Queue<int[]> path = new LinkedList<>();
     private static final int[][] DIRS = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}}; //used to iterate through all the directions of grid
 
     public static boolean bfs(Tile[][] tiles, int startRow, int startCol, int goalRow, int goalCol) {
-        int rows = tiles.length;
-        int cols = tiles[0].length;
+        int rows = 15;
+        int cols = 10;
+
+        int steps=0;
 
         boolean[][] visited = new boolean[rows][cols];
 
@@ -30,7 +33,9 @@ public class SmartThiefSearch {
         visited[startRow][startCol] = true;
         queue.add(new int[]{startRow, startCol});
 
-        while (!queue.isEmpty()) {
+        while (!queue.isEmpty() && steps <= MAX_STEPS) {
+            steps++;
+
             // dequeue the current cell
             int[] curr = queue.poll();
             int currRow = curr[0];
@@ -49,17 +54,26 @@ public class SmartThiefSearch {
                 int nextRow = currRow + dir[0];
                 int nextCol = currCol + dir[1];
 
+                int rowDiff = currRow - nextRow;
+                int colDiff = currCol - nextCol;
                 // check if the next cell is valid, not visited, and has at least one common color with the current cell
                 if (nextRow >= 0 && nextRow < rows && nextCol >= 0 && nextCol < cols && !visited[nextRow][nextCol] &&
-                        tiles[nextRow][nextCol].isLegalJump(tiles[currRow][currCol])) {
+                        tiles[currRow][currCol].isLegalJump(tiles[nextRow][nextCol]) && (rowDiff <=1 && colDiff <= 1)) {
                     // mark the cell as visited and enqueue it
                     visited[nextRow][nextCol] = true;
                     queue.add(new int[]{nextRow, nextCol, currRow, currCol});
+
+
                 }
             }
         }
 
+
         // if reached here, no path to the goal
         return false;
+    }
+
+    public static Queue<int[]> getQueue(){
+        return path;
     }
 }
