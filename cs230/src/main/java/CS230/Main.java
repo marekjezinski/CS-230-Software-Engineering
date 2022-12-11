@@ -195,11 +195,17 @@ public class Main extends Application {
             //x + y co-ords of the nearest item
             int goalX = sPath.getPathGoalX();
             int goalY = sPath.getPathGoalY();
-            // if a path is found which isn't 0,0 then move randomly through the level
+            // if a path is found which isn't 0,0
+            // then move randomly through the level
             if (SmartThiefSearch.bfs(currentLevel.getTilesArray(),
-                    sThief.getX(),sThief.getY(),sPath.getPathGoalX(),sPath.getPathGoalY()) && !(goalX==0 && goalY ==0)){
+                    sThief.getX(),sThief.getY(),sPath.
+                            getPathGoalX(),
+                    sPath.getPathGoalY()) && !(goalX==0 && goalY ==0)){
                 path = SmartThiefSearch.getQueue();
-                //System.out.println("path X; "+sPath.getPathGoalX()+" Y: "+ sPath.getPathGoalY()); //currently treats a player like loot idk why
+                //System.out.println("path X;
+                // "+sPath.getPathGoalX()+" Y: "
+                // + sPath.getPathGoalY());
+                // currently treats a player like loot idk why
             } else {
                 if (currentLevel.getLoots().size() > 0) {
                     System.out.println("No path found");//for debugging
@@ -222,16 +228,25 @@ public class Main extends Application {
                 if (secToExplode != -2) {
                     try {
                         if (secToExplode == 3) {
-                            bombs.get(i).setImg(new Image(getClass().getResource("bomb3.png").toURI().toString()));
+                            bombs.get(i).
+                                    setImg(new Image(getClass().
+                                            getResource("bomb3.png").
+                                            toURI().toString()));
                         }
                         else if (secToExplode == 2) {
-                            bombs.get(i).setImg(new Image(getClass().getResource("bomb2.png").toURI().toString()));
+                            bombs.get(i).setImg(new Image(getClass().
+                                    getResource("bomb2.png").
+                                    toURI().toString()));
                         }
                         else if (secToExplode == 1) {
-                            bombs.get(i).setImg(new Image(getClass().getResource("bomb1.png").toURI().toString()));
+                            bombs.get(i).setImg(new Image(getClass().
+                                    getResource("bomb1.png").
+                                    toURI().toString()));
                         }
                         else if (secToExplode == 0) {
-                            bombs.get(i).setImg(new Image(getClass().getResource("bomb0.png").toURI().toString()));
+                            bombs.get(i).setImg(new Image(getClass().
+                                    getResource("bomb0.png").
+                                    toURI().toString()));
                             currentLevel.explodeBomb(i);
 
                         }
@@ -251,7 +266,8 @@ public class Main extends Application {
         }));
         bombTimeline.setCycleCount(Animation.INDEFINITE);
 
-        scoreColourChanger = new Timeline(new KeyFrame(Duration.millis(500), event -> scoreColour()));
+        scoreColourChanger = new Timeline(
+                new KeyFrame(Duration.millis(500), event -> scoreColour()));
         scoreColourChanger.setCycleCount(Animation.INDEFINITE);
 
         // Display the scene on the stage
@@ -270,28 +286,32 @@ public class Main extends Application {
             case RIGHT:
                 // Right key was pressed. So move the player right by one cell.
                 if (player1.getX() < 28 && this.hasGameStarted) {
-                    player1.setX(currentLevel.moveRight(player1.getX(), player1.getY()));
+                    player1.setX(currentLevel.
+                            moveRight(player1.getX(), player1.getY()));
                 }
                 break;
 
             case LEFT:
                 // Left key was pressed. So move the player left by one cell.
                 if (player1.getX() > 0 && this.hasGameStarted ) {
-                    player1.setX(currentLevel.moveLeft(player1.getX(), player1.getY()));
+                    player1.setX(currentLevel.
+                            moveLeft(player1.getX(), player1.getY()));
                 }
                 break;
 
             case UP:
                 // Up key was pressed. So move the player up by one cell.
                 if (player1.getY() > 0 && this.hasGameStarted) {
-                    player1.setY(currentLevel.moveUp(player1.getX(), player1.getY()));
+                    player1.setY(currentLevel.
+                            moveUp(player1.getX(), player1.getY()));
                 }
                 break;
 
             case DOWN:
                 // Down key was pressed. So move the player down by one cell.
                 if (player1.getY() < 18 && this.hasGameStarted) {
-                    player1.setY(currentLevel.moveDown(player1.getX(), player1.getY()));
+                    player1.setY(currentLevel.
+                            moveDown(player1.getX(), player1.getY()));
                 }
                 break;
 
@@ -310,7 +330,9 @@ public class Main extends Application {
 
 
 
-        // Consume the event. This means we mark it as dealt with. This stops other GUI nodes (buttons etc.) responding to it.
+        // Consume the event.
+        // This means we mark it as dealt with.
+        // his stops other GUI nodes (buttons etc.) responding to it.
         event.consume();
     }
 
@@ -376,24 +398,30 @@ public class Main extends Application {
         Cell[][] cellsArray = currentLevel.getCellsArray();
         for (int y = 0; y < cellsArray[0].length; y++){
             for (int x = 0; x < cellsArray.length; x++) {
-                gc.drawImage(cellsArray[x][y].getCellImage(), x * GRID_CELL_WIDTH, y * GRID_CELL_HEIGHT);
+                gc.drawImage(cellsArray[x][y].getCellImage(),
+                        x * GRID_CELL_WIDTH, y * GRID_CELL_HEIGHT);
             }
         }
 
         Door door = currentLevel.getDoor();
-        gc.drawImage(door.getImg(), door.getX() * GRID_CELL_WIDTH * 2, door.getY() * GRID_CELL_HEIGHT * 2);
+        gc.drawImage(door.getImg(), door.getX()
+                * GRID_CELL_WIDTH * 2, door.getY() * GRID_CELL_HEIGHT * 2);
 
         Gate rgate =  currentLevel.getRGate();
-        gc.drawImage(rgate.getImg(), rgate.getX() * GRID_CELL_WIDTH * 2, rgate.getY() * GRID_CELL_HEIGHT * 2);
+        gc.drawImage(rgate.getImg(), rgate.getX()
+                * GRID_CELL_WIDTH * 2, rgate.getY() * GRID_CELL_HEIGHT * 2);
 
         Lever rlever =  currentLevel.getRLever();
-        gc.drawImage(rlever.getImg(), rlever.getX() * GRID_CELL_WIDTH * 2, rlever.getY() * GRID_CELL_HEIGHT * 2);
+        gc.drawImage(rlever.getImg(), rlever.getX()
+                * GRID_CELL_WIDTH * 2, rlever.getY() * GRID_CELL_HEIGHT * 2);
 
         Gate wgate =  currentLevel.getWGate();
-        gc.drawImage(wgate.getImg(), wgate.getX() * GRID_CELL_WIDTH * 2, wgate.getY() * GRID_CELL_HEIGHT * 2);
+        gc.drawImage(wgate.getImg(), wgate.getX()
+                * GRID_CELL_WIDTH * 2, wgate.getY() * GRID_CELL_HEIGHT * 2);
 
         Lever wlever =  currentLevel.getWLever();
-        gc.drawImage(wlever.getImg(), wlever.getX() * GRID_CELL_WIDTH * 2, wlever.getY() * GRID_CELL_HEIGHT * 2);
+        gc.drawImage(wlever.getImg(), wlever.getX()
+                * GRID_CELL_WIDTH * 2, wlever.getY() * GRID_CELL_HEIGHT * 2);
 
         ArrayList<Bomb> bombs = currentLevel.getBombs();
         bombs.forEach(e ->  gc.drawImage(e.getImg(),
@@ -401,29 +429,39 @@ public class Main extends Application {
 
         ArrayList<Clock> clocks = currentLevel.getClocks();
         clocks.forEach(e ->  gc.drawImage(e.getImg(),
-                e.getX() * GRID_CELL_WIDTH * 2, e.getY() * GRID_CELL_HEIGHT * 2));
+                e.getX() * GRID_CELL_WIDTH * 2, e.getY() *
+                        GRID_CELL_HEIGHT * 2));
 
         ArrayList<Loot> loots = currentLevel.getLoots();
         loots.forEach(e ->  gc.drawImage(e.getImg(),
-                e.getX() * GRID_CELL_WIDTH * 2, e.getY() * GRID_CELL_HEIGHT * 2));
+                e.getX() * GRID_CELL_WIDTH * 2, e.getY() *
+                        GRID_CELL_HEIGHT * 2));
 
         ArrayList<FlyingAssassin> flyingAssassins = currentLevel.getFlyingAssassins();
         flyingAssassins.forEach(e ->  gc.drawImage(e.getImg(),
-                e.getX() * GRID_CELL_WIDTH * 2, e.getY() * GRID_CELL_HEIGHT * 2));
+                e.getX() * GRID_CELL_WIDTH * 2, e.getY() *
+                        GRID_CELL_HEIGHT * 2));
 
         ArrayList<Thief> thieves = currentLevel.getThieves();
         thieves.forEach(e ->  gc.drawImage(e.getImg(),
-                e.getX() * GRID_CELL_WIDTH * 2, e.getY() * GRID_CELL_HEIGHT * 2));
+                e.getX() * GRID_CELL_WIDTH * 2, e.getY() *
+                        GRID_CELL_HEIGHT * 2));
 
-        gc.drawImage(player1.getCharImage(), player1.getX() * GRID_CELL_WIDTH, player1.getY() * GRID_CELL_HEIGHT);
+        gc.drawImage(player1.getCharImage(), player1.getX()
+                * GRID_CELL_WIDTH, player1.getY() *
+                GRID_CELL_HEIGHT);
 
         int[] smThiefCoords = path.poll();
         if (smThiefCoords != null) {
             sThief.setX(smThiefCoords[0]);
             sThief.setY(smThiefCoords[1]);
-            gc.drawImage(sThief.getImg(), smThiefCoords[0]*2  * GRID_CELL_WIDTH, smThiefCoords[1]*2 * GRID_CELL_HEIGHT);
+            gc.drawImage(sThief.getImg(), smThiefCoords[0]*2
+                    * GRID_CELL_WIDTH, smThiefCoords[1]*2 *
+                    GRID_CELL_HEIGHT);
         } else {
-            gc.drawImage(sThief.getImg(), sThief.getX()*2 * GRID_CELL_WIDTH, sThief.getY() * 2 * GRID_CELL_HEIGHT);
+            gc.drawImage(sThief.getImg(), sThief.getX()*2
+                    * GRID_CELL_WIDTH, sThief.getY() * 2 *
+                    GRID_CELL_HEIGHT);
         }
 
         gc.setFill(Color.GRAY);
@@ -470,7 +508,8 @@ public class Main extends Application {
             this.timerLeft = this.timerLeft - 1;
             this.timerText.setText("Time remaining: " + this.timerLeft + "| Level "
                     + (this.currentLevelID + 1)
-                    + "| Loot remaining: " + (this.currentLevel.getLoots().size()));
+                    + "| Loot remaining: " + (this.currentLevel.
+                    getLoots().size()));
         }
         else {
             this.timerTimeline.stop();
@@ -538,7 +577,8 @@ public class Main extends Application {
         //create user
         createUser.setOnAction(e -> {
             if(!usernameIn.getText().equals("")) {
-                profiles.addProfile(usernameIn.getText().replaceAll("\\s",""));
+                profiles.addProfile(
+                        usernameIn.getText().replaceAll("\\s",""));
                 stats.getChildren().removeAll(stats.getChildren());
                 for (String profilesUsername : profiles.getUsernames()) {
                     stats.getChildren().add(new Label(profilesUsername));
@@ -592,8 +632,7 @@ public class Main extends Application {
         this.hasGameStarted = true;
         timerTimeline.play();
         scoreColourChanger.play();
-        //TODO: UNCOMMENT PLAY MUSIC - sorry I cant stand this music when I debug stuff lol
-        //this.player.play();
+        this.player.play();
         this.score = scoreIn;
 
 

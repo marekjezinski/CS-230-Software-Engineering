@@ -25,11 +25,6 @@ public abstract class NPC {
         this.y = y;
     }
 
-    //for smart thief testing
-    public NPC(int x, int y){
-        this.x = x;
-        this.y = y;
-    }
 
     /**
      * method that gets an NPC image/graphic
