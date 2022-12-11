@@ -1,13 +1,12 @@
 package CS230;
 import CS230.items.*;
 import CS230.npc.*;
-import CS230.saveload.FileHandler;
+import CS230.saveload.ProfileFileManager;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.geometry.Insets;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -36,7 +35,6 @@ import java.util.*;
 import java.net.URISyntaxException;
 
 import java.util.ArrayList;
-import java.util.concurrent.atomic.AtomicReference;
 
 
 import static java.lang.Math.ceil;
@@ -81,7 +79,7 @@ public class Main extends Application {
     private Timeline scoreColourChanger;
     private Timeline bombTimeline;
     private Leaderboard l = new Leaderboard();
-    private FileHandler profiles = new FileHandler();
+    private ProfileFileManager profiles = new ProfileFileManager();
 
     private int timerLeft;
 
@@ -298,7 +296,8 @@ public class Main extends Application {
             gameOver();
         }
         checkItems();
-        profiles.updateSave(this.username, this.currentLevelID, this.score);
+        profiles.updateMaxLvl(username, currentLevelID);
+        profiles.updateMaxScore(username, this.score);
         // Redraw game as the player may have moved.
         drawGame();
 
@@ -328,6 +327,7 @@ public class Main extends Application {
                 timerLeft = currentLevel.getStartTimer();
 
                 this.score = (int) (this.score + ceil(this.timerLeft / 3));
+                System.out.println(this.score);
             }
         }
         score += currentLevel.checkLoots(playerX, playerY );
@@ -538,14 +538,24 @@ public class Main extends Application {
             if(profiles.isValidName(usernameIn.getText())) {
                 this.username = usernameIn.getText();
                 toolbar.getChildren().clear();
-                stats.getChildren().clear();
-                this.timerText.setText("");
-                this.timerText.setFont(Font.font("arial",20));
-                this.scoreText.setText("");
-                this.scoreText.setFont(Font.font("arial",20));
-                toolbar.getChildren().add(this.scoreText);
-                toolbar.getChildren().add(timerText);
-                begin(profiles.getScore(username), profiles.getMaxLvl(username));
+                toolbar.getChildren().add(new Label("Choose level: "));
+                for(int i = 0; i <= profiles.getMaxLvl(username); i++) {
+                    Button b = new Button(String.valueOf(i + 1));
+                    final int lvl = i;
+                    b.setOnAction(f -> {
+                        stats.getChildren().clear();
+                        toolbar.getChildren().clear();
+                        this.timerText.setText("");
+                        this.timerText.setFont(Font.font("arial",20));
+                        this.scoreText.setText("");
+                        this.scoreText.setFont(Font.font("arial",20));
+                        toolbar.getChildren().add(this.scoreText);
+                        toolbar.getChildren().add(timerText);
+                        begin(0,lvl);
+                    });
+                    toolbar.getChildren().add(b);
+                }
+                //stats.getChildren().clear();
             }
         });
 

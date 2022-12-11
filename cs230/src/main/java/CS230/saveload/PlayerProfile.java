@@ -1,5 +1,4 @@
 package CS230.saveload;
-import java.util.ArrayList;
 
 /**
  * Class that reads the current Player's status from saved files
@@ -22,14 +21,14 @@ public class PlayerProfile {
     }
 
     public void setScore(int score) {
-        this.score += score;
+        this.score = score;
     }
 
     public void setUsername(String username){
         this.username = username;
     }
 
-    public int getScore(){
+    public int getMaxScore(){
             return this.score;
         }
 

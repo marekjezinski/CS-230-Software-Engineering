@@ -1,13 +1,9 @@
 package CS230.saveload;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.layout.VBox;
 
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.File;
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -19,19 +15,19 @@ import java.util.Scanner;
  * @author Tom Stevens
  * @version 1.0
  */
-public class FileHandler {
+public class ProfileFileManager {
     private ArrayList<PlayerProfile> playerProfiles = new ArrayList<>();
 
-    public FileHandler() {
+    public ProfileFileManager() {
         try{
             Scanner sc = new Scanner(new File("profiles.txt"));
             while(sc.hasNext()) {
                 String username = sc.next();
                 int maxLevel = sc.nextInt();
-                int score = sc.nextInt();
+                int maxScore = sc.nextInt();
                 PlayerProfile pl = new PlayerProfile(username);
                 pl.setMaxLevel(maxLevel);
-                pl.setScore(score);
+                pl.setScore(maxScore);
                 playerProfiles.add(pl);
             }
             sc.close();
@@ -52,54 +48,48 @@ public class FileHandler {
         }
     }
 
-    public void updateSave(String username, int maxLvl, int score) {
-        ArrayList<String> line = new ArrayList<>();
-        try{
-            Scanner sc = new Scanner(new File("profiles.txt"));
-            while(sc.hasNext()) {
-                line.add(sc.nextLine());
-            }
-            sc.close();
+    private void updateFile() {
+        File f = new File("profiles.txt");
+        if (f.exists()) {
+            f.delete();
         }
-        catch (FileNotFoundException e) {
-
-        }
+        FileWriter wr = null;
         try {
-            File f = new File("profiles.txt");
-            if (f.exists()) {
-                f.delete();
-            }
             f.createNewFile();
-            FileWriter wr = new FileWriter(f);
-            line = modifyProfileFile(line, username, maxLvl, score);
-            for (String s : line) {
-                wr.write(s);
+            wr = new FileWriter(f);
+            for (PlayerProfile playerProfile : playerProfiles) {
+                wr.write(playerProfile.getUsername() + " " + playerProfile.getMaxLevel() + " " +
+                        playerProfile.getMaxScore());
                 wr.write(System.lineSeparator());
             }
             wr.close();
-
-        } catch (IOException err) {
-
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
+
 
     }
 
-    private ArrayList<String> modifyProfileFile(ArrayList<String> lines, String username2, int maxLvl2, int score2) {
-        for(int i = 0; i < lines.size(); i++) {
-            String line = lines.get(i);
-            Scanner sc = new Scanner(line);
-            String username = sc.next();
-            int maxLvl = sc.nextInt();
-            int score = sc.nextInt();
-            sc.close();
-            if(username.equals(username2)) {
-                maxLvl = maxLvl2;
-                score = score2;
+    public void updateMaxLvl(String username, int maxLvl) {
+        for(int i = 0; i < playerProfiles.size(); i++) {
+            if(playerProfiles.get(i).getUsername().equals(username)) {
+                if(playerProfiles.get(i).getMaxLevel() < maxLvl) {
+                    playerProfiles.get(i).setMaxLevel(maxLvl);
+                }
             }
-            line = username + " " + maxLvl + " " + score;
-            lines.set(i, line);
         }
-        return(lines);
+        updateFile();
+    }
+
+    public void updateMaxScore(String username, int maxScore) {
+        for(int i = 0; i < playerProfiles.size(); i++) {
+            if(playerProfiles.get(i).getUsername().equals(username)) {
+                if(playerProfiles.get(i).getMaxScore() < maxScore) {
+                    playerProfiles.get(i).setScore(maxScore);
+                }
+            }
+        }
+        updateFile();
     }
 
     public boolean isValidName(String username) {
@@ -123,6 +113,7 @@ public class FileHandler {
         if(!exists) {
             playerProfiles.add(new PlayerProfile(username));
         }
+        updateFile();
     }
 
     public ArrayList<String> getUsernames() {
@@ -144,12 +135,13 @@ public class FileHandler {
         if(index != -1) {
             playerProfiles.remove(index);
         }
+        updateFile();
     }
 
     public int getScore(String username) {
         for (PlayerProfile playerProfile : playerProfiles) {
             if(playerProfile.getUsername().equals(username)) {
-                return(playerProfile.getScore());
+                return(playerProfile.getMaxScore());
             }
         }
         return(-1);
