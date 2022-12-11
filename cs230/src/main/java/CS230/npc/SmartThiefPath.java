@@ -75,7 +75,8 @@ public class SmartThiefPath {
     }
 
     /**
-     * method that sets the path goal which will be used by SmartThiefSearch to get the shortest path
+     * method that sets the path goal which will
+     * be used by SmartThiefSearch to get the shortest path
      * @param x the x of the path goal
      * @param y the y of the path goal
      */
@@ -85,7 +86,8 @@ public class SmartThiefPath {
     }
 
     /**
-     * method that checks if there's a valid move between 2 tiles before adding to queue
+     * method that checks if there's a valid move
+     * between 2 tiles before adding to queue
      * @param x1 the x coordinate of the current tile
      * @param y1 the y coordinate of the current tile
      * @param x2 the x coordinate of the desired next tile

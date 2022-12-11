@@ -33,6 +33,10 @@ public class Thief extends NPC {
         this.direction = direction;
     }
 
+    /**
+     * Movement for the thief
+     * @param m
+     */
     public void movement(Map m) {
         if(isActive) {
             Tile[][] tilesArray = m.getTilesArray();
@@ -98,6 +102,11 @@ public class Thief extends NPC {
         }
     }
 
+    /**
+     * Method to see if any items can be removed
+     * @param m
+     */
+
     private void trigger(Map m) {
         m.checkLoots(x, y);
         m.checkRLever(x, y);
@@ -105,6 +114,13 @@ public class Thief extends NPC {
         m.checkWLever(x, y);
     }
 
+    /**
+     * Method to see if there is a gate or bomb
+     * @param m
+     * @param x
+     * @param y
+     * @return
+     */
     private boolean isItem(Map m, int x, int y) {
         Gate r = m.getRGate();
         Gate w = m.getWGate();
@@ -123,6 +139,12 @@ public class Thief extends NPC {
         return false;
     }
 
+    /**
+     * Method for legal movement right
+     * @param m
+     * @return
+     */
+
     private boolean canMoveRight(Map m) {
         if(x + 1 < m.getMAP_MAX_X()) {
             if(m.getTilesArray()[x+1][y].getTileColours().indexOf(colour) != -1) {
@@ -133,6 +155,11 @@ public class Thief extends NPC {
         }
         return false;
     }
+    /**
+     * Method for legal movement down
+     * @param m
+     * @return
+     */
     private boolean canMoveDown(Map m) {
         if(y + 1 < m.getMAP_MAX_Y()) {
             if(m.getTilesArray()[x][y+1].getTileColours().indexOf(colour) != -1) {
@@ -143,6 +170,11 @@ public class Thief extends NPC {
         }
         return false;
     }
+    /**
+     * Method for legal movement left
+     * @param m
+     * @return
+     */
     private boolean canMoveLeft(Map m) {
         if(x - 1 >= 0) {
             if(m.getTilesArray()[x-1][y].getTileColours().indexOf(colour) != -1) {
@@ -153,6 +185,11 @@ public class Thief extends NPC {
         }
         return false;
     }
+    /**
+     * Method for legal movement up
+     * @param m
+     * @return
+     */
     private boolean canMoveUp(Map m) {
         if(y - 1 >= 0) {
             if(m.getTilesArray()[x][y-1].getTileColours().indexOf(colour) != -1) {
@@ -163,23 +200,40 @@ public class Thief extends NPC {
         }
         return false;
     }
+
+    /**
+     * method for moving right
+     */
     private void moveRight() {
         x += 1;
         direction = 'e';
     }
+    /**
+     * method for moving down
+     */
     private void moveDown() {
         y += 1;
         direction = 's';
     }
+    /**
+     * method for moving left
+     */
     private void moveLeft() {
         x -= 1;
         direction = 'w';
     }
+    /**
+     * method for moving up
+     */
     private void moveUp() {
         y -= 1;
         direction = 'n';
     }
 
+    /**
+     * Method for changing the active variable
+     * @param active
+     */
     public void setActive(boolean active) {
         isActive = active;
     }

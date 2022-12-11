@@ -15,9 +15,12 @@ public class SmartThiefSearch {
 
     private static final int MAX_STEPS = 100;
     private static Queue<int[]> path = new LinkedList<>();
-    private static final int[][] DIRS = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}}; //used to iterate through all the directions of grid
+    //used to iterate through all the directions of grid
+    private static final int[][] DIRS = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
 
-    public static boolean bfs(Tile[][] tiles, int startRow, int startCol, int goalRow, int goalCol) {
+    public static boolean bfs(Tile[][] tiles, int startRow,
+                              int startCol, int goalRow, int goalCol) {
+        //TODO: error here
         int rows = 15;
         int cols = 10;
 
@@ -56,9 +59,14 @@ public class SmartThiefSearch {
 
                 int rowDiff = currRow - nextRow;
                 int colDiff = currCol - nextCol;
-                // check if the next cell is valid, not visited, and has at least one common color with the current cell
-                if (nextRow >= 0 && nextRow < rows && nextCol >= 0 && nextCol < cols && !visited[nextRow][nextCol] &&
-                        tiles[currRow][currCol].isLegalJump(tiles[nextRow][nextCol]) && (rowDiff <=1 && colDiff <= 1)) {
+                // check if the next cell is valid, not visited, and has
+                // at least one common color with the current cell
+                if (nextRow >= 0 && nextRow < rows && nextCol
+                        >= 0 && nextCol < cols
+                        && !visited[nextRow][nextCol] &&
+                        tiles[currRow][currCol]
+                                .isLegalJump(tiles[nextRow][nextCol])
+                        && (rowDiff <=1 && colDiff <= 1)) {
                     // mark the cell as visited and enqueue it
                     visited[nextRow][nextCol] = true;
                     queue.add(new int[]{nextRow, nextCol, currRow, currCol});

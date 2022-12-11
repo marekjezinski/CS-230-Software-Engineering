@@ -33,29 +33,24 @@ public class SmartThief extends NPC {
         Random rand = new Random();
         int directionChoice = rand.nextInt(3);
 
+        //Switch based on what the random number generator outputs
+
         switch (directionChoice){
             case 0:
-                if (this.getX() > 0) {
-                    this.setX(currentLevel.moveUp(this.getX(), this.getY()));
-                }
+                    y-=1;
                 currentLevel.checkLoots(this.x,this.y);
                 break;
             case 1:
-                if (this.getX() < 18) {
-                    this.setX(currentLevel.moveDown(this.getX(), this.getY()));
-                }
+
+                    y+=1;
                 currentLevel.checkLoots(this.x,this.y);
                 break;
             case 2:
-                if (this.getX() < 28) {
-                    this.setX(currentLevel.moveRight(this.getX(), this.getY()));
-                }
+                    x+=1;
                 currentLevel.checkLoots(this.x,this.y);
                 break;
             case 3:
-                if (this.getX() > 0) {
-                    this.setX(currentLevel.moveLeft(this.getX(), this.getY()));
-                }
+                    x-=1;
                 currentLevel.checkLoots(this.x,this.y);
                 break;
             default:
