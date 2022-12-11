@@ -194,6 +194,7 @@ public class MapReader {
                 }
             }
         } catch (Exception e) {
+            e.printStackTrace();
             System.err.println("Please check level file!");
             System.exit(1);
         }

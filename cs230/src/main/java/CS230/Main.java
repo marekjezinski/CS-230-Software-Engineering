@@ -126,6 +126,10 @@ public class Main extends Application {
 
     Map level4 = new Map("L3.0.txt");
 
+    Map level5 = new Map("L4.0.txt");
+
+    Map level6 = new Map("L5.0.txt");
+
     private boolean restartCheck = false;
 
     public Main() throws URISyntaxException {
@@ -140,6 +144,8 @@ public class Main extends Application {
         levels.add(level2);
         levels.add(level3);
         levels.add(level4);
+        levels.add(level5);
+        levels.add(level6);
         this.currentLevel = levels.get(currentLevelID);
         this.timerLeft = this.currentLevel.getTimerLeft();
         // Load images. Note we use png images with a transparent background.
