@@ -21,7 +21,7 @@ public class ProfileFileManager {
     public ProfileFileManager(int levelsNumber) {
         this.levelsNumber = levelsNumber;
         try{
-            Scanner sc = new Scanner(new File("profiles.txt"));
+            Scanner sc = new Scanner(new File("textfiles/profiles.txt"));
             while(sc.hasNext()) {
                 String username = sc.next();
                 int maxLevel = sc.nextInt();
@@ -37,7 +37,7 @@ public class ProfileFileManager {
         }
         catch (FileNotFoundException e) {
             try {
-                File f = new File("profiles.txt");
+                File f = new File("textfiles/profiles.txt");
                 f.createNewFile();
             } catch (IOException err) {
                 err.printStackTrace();
@@ -55,7 +55,7 @@ public class ProfileFileManager {
      */
 
     private void updateFile() {
-        File f = new File("profiles.txt");
+        File f = new File("textfiles/profiles.txt");
         if (f.exists()) {
             f.delete();
         }
