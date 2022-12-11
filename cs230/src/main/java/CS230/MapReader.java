@@ -88,43 +88,45 @@ public class MapReader {
                     this.timer = in.nextInt();
                     starttimer = this.timer;
                 } else if (type.equals("rgate")) {
-                    Gate rgatein = new Gate(new Image(getClass()
-                            .getResource("rustygate.png")
+                    Gate rgatein = new Gate(new Image(getClass().
+                            getResource("rustygate.png")
                             .toURI().toString()),
                             in.nextInt(), in.nextInt());
                     rgate = rgatein;
                 } else if (type.equals("rlever")) {
                     Lever rleverin = new Lever(new Image(
                             getClass().
-                                    getResource("rustylever.png")
-                                    .toURI().toString()),
+                                    getResource("rustylever.png").
+                                    toURI().toString()),
                             in.nextInt(), in.nextInt());
                     rlever = rleverin;
                 } else if (type.equals("wgate")) {
                     Gate wgatein = new Gate(new
-                            Image(getClass()
-                            .getResource("woodengate.png")
-                            .toURI().toString()),
+                            Image(getClass().
+                            getResource("woodengate.png").
+                            toURI().toString()),
                             in.nextInt(), in.nextInt());
                     wgate = wgatein;
                 } else if (type.equals("wlever")) {
                     Lever wleverin = new Lever(new
-                            Image(getClass()
-                            .getResource("woodenlever.png")
-                            .toURI().toString()),
+                            Image(getClass().
+                            getResource("woodenlever.png").
+                            toURI().toString()),
                             in.nextInt(), in.nextInt());
                     wlever = wleverin;
                 }
                 //
                 else if (type.equals("clock")) {
-                    Clock c = new Clock(new Image(getClass()
-                            .getResource("clock.png").toURI().toString()),
+                    Clock c = new Clock(new Image(getClass().
+                            getResource("clock.png").
+                            toURI().toString()),
                             in.nextInt(), in.nextInt(), CLOCK_TIME_ADDED);
                     items.add(c);
                     clocks.add(c);
                 } else if (type.equals("bomb")) {
                     Bomb b = new Bomb(new Image(getClass()
-                            .getResource("bomb.png").toURI().toString()),
+                            .getResource("bomb.png").
+                            toURI().toString()),
                             in.nextInt(), in.nextInt());
                     items.add(b);
                     this.bombs.add(b);
