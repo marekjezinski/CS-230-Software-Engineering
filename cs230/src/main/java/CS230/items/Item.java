@@ -42,7 +42,7 @@ public abstract class Item {
 
     /**
      * method that gets the item's x coordinate
-     * @return x
+     * @return the item's x coordinate
      */
     public int getX() {
         return x;
@@ -50,7 +50,7 @@ public abstract class Item {
 
     /**
      * method that get the item's y coordinate
-     * @return y
+     * @return y the item's y coordinate
      */
     public int getY() {
         return y;

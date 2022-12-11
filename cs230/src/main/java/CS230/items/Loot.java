@@ -25,7 +25,7 @@ public abstract class Loot extends Item {
 
     /**
      * method that gets the value of the loot item
-     * @return lootValue
+     * @return lootValue the value of the loot item
      */
     public int getLootValue() {
         return lootValue;
