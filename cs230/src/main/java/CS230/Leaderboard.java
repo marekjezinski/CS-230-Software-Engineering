@@ -88,7 +88,9 @@ public class Leaderboard extends SaveLoad {
             for (int i = 0; i < this.names.size(); i++) {
                 for (int j = 0; j < this.names.size(); j++) {
                     int score = this.scores.get(j);
-                    if ((this.names.get(i).equals(this.names.get(j))) && !duplicate && (i != j)) {
+                    if ((this.names.get(i).
+                            equals(this.names.get(j)))
+                            && !duplicate && (i != j)) {
                         duplicate = true;
                         if (this.scores.get(i) >= score) {
                             duplicateNames.add(this.names.get(i));
