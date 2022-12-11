@@ -54,7 +54,7 @@ public class PlayerProfile {
 
     /**
      * method that gets the max level
-      * @return maxLevel the max level avaliable
+     * @return maxLevel the max level avaliable
      */
     public int getMaxLevel(){
         return this.maxLevel;
