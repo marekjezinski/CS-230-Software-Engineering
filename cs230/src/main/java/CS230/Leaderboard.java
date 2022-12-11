@@ -55,6 +55,8 @@ public class Leaderboard extends SaveLoad {
         }
 
         if(!duplicate) {
+            names.add(username);
+            scores.add(score);
             try {
                 FileWriter fI = new FileWriter("scores.txt", true);
                 fI.write(System.lineSeparator() + username + " " + score);
