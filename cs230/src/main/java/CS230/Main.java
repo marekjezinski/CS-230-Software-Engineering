@@ -574,6 +574,7 @@ public class Main extends Application {
     /**
      * Create the GUI.
      * @return The panel that contains the created GUI.
+     * @throws  IOException
      */
     private Pane buildGUI() throws IOException {
         // Create top-level panel that will hold all GUI nodes.
@@ -732,7 +733,7 @@ public class Main extends Application {
         drawGame();
     }
     /**
-     * main
+     * main method for the game
      */
     public static void main(String[] args) throws IOException {
         launch(args);
