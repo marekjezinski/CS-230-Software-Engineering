@@ -81,7 +81,6 @@ public class Main extends Application {
     private Timeline scoreColourChanger;
     private Timeline bombTimeline;
     private Leaderboard l = new Leaderboard();
-    private ProfileFileManager profiles = new ProfileFileManager();
 
     private int timerLeft;
     private Loot currentGoal;
@@ -109,6 +108,7 @@ public class Main extends Application {
     private Text scoreText = new Text();
     private Text errorText = new Text();
     private Text messageOfDayText = new Text();
+    private Label leaderboardText = new Label();
 
     private MessageOfTheDay m;
     private MediaPlayer player = new MediaPlayer(new
@@ -126,6 +126,8 @@ public class Main extends Application {
 
     Map level4 = new Map("L3.0.txt");
 
+    private ProfileFileManager profiles;
+
     private boolean restartCheck = false;
 
     public Main() throws URISyntaxException {
@@ -140,6 +142,7 @@ public class Main extends Application {
         levels.add(level2);
         levels.add(level3);
         levels.add(level4);
+        profiles = new ProfileFileManager(levels.size());
         this.currentLevel = levels.get(currentLevelID);
         this.timerLeft = this.currentLevel.getTimerLeft();
         // Load images. Note we use png images with a transparent background.
@@ -339,7 +342,7 @@ public class Main extends Application {
         }
         checkItems();
         profiles.updateMaxLvl(username, currentLevelID);
-        profiles.updateMaxScore(username, this.score);
+        profiles.updateMaxScore(username, this.score, currentLevelID);
         // Redraw game as the player may have moved.
         drawGame();
 
@@ -365,14 +368,15 @@ public class Main extends Application {
         if(currentLevel.checkDoor(playerX, playerY)>0){
             if( currentLevel.getLoots().size() == 0 &&
                     currentLevel.checklever()) {
+                this.score = (int) (this.score + ceil(this.timerLeft / 3));
+                profiles.updateMaxScore(username, score, currentLevelID);
                 currentLevelID++;
-
+                this.score = 0;
                 currentLevel = levels.get(currentLevelID);
                 player1.setX(currentLevel.getPlayerX());
                 player1.setY(currentLevel.getPlayerY());
                 timerLeft = currentLevel.getStartTimer();
 
-                this.score = (int) (this.score + ceil(this.timerLeft / 3));
                 System.out.println(this.score);
             }
         }
@@ -580,10 +584,10 @@ public class Main extends Application {
         toolbar.setPadding(new Insets(10, 10, 10, 10));
         root.setTop(toolbar);
 
-        VBox stats = new VBox();
-        stats.setSpacing(5);
-        stats.setPadding(new Insets(10, 10, 10, 10));
-        root.setLeft(stats);
+        VBox profileGUI = new VBox();
+        profileGUI.setSpacing(5);
+        profileGUI.setPadding(new Insets(10, 10, 10, 10));
+        root.setLeft(profileGUI);
 
         // Create the toolbar content
         TextField usernameIn = new TextField();
@@ -596,16 +600,16 @@ public class Main extends Application {
         this.messageOfDayText.setFont(Font.font("arial",10));
         toolbar.getChildren().addAll(this.messageOfDayText);
         for (String profilesUsername : profiles.getUsernames()) {
-            stats.getChildren().add(new Label(profilesUsername));
+            profileGUI.getChildren().add(new Label(profilesUsername));
         }
         //create user
         createUser.setOnAction(e -> {
             if(!usernameIn.getText().equals("")) {
                 profiles.addProfile(
                         usernameIn.getText().replaceAll("\\s",""));
-                stats.getChildren().removeAll(stats.getChildren());
+                profileGUI.getChildren().removeAll(profileGUI.getChildren());
                 for (String profilesUsername : profiles.getUsernames()) {
-                    stats.getChildren().add(new Label(profilesUsername));
+                    profileGUI.getChildren().add(new Label(profilesUsername));
                 }
             }
         });
@@ -619,7 +623,7 @@ public class Main extends Application {
                     Button b = new Button(String.valueOf(i + 1));
                     final int lvl = i;
                     b.setOnAction(f -> {
-                        stats.getChildren().clear();
+                        profileGUI.getChildren().clear();
                         toolbar.getChildren().clear();
                         this.timerText.setText("");
                         this.timerText.setFont(Font.font("arial",20));
@@ -627,6 +631,11 @@ public class Main extends Application {
                         this.scoreText.setFont(Font.font("arial",20));
                         toolbar.getChildren().add(this.scoreText);
                         toolbar.getChildren().add(timerText);
+                        VBox leaderboard = new VBox();
+                        leaderboard.setSpacing(5);
+                        leaderboard.setPadding(new Insets(10, 10, 10, 10));
+                        leaderboard.getChildren().add(leaderboardText);
+                        root.setLeft(leaderboard);
                         begin(0,lvl);
                     });
                     toolbar.getChildren().add(b);
@@ -637,9 +646,9 @@ public class Main extends Application {
 
         removeUser.setOnAction(e -> {
             profiles.removeProfile(usernameIn.getText());
-            stats.getChildren().removeAll(stats.getChildren());
+            profileGUI.getChildren().removeAll(profileGUI.getChildren());
             for (String profilesUsername : profiles.getUsernames()) {
-                stats.getChildren().add(new Label(profilesUsername));
+                profileGUI.getChildren().add(new Label(profilesUsername));
             }
         });
 
@@ -668,6 +677,8 @@ public class Main extends Application {
                 + (this.currentLevelID + 1)
                 + "| Loot remaining: " + (this.currentLevel.getLoots().size()));
         scoreText.setText("Score: " + this.score);
+        this.leaderboardText.setText(profiles.getLeaderboardForLevelID(currentLevelID));
+
 
         currentLevel = levels.get(currentLevelID);
         player1.setX(currentLevel.getPlayerX());

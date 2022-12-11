@@ -4,9 +4,7 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.InputMismatchException;
-import java.util.Scanner;
+import java.util.*;
 
 /**
  * Class for saving the current state of the program and seeing if
@@ -17,17 +15,21 @@ import java.util.Scanner;
  */
 public class ProfileFileManager {
     private ArrayList<PlayerProfile> playerProfiles = new ArrayList<>();
+    private int levelsNumber;
 
-    public ProfileFileManager() {
+    public ProfileFileManager(int levelsNumber) {
+        this.levelsNumber = levelsNumber;
         try{
             Scanner sc = new Scanner(new File("profiles.txt"));
             while(sc.hasNext()) {
                 String username = sc.next();
                 int maxLevel = sc.nextInt();
-                int maxScore = sc.nextInt();
-                PlayerProfile pl = new PlayerProfile(username);
+                PlayerProfile pl = new PlayerProfile(username, levelsNumber);
+                for(int i = 0; i < this.levelsNumber; i++) {
+                    int x = sc.nextInt();
+                    pl.setScore(i, x);
+                }
                 pl.setMaxLevel(maxLevel);
-                pl.setScore(maxScore);
                 playerProfiles.add(pl);
             }
             sc.close();
@@ -58,8 +60,14 @@ public class ProfileFileManager {
             f.createNewFile();
             wr = new FileWriter(f);
             for (PlayerProfile playerProfile : playerProfiles) {
-                wr.write(playerProfile.getUsername() + " " + playerProfile.getMaxLevel() + " " +
-                        playerProfile.getMaxScore());
+                String toWrite = playerProfile.getUsername();
+                toWrite += " ";
+                toWrite += playerProfile.getMaxLevel();
+                for(int i = 0; i < this.levelsNumber; i++) {
+                    toWrite += " ";
+                    toWrite += playerProfile.getScore(i);
+                }
+                wr.write(toWrite);
                 wr.write(System.lineSeparator());
             }
             wr.close();
@@ -81,11 +89,11 @@ public class ProfileFileManager {
         updateFile();
     }
 
-    public void updateMaxScore(String username, int maxScore) {
+    public void updateMaxScore(String username, int scoreToUpdate, int levelID) {
         for(int i = 0; i < playerProfiles.size(); i++) {
             if(playerProfiles.get(i).getUsername().equals(username)) {
-                if(playerProfiles.get(i).getMaxScore() < maxScore) {
-                    playerProfiles.get(i).setScore(maxScore);
+                if(playerProfiles.get(i).getScore(levelID) < scoreToUpdate) {
+                    playerProfiles.get(i).setScore(levelID, scoreToUpdate);
                 }
             }
         }
@@ -111,7 +119,7 @@ public class ProfileFileManager {
             }
         }
         if(!exists) {
-            playerProfiles.add(new PlayerProfile(username));
+            playerProfiles.add(new PlayerProfile(username, levelsNumber));
         }
         updateFile();
     }
@@ -120,7 +128,7 @@ public class ProfileFileManager {
         ArrayList<String> usernames = new ArrayList<>();
         usernames.add("Profiles:");
         for (PlayerProfile playerProfile : playerProfiles) {
-            usernames.add(playerProfile.getUsername() + ": max lvl " + playerProfile.getMaxLevel());
+            usernames.add(playerProfile.getUsername() + ": max level " + playerProfile.getMaxLevel());
         }
         return(usernames);
     }
@@ -138,10 +146,10 @@ public class ProfileFileManager {
         updateFile();
     }
 
-    public int getScore(String username) {
+    public int getScore(String username, int levelID) {
         for (PlayerProfile playerProfile : playerProfiles) {
             if(playerProfile.getUsername().equals(username)) {
-                return(playerProfile.getMaxScore());
+                return(playerProfile.getScore(levelID));
             }
         }
         return(-1);
@@ -154,6 +162,29 @@ public class ProfileFileManager {
             }
         }
         return(-1);
+    }
+
+    public String getLeaderboardForLevelID(int levelID) {
+        ArrayList<PlayerProfile> profilesSortedByScore = new ArrayList<>();
+        String leaderboard;
+        for (PlayerProfile playerProfile : playerProfiles) {
+            profilesSortedByScore.add(playerProfile);
+        }
+        /*Collections.sort(profilesSortedByScore, new Comparator<PlayerProfile>() {
+            @Override
+            public int compare(PlayerProfile obj1, PlayerProfile obj2) {
+                return obj1.getScore(levelID).compareTo(obj2.getScore(levelID));
+            }
+        });*/
+        int numOfScores = profilesSortedByScore.size();
+        if(numOfScores > 10) {
+            numOfScores = 10;
+        }
+        leaderboard = "Leaderboard for level " + levelID + "\n";
+        for(int i = 0; i < numOfScores; i++) {
+            leaderboard += String.valueOf(profilesSortedByScore.get(i).getScore(levelID) + "\n");
+        }
+        return leaderboard;
     }
 }
 
