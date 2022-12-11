@@ -2,8 +2,6 @@ package CS230;
 import CS230.items.*;
 import CS230.npc.*;
 import CS230.saveload.ProfileFileManager;
-//import CS230.saveload.FileHandler;
-import CS230.saveload.PlayerProfile;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -47,6 +45,7 @@ import static java.lang.Math.ceil;
  * @author Liam O'Reilly
  * @author Tom Stevens
  * @author Kam Leung
+ * @author Marek Jezinski
  */
 //TODO: please put names here
 public class Main extends Application {
@@ -62,76 +61,44 @@ public class Main extends Application {
     private static final int GRID_CELL_WIDTH = 25;
     private static final int GRID_CELL_HEIGHT = 25;
 
-    // The canvas in the GUI. This needs to be a global variable
-    // (in this setup) as we need to access it in different methods.
-    // We could use FXML to place code in the controller instead.
+    // The canvas in the GUI.
     private Canvas canvas;
-
-    // Loaded images
     private Image playerImage;
-
-    // X and Y coordinate of player on the grid.
     private int playerX = 0;
     private int playerY = 0;
     private Player player1;
-
-    // Timeline which will cause tick method to be called periodically.
-    private Timeline tickTimeline;
     private Timeline timerTimeline;
     private Timeline scoreColourChanger;
     private Timeline bombTimeline;
     private Leaderboard l = new Leaderboard();
-
     private int timerLeft;
     private Loot currentGoal;
-
-
-
     //SmartThief
-    private int pathGoalX,pathGoalY;
     public static Queue<int[]> path = new LinkedList<>();
     //used to iterate through all the directions of grid
-    private static final int[][] DIRS = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}}; 
-
     private Image SMImage =  new Image(getClass().
             getResource("smartThief.png").toURI().toString());
-    //create smart thief at 0,0
     private SmartThief sThief = new SmartThief(1,1,SMImage);
-
-    private int[] smThiefCoords = {0,0};
+    private int[] smThiefCords = {0,0};
     private int score = 0;
     private String username;
-    private PlayerProfile p1Profile;
-
-    private ArrayList<Item> items;
     ArrayList<Integer> reload;
     private boolean hasGameStarted = false;
     private Text timerText = new Text();
     private Text scoreText = new Text();
-    private Text errorText = new Text();
-    private Text messageOfDayText = new Text();
+    private final Text messageOfDayText = new Text();
     private Label leaderboardText = new Label();
-
-    private MessageOfTheDay m;
-    private MediaPlayer player = new MediaPlayer(new
-            Media(new File("gamemusic.mp3").
-            toURI().toString()));
-
+    private MediaPlayer player = new MediaPlayer(new Media(new File("gamemusic.mp3").toURI().toString()));
     private int currentLevelID = 0;
     private ArrayList<Map> levels = new ArrayList<>();
     Map currentLevel;
-    //todo Change file name of map when NPC in mapreader is finished
-    Map level1 = new Map("L0.0.txt");
-    Map level2 = new Map("L1.0.txt");
-
-    Map level3 = new Map("L2.0.txt");
-
-    Map level4 = new Map("L3.0.txt");
-    Map level5 = new Map("L4.0.txt");
-
-    Map level6 = new Map("L5.0.txt");
+    Map level1 = new Map("textfiles/maps/L0.0.txt");
+    Map level2 = new Map("textfiles/maps/L1.0.txt");
+    Map level3 = new Map("textfiles/maps/L2.0.txt");
+    Map level4 = new Map("textfiles/maps/L3.0.txt");
+    Map level5 = new Map("textfiles/maps/L4.0.txt");
+    Map level6 = new Map("textfiles/maps/L5.0.txt");
     private ProfileFileManager profiles;
-
     private boolean restartCheck = false;
 
     public Main() throws URISyntaxException {
@@ -168,35 +135,22 @@ public class Main extends Application {
         // Create a scene from the GUI
         Scene scene = new Scene(root, WINDOW_WIDTH, WINDOW_HEIGHT);
 
-        // Register an event handler for key presses.
-        // This causes the processKeyEvent method to be called each time a key is pressed.
         scene.addEventFilter(KeyEvent.KEY_PRESSED, event -> processKeyEvent(event));
-
-        // Register a tick method to be called periodically.
-        // Make a new timeline with one keyframe
-        // that triggers the tick method every half a second.
-        //tickTimeline = new Timeline
-        // (new KeyFrame(Duration.millis(1000), event -> tick()));
-        // Loop the timeline forever
-        //tickTimeline.setCycleCount(Animation.INDEFINITE);
-        // We start the timeline upon a button press.
-
-
 
         timerTimeline = new Timeline(new
                 KeyFrame(Duration.millis(1000), event -> {
             timer();
             ArrayList<FlyingAssassin> fl = currentLevel.getFlyingAssassins();
-            for(int i = 0; i < fl.size(); i++) {
-                fl.get(i).movement(currentLevel);
+            for (FlyingAssassin flyingAssassin : fl) {
+                flyingAssassin.movement(currentLevel);
             }
             currentLevel.setFlyingAssassins(fl);
             if(currentLevel.isFlAsCollidedWPlayer()) {
                 gameOver();
             }
             ArrayList<Thief> th = currentLevel.getThieves();
-            for(int i = 0; i < th.size(); i++) {
-                th.get(i).movement(currentLevel);
+            for (Thief thief : th) {
+                thief.movement(currentLevel);
             }
             currentLevel.setThieves(th);
             for(int i = 0; i < currentLevel.getThieves().size(); i++) {
@@ -214,12 +168,12 @@ public class Main extends Application {
                 currentGoal = sPath.findClosestLoot(currentLevel, sThief);
             }
 
-            this.smThiefCoords = path.poll();
-            if (this.smThiefCoords != null) {
+            this.smThiefCords = path.poll();
+            if (this.smThiefCords != null) {
                 if(currentLevel.isLegalMovement
-                        (this.smThiefCoords[0],this.smThiefCoords[1])) {
-                    sThief.setX(this.smThiefCoords[0]);
-                    sThief.setY(this.smThiefCoords[1]);
+                        (this.smThiefCords[0],this.smThiefCords[1])) {
+                    sThief.setX(this.smThiefCords[0]);
+                    sThief.setY(this.smThiefCords[1]);
                 }
             }
 
@@ -349,7 +303,6 @@ public class Main extends Application {
                 break;
 
             default:
-                // Do nothing for all other keys.
                 break;
         }
         if(currentLevel.isFlAsCollidedWPlayer()) {
@@ -378,21 +331,23 @@ public class Main extends Application {
         playerX = player1.getX() / 2;
         playerY = player1.getY() / 2;
         timerLeft += currentLevel.checkClocks(playerX , playerY);
-        //TODO: implement door and level progression
-
         if(currentLevel.checkDoor(playerX, playerY)>0){
             if( currentLevel.getLoots().size() == 0 &&
                     currentLevel.checklever()) {
                 this.score = (int) (this.score + ceil(this.timerLeft / 3));
                 profiles.updateMaxScore(username, score, currentLevelID);
                 currentLevelID++;
-                this.score = 0;
-                currentLevel = levels.get(currentLevelID);
-                player1.setX(currentLevel.getPlayerX());
-                player1.setY(currentLevel.getPlayerY());
-                timerLeft = currentLevel.getStartTimer();
+                if(currentLevelID > levels.size() - 1) {
+                    gameOver();
+                } else {
+                    this.score = 0;
+                    currentLevel = levels.get(currentLevelID);
+                    player1.setX(currentLevel.getPlayerX() * 2);
+                    player1.setY(currentLevel.getPlayerY() * 2);
+                    timerLeft = currentLevel.getStartTimer();
 
-                System.out.println(this.score);
+                    System.out.println(this.score);
+                }
             }
         }
         currentLevel.checkLoots(sThief.getX(), sThief.getY());
@@ -497,29 +452,6 @@ public class Main extends Application {
         for(int y = -1; y < CANVAS_HEIGHT; y += 50) {
             gc.fillRect(0, y, canvas.getWidth(), 3);
         }
-    }
-
-
-
-
-
-
-
-    /**
-     * This method is called periodically by the tick timeline
-     * and would for, example move, perform logic in the game,
-     * this might cause the bad guys to move (by e.g., looping
-     * over them all and calling their own tick method).
-     */
-    public void tick() {
-        // Here we move the player right one cell and teleport
-        // them back to the left side when they reach the right side.
-        playerX = playerX + 1;
-        if (playerX > 11) {
-            playerX = 0;
-        }
-        // We then redraw the whole canvas.
-        drawGame();
     }
 
     /**
@@ -691,8 +623,8 @@ public class Main extends Application {
 
 
         currentLevel = levels.get(currentLevelID);
-        player1.setX(currentLevel.getPlayerX());
-        player1.setY(currentLevel.getPlayerY());
+        player1.setX(currentLevel.getPlayerX() * 2);
+        player1.setY(currentLevel.getPlayerY() * 2);
         timerLeft = currentLevel.getStartTimer();
 
         if (this.restartCheck == true) {
@@ -717,8 +649,8 @@ public class Main extends Application {
             }
 
             int bombMover = 0;
-            for (int i = 0; i < reload.size(); i++){
-                System.out.println(reload.get(i));
+            for (Integer integer : reload) {
+                System.out.println(integer);
             }
             for (int x = 9; x < this.reload.size(); x++){
                 if(this.reload.get(x) == -1){
@@ -734,16 +666,7 @@ public class Main extends Application {
     /**
      * main
      */
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
         launch(args);
     }
-
-
-
-
-
-
-
-
-
 }

@@ -129,7 +129,6 @@ public class MapReader {
                     items.add(b);
                     this.bombs.add(b);
                 }
-                //TODO: Change filename for all loot!
                 else if (type.equals("cent")) {
                     Cent c = new Cent(new Image(getClass()
                             .getResource("cent.png").toURI().toString()),
