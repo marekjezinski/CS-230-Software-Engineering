@@ -31,7 +31,6 @@ public class SmartThiefSearch {
      */
     public static boolean bfs(Map x, Tile[][] tiles, int startRow,
                               int startCol, int goalRow, int goalCol ) {
-        //TODO: error here
         int rows = x.getMAP_MAX_X();
         int cols = x.getMAP_MAX_Y();
 
