@@ -27,7 +27,7 @@ public class SmartThiefSearch {
      * @param startCol
      * @param goalRow
      * @param goalCol
-     * @return
+     * @return boolean true if there is a path to the goal
      */
     public static boolean bfs(Map x, Tile[][] tiles, int startRow,
                               int startCol, int goalRow, int goalCol ) {
@@ -102,7 +102,9 @@ public class SmartThiefSearch {
     }
 
 
-
+    /**
+     * method for getting the queue
+     */
     public static Queue<int[]> getQueue(){
         return path;
     }

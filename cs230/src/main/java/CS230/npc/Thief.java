@@ -35,7 +35,7 @@ public class Thief extends NPC {
 
     /**
      * Movement for the thief
-     * @param m
+     * @param m the map of the current level
      */
     public void movement(Map m) {
         if(isActive) {
@@ -104,7 +104,7 @@ public class Thief extends NPC {
 
     /**
      * Method to see if any items can be removed
-     * @param m
+     * @param m map of the level
      */
 
     private void trigger(Map m) {
@@ -232,7 +232,7 @@ public class Thief extends NPC {
 
     /**
      * Method for changing the active variable
-     * @param active
+     * @param active to check if it is active.
      */
     public void setActive(boolean active) {
         isActive = active;

@@ -26,7 +26,7 @@ public class SmartThief extends NPC {
 
     /**
      *  randomly moves if no valid path is found
-     * @param currentLevel
+     * @param currentLevel the map of current level
      */
     public void randomMovement(Map currentLevel){
         Tile[][] currentMap = currentLevel.getTilesArray();
