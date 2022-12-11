@@ -94,7 +94,6 @@ public class Leaderboard extends SaveLoad {
                             duplicateNames.add(this.names.get(i));
                             duplicateScores.add(this.scores.get(i));
                         }
-                        j = this.names.size();
                     }
                 }
                 if (!duplicate) {
@@ -107,6 +106,15 @@ public class Leaderboard extends SaveLoad {
             }
             scores=duplicateScores;
             names=duplicateNames;
+
+            for (int i = 0; i < this.names.size(); i++){
+                for (int j = 1; j< this.names.size(); j++){
+                    if (this.names.get(i).equals(this.names.get(j))){
+                        this.names.remove(j);
+                        this.scores.remove(j);
+                    }
+                }
+            }
 
             for (int i = 0; i < 10; i++) {
                 if (this.scores.size() > 0) {
