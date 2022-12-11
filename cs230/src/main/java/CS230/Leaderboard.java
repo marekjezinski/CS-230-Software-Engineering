@@ -73,52 +73,62 @@ public class Leaderboard extends SaveLoad {
     /**
      * method for printing out the top 10 scores
      */
-    public void getTopScores(){
+    public void getTopScores() {
         File f = new File("scores.txt");
-        try  {
+        try {
             Scanner in = new Scanner(f);
-            while(in.hasNext()) {
+            while (in.hasNext()) {
                 this.names.add(in.next());
                 this.scores.add(in.nextInt());
             }
-            for(int i = 0; i < this.names.size(); i++){
-                int score = 0;
-                for(int j = 1; j < this.names.size(); j++){
-                    if (this.names.get(i).equals(this.names.get(j))){
-                        if (this.scores.get(i) >= score){
-                            this.scores.remove(j);
-                            this.names.remove(j);
+
+            ArrayList<String> duplicateNames = new ArrayList<String>();
+            ArrayList<Integer> duplicateScores = new ArrayList<Integer>();
+            boolean duplicate = false;
+            for (int i = 0; i < this.names.size(); i++) {
+                for (int j = 0; j < this.names.size(); j++) {
+                    int score = this.scores.get(j);
+                    if ((this.names.get(i).equals(this.names.get(j))) && !duplicate && (i != j)) {
+                        duplicate = true;
+                        if (this.scores.get(i) >= score) {
+                            duplicateNames.add(this.names.get(i));
+                            duplicateScores.add(this.scores.get(i));
                         }
-                        /*else {
-                            this.scores.remove(i);
-                            this.names.remove(i);
-                        }*/
+                        j = this.names.size();
                     }
                 }
-            }
-           for (int i = 0; i < 10; i++) {
-               if (this.scores.size() > 0) {
-                   int topScore = 0;
-                   String name = "";
-                   int position = 0;
-                   for (int j = 0; j < this.scores.size(); j++) {
-                       if (this.scores.get(j) >= topScore) {
-                           topScore = this.scores.get(j);
-                           name = this.names.get(j);
-                           position = j;
-                       }
-                   }
-                   System.out.println(name + " " + topScore);
-                   this.names.remove(position);
-                   this.scores.remove(position);
-
-               }
-           }
+                if (!duplicate) {
+                    duplicateNames.add(this.names.get(i));
+                    duplicateScores.add(this.scores.get(i));
                 }
+                else{
+                    duplicate = false;
+                }
+            }
+            scores=duplicateScores;
+            names=duplicateNames;
 
+            for (int i = 0; i < 10; i++) {
+                if (this.scores.size() > 0) {
+                    int topScore = 0;
+                    String name = "";
+                    int position = 0;
+                    for (int j = 0; j < this.scores.size(); j++) {
+                        if (this.scores.get(j) >= topScore) {
+                            topScore = this.scores.get(j);
+                            name = this.names.get(j);
+                            position = j;
+                        }
+                    }
+                    System.out.println(name + " " + topScore);
+                    this.names.remove(position);
+                    this.scores.remove(position);
 
-        catch (FileNotFoundException exception) {
+                }
+            }
+        } catch (FileNotFoundException exception) {
             exception.printStackTrace();
+
         }
     }
 
