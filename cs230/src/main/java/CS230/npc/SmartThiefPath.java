@@ -22,7 +22,7 @@ public class SmartThiefPath {
     private Loot closest;
 
     /**
-     *
+     *the path of smartthief
      * @param currentLevel
      */
     public SmartThiefPath(Map currentLevel){

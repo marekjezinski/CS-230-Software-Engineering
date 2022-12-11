@@ -208,7 +208,7 @@ public class Main extends Application {
             int goalY = sPath.getPathGoalY();
             // if a path is found which isn't 0,0
             // then move randomly through the level
-            if (SmartThiefSearch.bfs(currentLevel.getTilesArray(),
+            if (SmartThiefSearch.bfs( currentLevel, currentLevel.getTilesArray(),
                     sThief.getX(),sThief.getY(),sPath.
                             getPathGoalX(),
                     sPath.getPathGoalY()) && !(goalX==0 && goalY ==0)){

@@ -1,5 +1,6 @@
 package CS230.npc;
 
+import CS230.Map;
 import CS230.Tile;
 
 import java.util.LinkedList;
@@ -28,11 +29,11 @@ public class SmartThiefSearch {
      * @param goalCol
      * @return
      */
-    public static boolean bfs(Tile[][] tiles, int startRow,
-                              int startCol, int goalRow, int goalCol) {
+    public static boolean bfs(Map x, Tile[][] tiles, int startRow,
+                              int startCol, int goalRow, int goalCol ) {
         //TODO: error here
-        int rows = 15;
-        int cols = 10;
+        int rows = x.getMAP_MAX_X();
+        int cols = x.getMAP_MAX_Y();
 
         int steps=0;
 
