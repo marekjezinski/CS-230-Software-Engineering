@@ -182,21 +182,26 @@ public class Main extends Application {
             int goalY = sPath.getPathGoalY();
             // if a path is found which isn't 0,0
             // then move randomly through the level
-            if (SmartThiefSearch.bfs( currentLevel, currentLevel.getTilesArray(),
-                    sThief.getX(),sThief.getY(),sPath.
-                            getPathGoalX(),
-                    sPath.getPathGoalY()) && !(goalX==0 && goalY ==0)){
-                path = SmartThiefSearch.getQueue();
-                //System.out.println("path X;
-                // "+sPath.getPathGoalX()+" Y: "
-                // + sPath.getPathGoalY());
-                // currently treats a player like loot idk why
-            } else {
-                if (currentLevel.getLoots().size() > 0) {
-                    sThief.randomMovement(currentLevel);
-                }
+            try {
+                if (SmartThiefSearch.bfs( currentLevel, currentLevel.getTilesArray(),
+                        sThief.getX(),sThief.getY(),sPath.
+                                getPathGoalX(),
+                        sPath.getPathGoalY()) && !(goalX==0 && goalY ==0)){
+                    path = SmartThiefSearch.getQueue();
+                    //System.out.println("path X;
+                    // "+sPath.getPathGoalX()+" Y: "
+                    // + sPath.getPathGoalY());
+                    // currently treats a player like loot idk why
+                } else {
+                    if (currentLevel.getLoots().size() > 0) {
+                        sThief.randomMovement(currentLevel);
+                    }
 
+                }
+            } catch (Exception e) {
+                
             }
+
 
 
 
