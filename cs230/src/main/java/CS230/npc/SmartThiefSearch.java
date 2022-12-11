@@ -70,16 +70,23 @@ public class SmartThiefSearch {
 
                 int rowDiff = currRow - nextRow;
                 int colDiff = currCol - nextCol;
+                int dist = rowDiff + colDiff;
+
+
                 // check if the next cell is valid, not visited, and has
                 // at least one common color with the current cell
-                if (nextRow >= 0 && nextRow < rows && nextCol
-                        >= 0 && nextCol < cols
-                        && !visited[nextRow][nextCol] &&
-                        tiles[currRow][currCol]
-                                .isLegalJump(tiles[nextRow][nextCol])
-                        && (rowDiff <=1 && colDiff <= 1)) {
+
+                if (((nextRow >= 0 && nextRow < rows ) &&
+                        (nextCol >= 0 && nextCol < cols) &&
+                        !visited[nextRow][nextCol] &&
+
+                        tiles[currRow][currCol].isLegalJump(tiles[nextRow][nextCol])
+
+                )&& (dist <= 1)) {
                     // mark the cell as visited and enqueue it
+
                     visited[nextRow][nextCol] = true;
+
                     queue.add(new int[]{nextRow, nextCol, currRow, currCol});
 
 
