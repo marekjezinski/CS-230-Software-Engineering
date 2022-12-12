@@ -1,9 +1,7 @@
 package CS230.npc;
 
-import CS230.Map;
+import CS230.map.Map;
 import javafx.scene.image.Image;
-
-import java.util.ArrayList;
 
 /**
  * Class that creates a FlyingAssassin, inherits from the superclass NPC

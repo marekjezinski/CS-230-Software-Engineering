@@ -1,5 +1,7 @@
 package CS230;
 import CS230.items.*;
+import CS230.map.Cell;
+import CS230.map.Map;
 import CS230.npc.*;
 import CS230.saveload.ProfileFileManager;
 import CS230.saveload.SaveGame;
@@ -32,7 +34,6 @@ import javafx.util.Duration;
 
 import java.io.File;
 import java.io.IOException;
-import java.lang.invoke.StringConcatFactory;
 import java.util.*;
 import java.net.URISyntaxException;
 
@@ -77,7 +78,7 @@ public class Main extends Application {
     public static Queue<int[]> path = new LinkedList<>();
     //used to iterate through all the directions of grid
     private Image SMImage =  new Image(getClass().
-            getResource("smartThief.png").toURI().toString());
+            getResource("map/smartThief.png").toURI().toString());
     private SmartThief sThief = new SmartThief(1,1,SMImage);
     private int[] smThiefCords = {0,0};
     private String username;
@@ -90,14 +91,14 @@ public class Main extends Application {
     SaveGame save = new SaveGame();
     private MediaPlayer player = new MediaPlayer(new Media(new File("gamemusic.mp3").toURI().toString()));
     private int currentLevelID = 0;
-    private ArrayList<Map> levels = new ArrayList<>();
-    Map currentLevel;
-    Map level1 = new Map("textfiles/maps/L0.0.txt");
-    Map level2 = new Map("textfiles/maps/L1.0.txt");
-    Map level3 = new Map("textfiles/maps/L2.0.txt");
-    Map level4 = new Map("textfiles/maps/L3.0.txt");
-    Map level5 = new Map("textfiles/maps/L4.0.txt");
-    Map level6 = new Map("textfiles/maps/L5.0.txt");
+    private ArrayList<CS230.map.Map> levels = new ArrayList<>();
+    CS230.map.Map currentLevel;
+    CS230.map.Map level1 = new CS230.map.Map("textfiles/maps/L0.0.txt");
+    CS230.map.Map level2 = new CS230.map.Map("textfiles/maps/L1.0.txt");
+    CS230.map.Map level3 = new CS230.map.Map("textfiles/maps/L2.0.txt");
+    CS230.map.Map level4 = new CS230.map.Map("textfiles/maps/L3.0.txt");
+    CS230.map.Map level5 = new CS230.map.Map("textfiles/maps/L4.0.txt");
+    CS230.map.Map level6 = new CS230.map.Map("textfiles/maps/L5.0.txt");
     private ProfileFileManager profiles;
 
     public Main() throws URISyntaxException {
@@ -120,7 +121,7 @@ public class Main extends Application {
 
         // Load images. Note we use png images with a transparent background.
         playerImage = new Image(getClass().
-                getResource("player.png").toURI().toString());
+                getResource("map/player.png").toURI().toString());
 
 
         //create player
@@ -214,22 +215,22 @@ public class Main extends Application {
                         if (secToExplode == 3) {
                             bombs.get(i).
                                     setImg(new Image(getClass().
-                                            getResource("bomb3.png").
+                                            getResource("map/bomb3.png").
                                             toURI().toString()));
                         }
                         else if (secToExplode == 2) {
                             bombs.get(i).setImg(new Image(getClass().
-                                    getResource("bomb2.png").
+                                    getResource("map/bomb2.png").
                                     toURI().toString()));
                         }
                         else if (secToExplode == 1) {
                             bombs.get(i).setImg(new Image(getClass().
-                                    getResource("bomb1.png").
+                                    getResource("map/bomb1.png").
                                     toURI().toString()));
                         }
                         else if (secToExplode == 0) {
                             bombs.get(i).setImg(new Image(getClass().
-                                    getResource("bomb0.png").
+                                    getResource("map/bomb0.png").
                                     toURI().toString()));
                             currentLevel.explodeBomb(i);
 

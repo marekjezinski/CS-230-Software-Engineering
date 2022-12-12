@@ -1,7 +1,7 @@
 package CS230.saveload;
 
-import CS230.Map;
-import CS230.Tile;
+import CS230.map.Map;
+import CS230.map.Tile;
 import CS230.items.Bomb;
 import CS230.items.Clock;
 import CS230.items.Loot;

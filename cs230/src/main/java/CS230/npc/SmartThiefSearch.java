@@ -1,10 +1,9 @@
 package CS230.npc;
 
-import CS230.Map;
-import CS230.Tile;
+import CS230.map.Map;
+import CS230.map.Tile;
 
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Queue;
 
 /**

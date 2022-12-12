@@ -1,9 +1,9 @@
 package CS230.npc;
 
 
-import CS230.Map;
+import CS230.map.Map;
 import CS230.items.Loot;
-import CS230.Tile;
+import CS230.map.Tile;
 
 import java.util.ArrayList;
 

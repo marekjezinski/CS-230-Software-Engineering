@@ -8,4 +8,5 @@ module com.example.cs230 {
     exports CS230.npc;
     opens CS230.npc to javafx.fxml;
     exports CS230.saveload;
+    exports CS230.map;
 }

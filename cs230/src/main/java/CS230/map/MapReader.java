@@ -1,4 +1,4 @@
-package CS230;
+package CS230.map;
 
 import CS230.items.*;
 import CS230.npc.*;

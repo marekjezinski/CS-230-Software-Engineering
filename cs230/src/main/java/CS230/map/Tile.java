@@ -1,4 +1,4 @@
-package CS230;
+package CS230.map;
 
 /**
  * Tile class for the game

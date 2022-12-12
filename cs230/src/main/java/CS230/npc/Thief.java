@@ -1,7 +1,7 @@
 package CS230.npc;
 
-import CS230.Map;
-import CS230.Tile;
+import CS230.map.Map;
+import CS230.map.Tile;
 import CS230.items.Bomb;
 import CS230.items.Gate;
 import javafx.scene.image.Image;
