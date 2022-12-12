@@ -188,10 +188,6 @@ public class Main extends Application {
                                 getPathGoalX(),
                         sPath.getPathGoalY()) && !(goalX==0 && goalY ==0)){
                     path = SmartThiefSearch.getQueue();
-                    //System.out.println("path X;
-                    // "+sPath.getPathGoalX()+" Y: "
-                    // + sPath.getPathGoalY());
-                    // currently treats a player like loot idk why
                 } else {
                     if (currentLevel.getLoots().size() > 0) {
                         sThief.randomMovement(currentLevel);
@@ -345,8 +341,6 @@ public class Main extends Application {
                     currentLevel = levels.get(currentLevelID);
                     player1.setX(currentLevel.getPlayerX() * 2);
                     player1.setY(currentLevel.getPlayerY() * 2);
-
-                    System.out.println(currentLevel.getScore());
                 }
             }
         }

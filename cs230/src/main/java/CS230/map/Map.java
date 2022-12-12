@@ -215,12 +215,12 @@ public class Map {
                 }
             }
             if(wlever.getX() == x && wlever.getY() == coordY) {
-                wlever.setX(-1);
-                wlever.setY(-1);
+                wlever.setX(-2);
+                wlever.setY(-2);
             }
             if(rlever.getX() == x && rlever.getY() == coordY) {
-                rlever.setX(-1);
-                rlever.setY(-1);
+                rlever.setX(-2);
+                rlever.setY(-2);
             }
         }
         for(int y = 0; y < MAP_MAX_Y; y++) {
@@ -242,12 +242,12 @@ public class Map {
                 }
             }
             if(wlever.getX() == coordX && wlever.getY() == y) {
-                wlever.setX(-1);
-                wlever.setY(-1);
+                wlever.setX(-2);
+                wlever.setY(-2);
             }
             if(rlever.getX() == coordY && rlever.getY() == y) {
-                rlever.setX(-1);
-                rlever.setY(-1);
+                rlever.setX(-2);
+                rlever.setY(-2);
             }
         }
     }

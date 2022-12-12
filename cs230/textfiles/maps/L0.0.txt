@@ -21,7 +21,7 @@ ruby 0 4
 wgate 3 4
 wlever 0 3
 rgate 5 4
-rlever 1 5
+rlever 1 6
 clock 11 9
 ruby 12 9
 ruby 13 9
