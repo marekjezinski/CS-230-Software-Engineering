@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"m":"com.example.cs230","l":"CS230"},{"m":"com.example.cs230","l":"CS230.items"},{"m":"com.example.cs230","l":"CS230.map"},{"m":"com.example.cs230","l":"CS230.npc"},{"m":"com.example.cs230","l":"CS230.saveload"}];updateSearchResults();
