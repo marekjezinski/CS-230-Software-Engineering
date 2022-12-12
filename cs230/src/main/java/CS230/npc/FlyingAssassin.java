@@ -5,6 +5,7 @@ import javafx.scene.image.Image;
 
 /**
  * Class that creates a FlyingAssassin, inherits from the superclass NPC
+ * @author Wiktoria Bruzgo
  * @author Marek Jezinski
  * @version 1.0
  */
@@ -75,7 +76,7 @@ public class FlyingAssassin extends NPC {
      * the player or not
      * @param playerX
      * @param playerY
-     * @return
+     * @return true if collided false otherwise
      */
     public boolean isCollidedWithPlayer(int playerX, int playerY) {
         if(x == playerX && y == playerY) {
@@ -84,6 +85,10 @@ public class FlyingAssassin extends NPC {
         return false;
     }
 
+    /**
+     * Gets current direction of assassin
+     * @return direction char
+     */
     public char getDirection() {
         return direction;
     }

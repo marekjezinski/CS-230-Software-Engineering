@@ -10,6 +10,11 @@ public class Tile {
 
     //colourCodes is array of 4 chars representing (1 tile is 4 cells): R - red,
     //G - green, B - blue, Y - yellow, C - cyan, M - magenta
+
+    /**
+     * Constructor creates tile consisting of four cells
+     * @param tileText colour code from map file
+     */
     public Tile(String tileText) {
         char[] colourCodes = tileText.toUpperCase().toCharArray();
         for(int i = 0; i < colourCodes.length; i++) {
@@ -17,6 +22,11 @@ public class Tile {
         }
     }
 
+    /**
+     * Compares one tile with another and determines if jump is legal
+     * @param t another tile
+     * @return true if legal jump false otherwise
+     */
     public boolean isLegalJump(Tile t) {
         String colourCode1 = t.getTileColours();
         String colourCode2 = getTileColours();
@@ -31,6 +41,11 @@ public class Tile {
         }
         return false;
     }
+
+    /**
+     * Returns tile colours in file format
+     * @return string of tile colours
+     */
     public String getTileColours() {
         String s = "";
         for(Cell var : cells) {
@@ -39,18 +54,34 @@ public class Tile {
         return s;
     }
 
+    /**
+     * Returns top left cell
+     * @return top left cell
+     */
     public Cell getTopLeftCell() {
         return cells[0];
     }
 
+    /**
+     * Returns top right cell
+     * @return top right cell
+     */
     public Cell getTopRightCell() {
         return cells[1];
     }
 
+    /**
+     * Returns bottom left cell
+     * @return bottom left cell
+     */
     public Cell getBottomLeftCell() {
         return cells[2];
     }
 
+    /**
+     * Returns bottom right cell
+     * @return bottom right cell
+     */
     public Cell getBottomRightCell() {
         return cells[3];
     }

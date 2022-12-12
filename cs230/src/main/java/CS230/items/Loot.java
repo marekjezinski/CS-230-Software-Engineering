@@ -33,6 +33,10 @@ public abstract class Loot extends Item {
         return lootValue;
     }
 
+    /**
+     * Method returns name of the loot
+     * @return name of the loot needed for save class
+     */
     public String getLootName() {
         return lootName;
     }

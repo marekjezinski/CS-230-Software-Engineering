@@ -5,11 +5,11 @@ import javafx.scene.image.Image;
 /**
  * Abstract class that creates a general NPC object, it's used
  * as a template for more specific NPCs
- * @author
- * @version 0
+ * @author Marek Jezinski
+ * @version 1.0
  */
 public abstract class NPC {
-    private Image img; //will change back to final after smartthief
+    private Image img;
     protected int x;
     protected int y;
 

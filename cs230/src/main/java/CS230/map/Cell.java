@@ -4,7 +4,7 @@ import javafx.scene.image.Image;
 
 /**
  * Class that constructs a Cell object, which is a single component of a Tile. Tile consists of 4 cells
- * @author
+ * @author Marek Jezinski
  * @version 1.0
  */
 public class Cell {
@@ -15,9 +15,8 @@ public class Cell {
     /**
      * method that sets a cell image's colour.
      * @param colourCode - used to identify the colour of the cell
-     * @return cell image
      */
-    private Image setCellImage(char colourCode) {
+    private void setCellImage(char colourCode) {
         try {
             switch(colourCode) {
                 case 'R':
@@ -46,8 +45,6 @@ public class Cell {
             System.err.println("Check image files!");
             System.exit(1);
         }
-
-        return cellImage;
     }
 
     /**
@@ -56,7 +53,7 @@ public class Cell {
      */
     public Cell(char colourCode) {
         this.colourCode = colourCode;
-        this.cellImage = setCellImage(this.colourCode);
+        setCellImage(this.colourCode);
     }
 
     /**
@@ -65,14 +62,6 @@ public class Cell {
      */
     public char getColourCode() {
         return colourCode;
-    }
-
-    /**
-     * method that sets a cell's colour code
-     * @param colourCode
-     */
-    public void setColourCode(char colourCode) {
-        this.colourCode = colourCode;
     }
 
     /**

@@ -49,9 +49,9 @@ public class MapReader {
     private int starttimer;
     private int lootcount = 0;
     /**
-     * Constructor for the class
+     * Constructor for the class, sets all parameters needed for return later
      *
-     * @param fileName
+     * @param fileName name of file
      */
     public MapReader(String fileName) {
         this.fileName = fileName;
@@ -178,8 +178,6 @@ public class MapReader {
                                     .toURI().toString()),
                             in.next().toUpperCase().charAt(0),
                             in.next().toLowerCase().charAt(0)));
-                    /*Thief thief = new Thief(in.nextInt(), in.nextInt(),
-                            new Image(getClass().getResource("thief.png").toURI().toString()));*/
                 } else if (type.equals("smartthief")) {
                     smarts.add(new SmartThief(in.nextInt(), in.nextInt(),
                             new Image(getClass().getResource("smartThief.png").toURI().toString())));
@@ -208,27 +206,27 @@ public class MapReader {
     }
 
     /**
-     * Get method for maxTileX
+     * Get method for maximal X cord on map
      *
-     * @return maxTileX
+     * @return maxTileX max X cord
      */
     public int getMaxTileX() {
         return maxTileX;
     }
 
     /**
-     * Get method for maxTileY
+     * Get method for maximal Y cord on map
      *
-     * @return maxTileY
+     * @return maxTileY max Y cord
      */
     public int getMaxTileY() {
         return maxTileY;
     }
 
     /**
-     * Get method for tiles
+     * Get method for tiles array
      *
-     * @return tiles
+     * @return tiles tile array
      */
     public Tile[][] getTiles() {
         return tiles;
@@ -237,43 +235,43 @@ public class MapReader {
     /**
      * Get method for timer
      *
-     * @return timer
+     * @return timer time
      */
     public int getTimer() {
         return this.timer;
     }
 
     /**
-     * Get method for items
+     * Get method for items objects array
      *
-     * @return items
+     * @return items item array
      */
     public ArrayList<Item> getItems() {
         return items;
     }
 
     /**
-     * Get method for loot
+     * Get method for loot objects array
      *
-     * @return loot
+     * @return loot loot array
      */
     public ArrayList<Loot> getLoot() {
         return loot;
     }
 
     /**
-     * Get method for clocks
+     * Get method for clocks objects array
      *
-     * @return clocks
+     * @return clocks clock array
      */
     public ArrayList<Clock> getClocks() {
         return clocks;
     }
 
     /**
-     * Get method for door
+     * Get method for door object
      *
-     * @return door
+     * @return door door object
      */
     public Door getDoor() {
         return door;
@@ -282,7 +280,7 @@ public class MapReader {
     /**
      * Get method for rusty gate
      *
-     * @return rgate
+     * @return rgate rusty gate object
      */
     public Gate getRGate() {
         return rgate;
@@ -291,7 +289,7 @@ public class MapReader {
     /**
      * Get method for rusty lever
      *
-     * @return rlever
+     * @return rlever rusty lever object
      */
     public Lever getRLever() {
         return rlever;
@@ -300,7 +298,7 @@ public class MapReader {
     /**
      * Get method for wooden gate
      *
-     * @return wgate
+     * @return wgate wooden gate object
      */
     public Gate getWGate() {
         return wgate;
@@ -309,7 +307,7 @@ public class MapReader {
     /**
      * Get method for wooden lever
      *
-     * @return wlever
+     * @return wlever wooden lever object
      */
     public Lever getWLever() {
         return wlever;
@@ -318,7 +316,7 @@ public class MapReader {
     /**
      * Get method for bombs
      *
-     * @return bombs
+     * @return bombs bomb object
      */
     public ArrayList<Bomb> getBomb() {
         return bombs;
@@ -326,7 +324,7 @@ public class MapReader {
 
     /**
      * method to get player's starting x coordinate
-     * @return playerStartX;
+     * @return playerStartX player x coordinate
      */
     public int getPlayerStartX() {
         return playerStartX;
@@ -334,7 +332,7 @@ public class MapReader {
 
     /**
      * method to get player's starting y coordinate
-     * @return playerStartY
+     * @return playerStartY player y coordinate
      */
 
     public int getPlayerStartY() {
@@ -344,7 +342,7 @@ public class MapReader {
     /**
      * Get method for map's starting timer for level reset and level load.
      *
-     * @return starttimer;
+     * @return starttimer starting time
      */
     public int getStarttimer() {
         return starttimer;
@@ -356,17 +354,29 @@ public class MapReader {
 
     /**
      * Get method that returns the thieves arraylist
-     * @return thieves
+     * @return thieves thieves arraylist
      */
 
+    /**
+     * Returns arraylist of thieves objects
+     * @return arraylist of thieves ovjects
+     */
     public ArrayList<Thief> getThieves() {
         return thieves;
     }
 
+    /**
+     * Gets level id
+     * @return level id
+     */
     public int getLevelID() {
         return levelID;
     }
 
+    /**
+     * Gets current score saved
+     * @return score saved
+     */
     public int getScore() {
         return score;
     }

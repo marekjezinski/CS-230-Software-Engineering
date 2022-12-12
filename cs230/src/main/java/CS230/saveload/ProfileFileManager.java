@@ -18,6 +18,10 @@ public class ProfileFileManager {
     private ArrayList<PlayerProfile> playerProfiles = new ArrayList<>();
     private int levelsNumber;
 
+    /**
+     * Accesses profiles file and sets array list of player profiles accordingly
+     * @param levelsNumber maximal number of levels
+     */
     public ProfileFileManager(int levelsNumber) {
         this.levelsNumber = levelsNumber;
         try{
@@ -51,9 +55,8 @@ public class ProfileFileManager {
         }
     }
     /**
-     * method for updating the profile file
+     * method for updating the profile file by accessing player profile arraylist
      */
-
     private void updateFile() {
         File f = new File("textfiles/profiles.txt");
         if (f.exists()) {
@@ -97,6 +100,12 @@ public class ProfileFileManager {
         updateFile();
     }
 
+    /**
+     * Updates max score reached on given level
+     * @param username username of the player
+     * @param scoreToUpdate score to be updated
+     * @param levelID id of the level
+     */
     public void updateMaxScore(String username, int scoreToUpdate, int levelID) {
         for(int i = 0; i < playerProfiles.size(); i++) {
             if(playerProfiles.get(i).getUsername().equals(username)) {
@@ -108,8 +117,9 @@ public class ProfileFileManager {
         updateFile();
     }
     /**
-     * method for checking the username is vaild
+     * method for checking if the username is vaild
      * @param username the username inputted
+     * @return true if valid false otherwise
      */
     public boolean isValidName(String username) {
         for (PlayerProfile playerProfile : playerProfiles) {
@@ -166,17 +176,10 @@ public class ProfileFileManager {
         updateFile();
     }
 
-    public int getScore(String username, int levelID) {
-        for (PlayerProfile playerProfile : playerProfiles) {
-            if(playerProfile.getUsername().equals(username)) {
-                return(playerProfile.getScore(levelID));
-            }
-        }
-        return(-1);
-    }
     /**
-     * method for getting the Max level of the player
+     * method for getting the Max level reached of the player
      * @param username the username of the player
+     * @return max level reached
      */
     public int getMaxLvl(String username) {
         for (PlayerProfile playerProfile : playerProfiles) {
@@ -187,19 +190,29 @@ public class ProfileFileManager {
         return(-1);
     }
 
+    /**
+     * Returns string that consists of top 10 results on given level
+     * @param levelID id of the level
+     * @return string in readable format
+     */
     public String getLeaderboardForLevelID(int levelID) {
+        //creating copy of profiles to be sorted later
         ArrayList<PlayerProfile> profilesSortedByScore = new ArrayList<>();
         String leaderboard;
         for (PlayerProfile playerProfile : playerProfiles) {
             profilesSortedByScore.add(playerProfile);
         }
 
+        //accessing private method explained below
         profilesSortedByScore = sortProfilesByScore(profilesSortedByScore, levelID);
 
+        //limiting leaderboard to 10
         int numOfScores = profilesSortedByScore.size();
         if(numOfScores > 10) {
             numOfScores = 10;
         }
+
+        //generating string
         leaderboard = "Leaderboard for level " + (levelID + 1) + System.lineSeparator();
         for(int i = 0; i < numOfScores; i++) {
             leaderboard += String.valueOf((i + 1) + ": " + profilesSortedByScore.get(i).getUsername() + " "
@@ -208,6 +221,12 @@ public class ProfileFileManager {
         return leaderboard;
     }
 
+    /**
+     * Sorting player profile arraylist by scores descending, bubble sort
+     * @param p arraylist of player profiles
+     * @param levelID id of the level for which player profiles are going to be sorted
+     * @return sorted arraylist
+     */
     private ArrayList<PlayerProfile> sortProfilesByScore(ArrayList<PlayerProfile> p, int levelID) {
         for(int i = 0; i < p.size(); i++) {
             for(int j = 0; j < p.size() - 1; j++) {

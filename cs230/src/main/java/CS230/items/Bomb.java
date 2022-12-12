@@ -5,10 +5,10 @@ import javafx.scene.image.Image;
 /**
  * Bomb item class for the game, is a subclass of item
  * @author Tom Stevens
+ * @author Marek Jezinski
  * @version 1.0
  */
 public class Bomb extends Item {
-    private boolean isTriggered;
     private int secondsToExplode = -2;
     /**
      *
@@ -26,7 +26,7 @@ public class Bomb extends Item {
 
     /**
      * method that gets the seconds that a bomb will last before exploding
-     * @return secondsToExplode
+     * @return secondsToExplode seconds to explosion
      */
     public int getSecondsToExplode() {
         return secondsToExplode;
@@ -34,7 +34,7 @@ public class Bomb extends Item {
 
     /**
      * method that sets a bomb's seconds to explode
-     * @param secondsToExplode reading the bomb explode time
+     * @param secondsToExplode setting bomb explosion time
      */
     public void setSecondsToExplode(int secondsToExplode) {
         this.secondsToExplode = secondsToExplode;

@@ -43,14 +43,14 @@ import java.util.ArrayList;
 import static java.lang.Math.ceil;
 
 /**
- *Main method for the program based on the sample program provided
+ *Main method for the program based on the sample program provided. We kept Liam as he
+ * provided original code
  *
  * @author Liam O'Reilly
  * @author Tom Stevens
  * @author Kam Leung
  * @author Marek Jezinski
  */
-//TODO: please put names here
 public class Main extends Application {
     // The dimensions of the window
     private static final int WINDOW_WIDTH = 1200;
@@ -72,17 +72,27 @@ public class Main extends Application {
     private Player player1;
     private Timeline timerTimeline;
     private Timeline scoreColourChanger;
+    /**
+     * sfasdf
+     */
     private Timeline bombTimeline;
-    private Loot currentGoal;
     //SmartThief
     public static Queue<int[]> path = new LinkedList<>();
     //used to iterate through all the directions of grid
-    private Image SMImage =  new Image(getClass().
-            getResource("map/smartThief.png").toURI().toString());
+    private Image SMImage;
+    {
+        try {
+            SMImage = new Image(getClass().
+                    getResource("map/smartThief.png").toURI().toString());
+        } catch (URISyntaxException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     private SmartThief sThief = new SmartThief(1,1,SMImage);
     private int[] smThiefCords = {0,0};
+    //local username
     private String username;
-    ArrayList<Integer> reload;
     private boolean hasGameStarted = false;
     private Text timerText = new Text();
     private Text scoreText = new Text();
@@ -92,6 +102,8 @@ public class Main extends Application {
     private MediaPlayer player = new MediaPlayer(new Media(new File("gamemusic.mp3").toURI().toString()));
     private int currentLevelID = 0;
     private ArrayList<CS230.map.Map> levels = new ArrayList<>();
+
+    //below declaring maps from files
     CS230.map.Map currentLevel;
     CS230.map.Map level1 = new CS230.map.Map("textfiles/maps/L0.0.txt");
     CS230.map.Map level2 = new CS230.map.Map("textfiles/maps/L1.0.txt");
@@ -99,16 +111,15 @@ public class Main extends Application {
     CS230.map.Map level4 = new CS230.map.Map("textfiles/maps/L3.0.txt");
     CS230.map.Map level5 = new CS230.map.Map("textfiles/maps/L4.0.txt");
     CS230.map.Map level6 = new CS230.map.Map("textfiles/maps/L5.0.txt");
+    //profile manager for keeping track of profiles
     private ProfileFileManager profiles;
-
-    public Main() throws URISyntaxException {
-    }
 
     /**
      * Set up the new application.
      * @param primaryStage The stage that is to be used for the application.
      */
     public void start(Stage primaryStage) throws URISyntaxException, IOException {
+        //addinb levels to arraylist of levels playable
         levels.add(level1);
         levels.add(level2);
         levels.add(level3);
@@ -140,6 +151,8 @@ public class Main extends Application {
         timerTimeline = new Timeline(new
                 KeyFrame(Duration.millis(1000), event -> {
             timer();
+
+            //movement of flying assassin
             ArrayList<FlyingAssassin> fl = currentLevel.getFlyingAssassins();
             for (FlyingAssassin flyingAssassin : fl) {
                 flyingAssassin.movement(currentLevel);
@@ -148,11 +161,13 @@ public class Main extends Application {
             if(currentLevel.isFlAsCollidedWPlayer()) {
                 gameOver();
             }
+            //movement of floor following thieves
             ArrayList<Thief> th = currentLevel.getThieves();
             for (Thief thief : th) {
                 thief.movement(currentLevel);
             }
             currentLevel.setThieves(th);
+            //checking if thief triggered bomb
             for(int i = 0; i < currentLevel.getThieves().size(); i++) {
                 Thief currentThief = currentLevel.getThieves().get(i);
                 if (currentLevel.isBombTriggered(
@@ -161,12 +176,10 @@ public class Main extends Application {
                 }
             }
             currentLevel.isFlCollidedWithNPC();
+
+            //Smart thief below
             //create path
             SmartThiefPath sPath = new SmartThiefPath(currentLevel);
-            if(currentLevel.getLoots().size() > 0) {
-                //search for nearest item
-                currentGoal = sPath.findClosestLoot(currentLevel, sThief);
-            }
 
             this.smThiefCords = path.poll();
             if (this.smThiefCords != null) {
@@ -183,7 +196,7 @@ public class Main extends Application {
             // if a path is found which isn't 0,0
             // then move randomly through the level
             try {
-                if (SmartThiefSearch.bfs( currentLevel, currentLevel.getTilesArray(),
+                if (SmartThiefSearch.bfs( currentLevel, currentLevel.getTILES_ARRAY(),
                         sThief.getX(),sThief.getY(),sPath.
                                 getPathGoalX(),
                         sPath.getPathGoalY()) && !(goalX==0 && goalY ==0)){
@@ -197,56 +210,61 @@ public class Main extends Application {
             } catch (Exception e) {
 
             }
+            //drawing game
             drawGame();
         }));
         timerTimeline.setCycleCount(Animation.INDEFINITE);
 
+        //bomb timeline activated when bomb is triggered
         bombTimeline = new Timeline(new
                 KeyFrame(Duration.millis(1000), event -> {
-            ArrayList<Bomb> bombs = currentLevel.getBombs();
-            for(int i = 0; i < bombs.size(); i++) {
-                int secToExplode = bombs.get(i).getSecondsToExplode();
-                if (secToExplode != -2) {
-                    try {
-                        if (secToExplode == 3) {
-                            bombs.get(i).
-                                    setImg(new Image(getClass().
-                                            getResource("map/bomb3.png").
-                                            toURI().toString()));
-                        }
-                        else if (secToExplode == 2) {
-                            bombs.get(i).setImg(new Image(getClass().
-                                    getResource("map/bomb2.png").
-                                    toURI().toString()));
-                        }
-                        else if (secToExplode == 1) {
-                            bombs.get(i).setImg(new Image(getClass().
-                                    getResource("map/bomb1.png").
-                                    toURI().toString()));
-                        }
-                        else if (secToExplode == 0) {
-                            bombs.get(i).setImg(new Image(getClass().
-                                    getResource("map/bomb0.png").
-                                    toURI().toString()));
-                            currentLevel.explodeBomb(i);
+                ArrayList<Bomb> bombs = currentLevel.getBombs();
+                //triggering bombs and changing their time to explode
+                for(int i = 0; i < bombs.size(); i++) {
+                    int secToExplode = bombs.get(i).getSecondsToExplode();
+                    if (secToExplode != -2) {
+                        try {
+                            if (secToExplode == 3) {
+                                bombs.get(i).
+                                        setImg(new Image(getClass().
+                                                getResource("map/bomb3.png").
+                                                toURI().toString()));
+                            }
+                            else if (secToExplode == 2) {
+                                bombs.get(i).setImg(new Image(getClass().
+                                        getResource("map/bomb2.png").
+                                        toURI().toString()));
+                            }
+                            else if (secToExplode == 1) {
+                                bombs.get(i).setImg(new Image(getClass().
+                                        getResource("map/bomb1.png").
+                                        toURI().toString()));
+                            }
+                            else if (secToExplode == 0) {
+                                bombs.get(i).setImg(new Image(getClass().
+                                        getResource("map/bomb0.png").
+                                        toURI().toString()));
+                                currentLevel.explodeBomb(i);
 
+                            }
+                            else if (secToExplode == -1) {
+                                bombs.get(i).setX(-1);
+                                bombs.get(i).setY(-1);
+                            }
+                        } catch (URISyntaxException e) {
+                            System.err.println("Wrong bomb image!");
+                            System.exit(1);
                         }
-                        else if (secToExplode == -1) {
-                            bombs.get(i).setX(-1);
-                            bombs.get(i).setY(-1);
-                        }
-                    } catch (URISyntaxException e) {
-                        System.err.println("Wrong bomb image!");
-                        System.exit(1);
+                        bombs.get(i).setSecondsToExplode(secToExplode - 1);
                     }
-                    bombs.get(i).setSecondsToExplode(secToExplode - 1);
+                    //update data in map
+                    currentLevel.setBombs(bombs);
+                    drawGame();
                 }
-                currentLevel.setBombs(bombs);
-                drawGame();
-            }
-        }));
+            }));
         bombTimeline.setCycleCount(Animation.INDEFINITE);
 
+        //timelin for changing colour of score
         scoreColourChanger = new Timeline(
                 new KeyFrame(Duration.millis(500), event -> scoreColour()));
         scoreColourChanger.setCycleCount(Animation.INDEFINITE);
@@ -302,21 +320,21 @@ public class Main extends Application {
             default:
                 break;
         }
+        //these actions below are checked whether any button is pressed
+        //checking if flying assassin killed player
         if(currentLevel.isFlAsCollidedWPlayer()) {
             gameOver();
         }
+        //calling internal function that checks item collection
         checkItems();
+        //updating leaderboard and profile data
         this.leaderboardText.setText(profiles.getLeaderboardForLevelID(currentLevelID));
         profiles.updateMaxLvl(username, currentLevelID);
         profiles.updateMaxScore(username, currentLevel.getScore(), currentLevelID);
         // Redraw game as the player may have moved.
         drawGame();
 
-
-
-        // Consume the event.
-        // This means we mark it as dealt with.
-        // his stops other GUI nodes (buttons etc.) responding to it.
+        //om nom nom tasty event
         event.consume();
     }
 
@@ -326,30 +344,40 @@ public class Main extends Application {
      * It also autosaves the current progress
      */
     private void checkItems() {
+        //divided by two because of javafx implementation
         playerX = player1.getX() / 2;
         playerY = player1.getY() / 2;
+        //if clock collected then time is added
         currentLevel.setTimerLeft(currentLevel.getTimerLeft() + currentLevel.checkClocks(playerX , playerY));
+        //checking door conditions
         if(currentLevel.checkDoor(playerX, playerY)>0){
             if( currentLevel.getLoots().size() == 0 &&
                     currentLevel.checklever()) {
+                //progression to next level
                 currentLevel.setScore((int) (currentLevel.getScore() + ceil(currentLevel.getTimerLeft() / 3)));
                 profiles.updateMaxScore(username, currentLevel.getScore(), currentLevelID);
                 currentLevelID++;
+                //if no next level then game is finished
                 if(currentLevelID > levels.size() - 1) {
                     gameOver();
                 } else {
+                    //else progress
                     currentLevel = levels.get(currentLevelID);
                     player1.setX(currentLevel.getPlayerX() * 2);
                     player1.setY(currentLevel.getPlayerY() * 2);
                 }
             }
         }
+        //check loot collected by smart thief
         currentLevel.checkLoots(sThief.getX(), sThief.getY());
+        //change score data
         currentLevel.setScore(currentLevel.getScore() + currentLevel.checkLoots(playerX, playerY ));
         scoreText.setText("Score: " + currentLevel.getScore());
         scoreText.setFont(Font.font("arial",20));
+        //check if levers collected
         currentLevel.checkRLever(playerX , playerY );
         currentLevel.checkWLever(playerX , playerY );
+        //if bomb is triggered then timeline is played above
         if (currentLevel.isBombTriggered(playerX , playerY)) {
             bombTimeline.play();
         }
@@ -384,46 +412,37 @@ public class Main extends Application {
                         x * GRID_CELL_WIDTH, y * GRID_CELL_HEIGHT);
             }
         }
-
+        //drawing items and npcs
         Door door = currentLevel.getDoor();
         gc.drawImage(door.getImg(), door.getX()
                 * GRID_CELL_WIDTH * 2, door.getY() * GRID_CELL_HEIGHT * 2);
-
         Gate rgate =  currentLevel.getRGate();
         gc.drawImage(rgate.getImg(), rgate.getX()
                 * GRID_CELL_WIDTH * 2, rgate.getY() * GRID_CELL_HEIGHT * 2);
-
         Lever rlever =  currentLevel.getRLever();
         gc.drawImage(rlever.getImg(), rlever.getX()
                 * GRID_CELL_WIDTH * 2, rlever.getY() * GRID_CELL_HEIGHT * 2);
-
         Gate wgate =  currentLevel.getWGate();
         gc.drawImage(wgate.getImg(), wgate.getX()
                 * GRID_CELL_WIDTH * 2, wgate.getY() * GRID_CELL_HEIGHT * 2);
-
         Lever wlever =  currentLevel.getWLever();
         gc.drawImage(wlever.getImg(), wlever.getX()
                 * GRID_CELL_WIDTH * 2, wlever.getY() * GRID_CELL_HEIGHT * 2);
-
         ArrayList<Bomb> bombs = currentLevel.getBombs();
         bombs.forEach(e ->  gc.drawImage(e.getImg(),
                 e.getX() * GRID_CELL_WIDTH * 2, e.getY() * GRID_CELL_HEIGHT * 2));
-
         ArrayList<Clock> clocks = currentLevel.getClocks();
         clocks.forEach(e ->  gc.drawImage(e.getImg(),
                 e.getX() * GRID_CELL_WIDTH * 2, e.getY() *
                         GRID_CELL_HEIGHT * 2));
-
         ArrayList<Loot> loots = currentLevel.getLoots();
         loots.forEach(e ->  gc.drawImage(e.getImg(),
                 e.getX() * GRID_CELL_WIDTH * 2, e.getY() *
                         GRID_CELL_HEIGHT * 2));
-
         ArrayList<FlyingAssassin> flyingAssassins = currentLevel.getFlyingAssassins();
         flyingAssassins.forEach(e ->  gc.drawImage(e.getImg(),
                 e.getX() * GRID_CELL_WIDTH * 2, e.getY() *
                         GRID_CELL_HEIGHT * 2));
-
         ArrayList<Thief> thieves = currentLevel.getThieves();
         thieves.forEach(e ->  gc.drawImage(e.getImg(),
                 e.getX() * GRID_CELL_WIDTH * 2, e.getY() *
@@ -431,15 +450,12 @@ public class Main extends Application {
         gc.drawImage(sThief.getImg(), sThief.getX() * 2
                 * GRID_CELL_WIDTH, sThief.getY() * 2 *
                 GRID_CELL_HEIGHT);
-
         gc.drawImage(player1.getCharImage(), player1.getX()
                 * GRID_CELL_WIDTH, player1.getY() *
                 GRID_CELL_HEIGHT);
 
-
-
+        //Draw lines on canvas separating tiles
         gc.setFill(Color.GRAY);
-        //Draw lines in canvas
         for(int x = -1; x < CANVAS_WIDTH; x += 50) {
             gc.fillRect(x, 0, 3, canvas.getHeight());
         }
@@ -452,6 +468,7 @@ public class Main extends Application {
      * Method that updates the timer
      */
     public void timer(){
+        //change colour depending on time left
         if (currentLevel.getTimerLeft() <= 6){
             timerText.setFill(Paint.valueOf("Red"));
         }
@@ -473,7 +490,7 @@ public class Main extends Application {
     }
 
     /**
-     * Method to stop the game when player loses
+     * Method to stop the game when player loses or reaches last level
      */
     public void gameOver(){
         System.out.println("GAME OVER!!!");
@@ -531,7 +548,7 @@ public class Main extends Application {
         for (String profilesUsername : profiles.getUsernames()) {
             profileGUI.getChildren().add(new Label(profilesUsername));
         }
-        //create user
+        //create user button actions (adding profile and adjusting GUI data
         createUser.setOnAction(e -> {
             if(!usernameIn.getText().equals("")) {
                 profiles.addProfile(
@@ -545,14 +562,19 @@ public class Main extends Application {
         });
         //load user
         loadUser.setOnAction(e -> {
+            //checking if username exists in profiles
             if(profiles.isValidName(usernameIn.getText())) {
                 this.username = usernameIn.getText();
                 toolbar.getChildren().clear();
                 toolbar.getChildren().add(new Label("Choose level: "));
+                //for loop generates levels unlocked
                 for(int i = 0; i <= profiles.getMaxLvl(username); i++) {
                     Button b = new Button(String.valueOf(i + 1));
+                    //copy of i due to lambda expression limits
                     final int lvl = i;
                     b.setOnAction(f -> {
+                        //if appropriate button is selected then gui is adjusted to display appropriate text
+                        //upon game start
                         profileGUI.getChildren().clear();
                         toolbar.getChildren().clear();
                         this.timerText.setText("");
@@ -561,12 +583,15 @@ public class Main extends Application {
                         this.scoreText.setFont(Font.font("arial",20));
                         toolbar.getChildren().add(this.scoreText);
                         toolbar.getChildren().add(timerText);
+                        //button to allow player to save game
                         Button sv = new Button("Save game");
                         sv.setOnAction(g -> {
-                            save.update(currentLevel, currentLevel.getTimerLeft(), username);
+                            //saving level
+                            save.update(currentLevel, username);
                             gameOver();
                         });
                         toolbar.getChildren().add(sv);
+                        //adding leaderboard
                         VBox leaderboard = new VBox();
                         leaderboard.setSpacing(5);
                         leaderboard.setPadding(new Insets(10, 10, 10, 10));
@@ -576,6 +601,7 @@ public class Main extends Application {
                     });
                     toolbar.getChildren().add(b);
                 }
+                //if user save exists then they can load saved game
                 if(save.doesUserSaveExists(String.valueOf(usernameIn.getText()))) {
                     Button b = new Button("Saved game");
                     b.setOnAction(f -> {
@@ -591,7 +617,7 @@ public class Main extends Application {
                         toolbar.getChildren().add(timerText);
                         Button sv = new Button("Save game");
                         sv.setOnAction(g -> {
-                            save.update(currentLevel, currentLevel.getTimerLeft(), username);
+                            save.update(currentLevel, username);
                             gameOver();
                         });
                         toolbar.getChildren().add(sv);
@@ -600,7 +626,7 @@ public class Main extends Application {
                         leaderboard.setPadding(new Insets(10, 10, 10, 10));
                         leaderboard.getChildren().add(leaderboardText);
                         root.setLeft(leaderboard);
-                        begin(currentLevel.getLevelID(), true);
+                        begin(currentLevel.getLEVEL_ID(), true);
                     });
                     toolbar.getChildren().add(b);
                 }
@@ -608,6 +634,7 @@ public class Main extends Application {
             usernameIn.clear();
         });
 
+        //removing user from profiles and updating text on left hand side
         removeUser.setOnAction(g -> {
             profiles.removeProfile(String.valueOf(usernameIn.getText()));
             profileGUI.getChildren().removeAll(profileGUI.getChildren());
@@ -617,16 +644,14 @@ public class Main extends Application {
             usernameIn.clear();
         });
 
-
-
-
         // Finally, return the border pane we built up.
         return root;
     }
 
     /**
      * Method for starting the game with appropriate variables from save
-     * @param levelIn
+     * @param levelIn id of level being loaded
+     * @param isGameLoaded if game is loaded then it is going to load game instead of following levels
      */
     public void begin(int levelIn, boolean isGameLoaded){
         this.hasGameStarted = true;
@@ -639,12 +664,14 @@ public class Main extends Application {
         }
         timerTimeline.play();
 
+        //setting text for game start
         this.timerText.setText("Time remaining: " + currentLevel.getTimerLeft() + "| Level "
                 + (this.currentLevelID + 1)
                 + "| Loot remaining: " + (this.currentLevel.getLoots().size()));
         scoreText.setText("Score: " + currentLevel.getScore());
         this.leaderboardText.setText(profiles.getLeaderboardForLevelID(currentLevelID));
 
+        //multiplied by two due to javafx implementation
         player1.setX(currentLevel.getPlayerX() * 2);
         player1.setY(currentLevel.getPlayerY() * 2);
         currentLevel.setTimerLeft(currentLevel.getStartTimer());

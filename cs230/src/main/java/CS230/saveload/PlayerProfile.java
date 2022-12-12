@@ -7,6 +7,7 @@ import java.util.ArrayList;
  * and handle player input to move or make changes
  * @author Caleb Ocansey
  * @author Alex-Carmen Macoveanu
+ * @author Marek Jezinski
  * @version 1.0
  */
 public class PlayerProfile {
@@ -22,31 +23,34 @@ public class PlayerProfile {
     }
 
     /**
-     * method that sets the Player's max level
+     * method that sets the Player's max level reached
      * @param maxLevel the highest level player had passed
      */
     public void setMaxLevel(int maxLevel) {
         this.maxLevel = maxLevel;
     }
 
-    public void addScore(int score) {
-        maxScores.add(score);
-    }
-    public void setUsername(String username){
-        this.username = username;
-    }
-
+    /**
+     * Gets score of player on levelid given
+     * @param levelID id of level
+     * @return score integer
+     */
     public int getScore(int levelID) {
         return(maxScores.get(levelID));
     }
 
+    /**
+     * Sets score of player on given level id
+     * @param levelID id of level
+     * @param score score to be set
+     */
     public void setScore(int levelID, int score) {
         maxScores.set(levelID, score);
     }
 
     /**
      * method that gets the max level
-     * @return maxLevel the max level avaliable
+     * @return maxLevel the max level reached
      */
     public int getMaxLevel(){
         return this.maxLevel;

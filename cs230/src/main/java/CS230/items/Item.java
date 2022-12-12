@@ -5,7 +5,7 @@ import javafx.scene.image.Image;
  * Class that constructs a general item object, used as a general
  * template for more specifying item objects.
  * @author Marek Jezinski
- * @version 0
+ * @version 1.0
  */
 public abstract class Item {
     private Image img;
@@ -26,7 +26,7 @@ public abstract class Item {
 
     /**
      * method that gets the item's image/graphic
-     * @return img
+     * @return img get image of this item
      */
     public Image getImg() {
         return img;
@@ -34,7 +34,7 @@ public abstract class Item {
 
     /**
      * method that sets an item's image
-     * @param img image of the item
+     * @param img set image of the item
      */
     public void setImg(Image img) {
         this.img = img;

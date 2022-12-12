@@ -11,12 +11,10 @@ import java.util.ArrayList;
 /**
  * Class that creates a Thief object, inherits from the superclass Character
  * @author Wiktoria Bruzgo
+ * @author Marek Jezinski
  * @version 1.0
  */
 public class Thief extends NPC {
-
-    //private currentPath --  a current path for the npc to move on
-    //constructor for smartThief
 
     char colour;
     char direction;
@@ -39,7 +37,7 @@ public class Thief extends NPC {
      */
     public void movement(Map m) {
         if(isActive) {
-            Tile[][] tilesArray = m.getTilesArray();
+            Tile[][] tilesArray = m.getTILES_ARRAY();
             int MAP_MAX_X = m.getMAP_MAX_X();
             int MAP_MAX_Y = m.getMAP_MAX_Y();
             if(direction == 'e') {
@@ -147,7 +145,7 @@ public class Thief extends NPC {
 
     private boolean canMoveRight(Map m) {
         if(x + 1 < m.getMAP_MAX_X()) {
-            if(m.getTilesArray()[x+1][y].getTileColours().indexOf(colour) != -1) {
+            if(m.getTILES_ARRAY()[x+1][y].getTileColours().indexOf(colour) != -1) {
                 if(!isItem(m, x+1, y)) {
                     return true;
                 }
@@ -162,7 +160,7 @@ public class Thief extends NPC {
      */
     private boolean canMoveDown(Map m) {
         if(y + 1 < m.getMAP_MAX_Y()) {
-            if(m.getTilesArray()[x][y+1].getTileColours().indexOf(colour) != -1) {
+            if(m.getTILES_ARRAY()[x][y+1].getTileColours().indexOf(colour) != -1) {
                 if(!isItem(m, x, y+1)) {
                     return true;
                 }
@@ -177,7 +175,7 @@ public class Thief extends NPC {
      */
     private boolean canMoveLeft(Map m) {
         if(x - 1 >= 0) {
-            if(m.getTilesArray()[x-1][y].getTileColours().indexOf(colour) != -1) {
+            if(m.getTILES_ARRAY()[x-1][y].getTileColours().indexOf(colour) != -1) {
                 if(!isItem(m, x-1, y)) {
                     return true;
                 }
@@ -192,7 +190,7 @@ public class Thief extends NPC {
      */
     private boolean canMoveUp(Map m) {
         if(y - 1 >= 0) {
-            if(m.getTilesArray()[x][y-1].getTileColours().indexOf(colour) != -1) {
+            if(m.getTILES_ARRAY()[x][y-1].getTileColours().indexOf(colour) != -1) {
                 if(!isItem(m, x, y-1)) {
                     return true;
                 }
@@ -231,17 +229,25 @@ public class Thief extends NPC {
     }
 
     /**
-     * Method for changing the active variable
-     * @param active to check if it is active.
+     * Changes if thief is alive
+     * @param active true if alive false otherwise
      */
     public void setActive(boolean active) {
         isActive = active;
     }
 
+    /**
+     * Get colour of thief that is assigned to
+     * @return colour char
+     */
     public char getColour() {
         return colour;
     }
 
+    /**
+     * Get current direction of thief
+     * @return direction char
+     */
     public char getDirection() {
         return direction;
     }

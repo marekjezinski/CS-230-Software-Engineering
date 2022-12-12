@@ -27,7 +27,7 @@ public class SmartThiefPath {
      */
     public SmartThiefPath(Map currentLevel){
         this.currentLoot = currentLevel.getLoots();
-        currentTileArray = currentLevel.getTilesArray();
+        currentTileArray = currentLevel.getTILES_ARRAY();
     }
 
     /**

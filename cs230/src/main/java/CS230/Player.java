@@ -11,7 +11,6 @@ import javafx.scene.image.Image;
 public class Player {
     private int x;
     private int y;
-    private boolean alive;
     private Image charImage;
 
     /**
@@ -23,15 +22,7 @@ public class Player {
     public Player(int x, int y,Image pic){
         this.x = x;
         this.y = y;
-        this.alive = true;
         this.charImage = pic;
-    }
-
-    //Player constructor without image for testing
-    public Player(int x, int y){
-        this.x = x;
-        this.y = y;
-        this.alive = true;
     }
 
     /**
@@ -48,14 +39,6 @@ public class Player {
      */
     public int getX() {
         return x;
-    }
-
-    /**
-     * method that checks whether a Player is alive or not
-     * @return true if the Player is alive, false otherwise
-     */
-    public boolean isAlive() {
-        return alive;
     }
 
     /**
@@ -81,14 +64,6 @@ public class Player {
     public void setY(int newY){
         this.y = newY;
     }
-
-    /*
-     * method that kills a Player
-     */
-    /*public void killPlayer(){
-        this.alive = false;
-    }*/
-
 
 }
 
