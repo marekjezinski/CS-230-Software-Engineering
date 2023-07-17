@@ -1,6 +1,6 @@
-This is CS-230 Software Engineering 2022 github repository
+# CS-230 Software Engineering Game Development Coursework
 <br />The task was to create a digital version of the 1997 Jewel Chase game which was part of the Microsoft Entertainment Pack: The Puzzle Collection.
-<br />This game was built using Java and JavaFX framework
+<br />This game was built using Java and JavaFX framework with IntelliJ IDE
 <br />Authors:
 <ul>
   <li><a href="https://github.com/wikbruz" target="_blank">Wiktoria Bruzgo</a></li>
